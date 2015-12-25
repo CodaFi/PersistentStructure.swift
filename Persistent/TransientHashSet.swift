@@ -7,7 +7,7 @@
 //
 
 class TransientHashSet: AbstractTransientSet {
-	override func persistent() -> IPersistentCollection? {
+	override func persistent() -> IPersistentCollection {
 		return PersistentHashSet(meta: nil, impl: _impl!.persistent())
 	}
 }

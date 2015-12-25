@@ -74,7 +74,7 @@ class TransientArrayMap: AbstractTransientMap {
 		return _length / 2
 	}
 
-	override func doPersistent() -> IPersistentMap? {
+	override func doPersistent() -> IPersistentMap {
 		self.ensureEditable()
 		_owner = nil
 		var a: Array<AnyObject> = []

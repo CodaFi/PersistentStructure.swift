@@ -7,5 +7,5 @@
 //
 
 protocol IObj {
-	func withMeta(meta : IPersistentMap?) -> IObj?
+	func withMeta(meta: IPersistentMap) -> IObj
 }

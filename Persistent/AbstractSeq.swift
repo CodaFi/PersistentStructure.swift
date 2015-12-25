@@ -103,7 +103,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func empty() -> IPersistentCollection? {
+	func empty() -> IPersistentCollection {
 		return PersistentList.empty()
 	}
 

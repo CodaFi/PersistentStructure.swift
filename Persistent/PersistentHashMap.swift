@@ -192,7 +192,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return EmptySeq()
 	}
 
-	class func empty() -> IPersistentCollection? {
+	class func empty() -> IPersistentCollection {
 		return EMPTY
 	}
 

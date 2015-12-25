@@ -24,10 +24,6 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return EMPTY
 	}
 
-	class func empty() -> IPersistentCollection? {
-		return EMPTY
-	}
-
 	init(meta: IPersistentMap?, first: AnyObject, rest: IPersistentList?, count: Int) {
 		_first = first
 		_rest = rest
@@ -106,7 +102,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return ret
 	}
 
-	override func empty() -> IPersistentCollection? {
+	override func empty() -> IPersistentCollection {
 		return EMPTY.withMeta(_meta)
 	}
 }
@@ -163,7 +159,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return PersistentList(meta: _meta, first: other, rest: nil, count: 1)
 	}
 
-	func empty() -> IPersistentCollection? {
+	func empty() -> IPersistentCollection {
 		return self
 	}
 

@@ -94,7 +94,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 		return Utils.cons(o, to: self.seq())!
 	}
 
-	func empty() -> IPersistentCollection? {
+	func empty() -> IPersistentCollection {
 		return PersistentList.empty()
 	}
 

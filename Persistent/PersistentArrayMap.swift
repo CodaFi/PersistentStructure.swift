@@ -33,7 +33,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 //		self = (ret!.persistent() as! PersistentArrayMap)
 //	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
+	func withMeta(meta: IPersistentMap) -> IObj {
 		return PersistentArrayMap(meta: meta, array: _array)
 	}
 
@@ -138,8 +138,11 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return self
 	}
 
-	override func empty() -> IPersistentCollection? {
-		return EMPTY.withMeta(self.meta()) as! IPersistentMap?
+	override func empty() -> IPersistentCollection {
+		if let m = self.meta() {
+			return EMPTY.withMeta(m) as! IPersistentCollection
+		}
+		return EMPTY
 	}
 
 	override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {

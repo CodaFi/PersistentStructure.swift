@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class SortedTreeSeq: AbstractSeq {
+class SortedTreeSeq: AbstractSeq, IObj {
 	private var _stack: ISeq?
 	private var _asc: Bool
 	private var _cnt: Int
@@ -63,7 +63,7 @@ class SortedTreeSeq: AbstractSeq {
 		return UInt(_cnt)
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
-		return SortedTreeSeq(meta: meta, stack: _stack, ascending: _asc, count: _cnt) as? IObj
+	func withMeta(meta: IPersistentMap) -> IObj {
+		return SortedTreeSeq(meta: meta, stack: _stack, ascending: _asc, count: _cnt)
 	}
 }

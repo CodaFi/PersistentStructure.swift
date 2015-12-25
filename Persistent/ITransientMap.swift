@@ -9,5 +9,5 @@
 protocol ITransientMap : class, ITransientAssociative, ICounted {
 	func associateKey(key: AnyObject, value: AnyObject) -> ITransientMap?
 	func without(key : AnyObject) -> ITransientMap?
-	func persistent() -> IPersistentMap?
+	func persistent() -> IPersistentMap
 }

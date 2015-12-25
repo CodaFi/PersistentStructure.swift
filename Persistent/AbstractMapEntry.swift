@@ -37,7 +37,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		return self.asVector()!.cons(o)
 	}
 
-	override func empty() -> IPersistentCollection? {
+	override func empty() -> IPersistentCollection {
 		fatalError("Collection does not admit an empty representation")
 	}
 

@@ -25,7 +25,7 @@ class AbstractTransientMap : ITransientMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func doPersistent() -> IPersistentMap? {
+	func doPersistent() -> IPersistentMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
@@ -62,12 +62,12 @@ class AbstractTransientMap : ITransientMap {
 		return self.doWithout(key)
 	}
 
-	func persistent() -> IPersistentCollection? {
+	func persistent() -> IPersistentCollection {
 		self.ensureEditable()
 		return self.doPersistent()
 	}
 
-	func persistent() -> IPersistentMap? {
+	func persistent() -> IPersistentMap {
 		self.ensureEditable()
 		return self.doPersistent()
 	}

@@ -17,8 +17,7 @@ class Obj: IObj, IMeta {
 		return _meta
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
-//		RequestConcreteImplementation(self, _cmd, Obj.class)
-		return nil
+	func withMeta(meta: IPersistentMap) -> IObj {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

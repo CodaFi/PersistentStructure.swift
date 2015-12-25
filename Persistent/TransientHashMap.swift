@@ -77,7 +77,7 @@ class TransientHashMap: AbstractTransientMap {
 		return self
 	}
 
-	override func doPersistent() -> IPersistentMap? {
+	override func doPersistent() -> IPersistentMap {
 		return PersistentHashMap(count: UInt(_count), root: _root, hasNull: _hasNull, nullValue: _nullValue)
 	}
 

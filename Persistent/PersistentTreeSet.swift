@@ -47,7 +47,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		return PersistentTreeSet(meta: self.meta(), implementation: _impl!.associateKey(other, withValue: other) as? IPersistentMap)
 	}
 
-	override func empty() -> IPersistentCollection? {
+	override func empty() -> IPersistentCollection {
 		return PersistentTreeSet(meta: self.meta(), implementation: PersistentTreeMap.empty())
 	}
 
@@ -55,7 +55,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		return KeySeq.create((_impl as! IReversible).reversedSeq())
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
+	func withMeta(meta: IPersistentMap) -> IObj {
 		return PersistentTreeSet(meta: meta, implementation: _impl)
 	}
 

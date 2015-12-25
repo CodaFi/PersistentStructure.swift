@@ -41,7 +41,7 @@ class AbstractTransientSet : ITransientSet {
 		return _impl!.objectForKey(key)!
 	}
 
-	func persistent() -> IPersistentCollection? {
+	func persistent() -> IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

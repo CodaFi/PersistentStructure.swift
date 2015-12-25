@@ -9,6 +9,6 @@
 protocol IPersistentCollection : ISeqable {
 	func count() -> UInt
 	func cons(other : AnyObject) -> IPersistentCollection?
-	func empty() -> IPersistentCollection?
+	func empty() -> IPersistentCollection
 	func equiv(o : AnyObject) -> Bool
 }

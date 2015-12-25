@@ -33,8 +33,11 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		_tail = tail
 	}
 
-	override func empty() -> IPersistentCollection? {
-		return EMPTY.withMeta(self.meta()) as? IPersistentCollection
+	override func empty() -> IPersistentCollection {
+		if let m = self.meta() {
+			return EMPTY.withMeta(m) as! IPersistentCollection
+		}
+		return EMPTY
 	}
 
 	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector? {
@@ -150,7 +153,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return UInt(_count)
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
+	func withMeta(meta: IPersistentMap) -> IObj {
 		return PersistentVector(meta: meta, count: _count, shift: _shift, node: _root!, tail: _tail)
 	}
 
@@ -238,7 +241,10 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			fatalError("Can't pop from an empty vector")
 		}
 		if _count == 1 {
-			return EMPTY.withMeta(self.meta()) as! IPersistentStack?
+			if let m = self.meta() {
+				EMPTY.withMeta(m) as? IPersistentStack
+			}
+			return EMPTY
 		}
 		if _count - self.tailoff() > 1 {
 			var newTail: Array<AnyObject> = []

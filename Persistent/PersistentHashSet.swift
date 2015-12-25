@@ -89,11 +89,14 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return PersistentHashSet(meta: self.meta(), impl: _impl!.associateKey(0, withValue: other)! as? IPersistentMap)
 	}
 
-	override func empty() -> IPersistentCollection? {
-		return EMPTY.withMeta(self.meta()) as? IPersistentCollection
+	override func empty() -> IPersistentCollection {
+		if let m = self.meta() {
+			return EMPTY.withMeta(m) as! IPersistentCollection
+		}
+		return EMPTY
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
+	func withMeta(meta: IPersistentMap) -> IObj {
 		return PersistentHashSet(meta: meta, impl: _impl)
 	}
 

@@ -104,11 +104,14 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		}
 	}
 
-	func empty() -> IPersistentCollection? {
-		return EMPTY.withMeta(self.meta()) as! IPersistentCollection?
+	func empty() -> IPersistentCollection {
+		if let m = self.meta() {
+			return EMPTY.withMeta(m) as! IPersistentCollection
+		}
+		return EMPTY
 	}
 
-	override func withMeta(meta: IPersistentMap?) -> IObj? {
+	override func withMeta(meta: IPersistentMap) -> IObj {
 		return PersistentQueue(meta: meta, count: _count, seq: _front, rev: _rear)
 	}
 

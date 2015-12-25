@@ -38,7 +38,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		super.init()
 	}
 
-	class func empty() -> IPersistentCollection? {
+	class func empty() -> IPersistentCollection {
 		return EMPTY
 	}
 
@@ -55,7 +55,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return EMPTY
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
+	func withMeta(meta: IPersistentMap) -> IObj {
 		return PersistentTreeMap(meta: meta, comparator: _comp, tree: _tree, count: _count)
 	}
 

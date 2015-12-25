@@ -52,8 +52,11 @@ class SubVector: AbstractPersistentVector, IObj {
 		return SubVector(meta: _meta, vector: _v!.assocN(_end, value: o), start: _start, end: _end + 1)
 	}
 
-	override func empty() -> IPersistentCollection? {
-		return PersistentVector.empty().withMeta(self.meta()) as! IPersistentCollection?
+	override func empty() -> IPersistentCollection {
+		if let m = self.meta() {
+			return PersistentVector.empty().withMeta(m) as! IPersistentCollection
+		}
+		return PersistentVector.empty()
 	}
 
 	override func pop() -> IPersistentStack? {
@@ -63,7 +66,7 @@ class SubVector: AbstractPersistentVector, IObj {
 		return SubVector(meta: _meta, vector: _v, start: _start, end: _end - 1)
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
+	func withMeta(meta: IPersistentMap) -> IObj {
 		if meta === _meta {
 			return self
 		}

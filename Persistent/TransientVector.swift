@@ -53,10 +53,10 @@ class TransientVector : ITransientVector, ICounted {
 		return Node(edit: NSThread.currentThread(), array: node.array)
 	}
 
-	func persistent() -> IPersistentCollection? {
+	func persistent() -> IPersistentCollection {
 		self.ensureEditable()
 		if _root.edit != nil && _root.edit != NSThread.currentThread() {
-//			NSException.raise(NSInternalInconsistencyException, format: "Mutation release by non-owner thread")
+			fatalError("Mutation release by non-owner thread")
 		}
 		var trimmedTail: Array<AnyObject> = []
 		trimmedTail.reserveCapacity(_count - self.tailoff())

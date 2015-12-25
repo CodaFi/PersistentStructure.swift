@@ -275,7 +275,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func empty() -> IPersistentCollection? {
+	func empty() -> IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

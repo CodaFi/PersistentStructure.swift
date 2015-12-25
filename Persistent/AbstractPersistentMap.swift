@@ -116,7 +116,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		return hash
 	}
 
-	func empty() -> IPersistentCollection? {
+	func empty() -> IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
