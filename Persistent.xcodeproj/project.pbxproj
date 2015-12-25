@@ -222,6 +222,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		822F358C1C2D2D4600E1D42E /* Persistent Structures */ = {
+			isa = PBXGroup;
+			children = (
+				82CF9AF51C29D85A00D4677B /* TransientVector.swift */,
+				82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */,
+				82BACD681C2A0146006BA8F5 /* LazilyPersistentVector.swift */,
+				82BACD6A1C2A01F2006BA8F5 /* PersistentList.swift */,
+				82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */,
+				82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */,
+				82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */,
+				82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */,
+				829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */,
+				829C0AE01C2B182600AA3331 /* TransientHashSet.swift */,
+				829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */,
+				82DD94E51C2B522700064CB7 /* PersistentTreeMap.swift */,
+				82DD94E71C2D0F9000064CB7 /* SortedTreeSeq.swift */,
+				829C0AE41C2B187800AA3331 /* PersistentQueue.swift */,
+				82DD94E31C2B4C5100064CB7 /* SubVector.swift */,
+			);
+			name = "Persistent Structures";
+			sourceTree = "<group>";
+		};
 		82A667231BF9166400EBCDFA = {
 			isa = PBXGroup;
 			children = (
@@ -244,26 +266,12 @@
 		82A6672F1BF9166400EBCDFA /* Persistent */ = {
 			isa = PBXGroup;
 			children = (
-				82A667321BF9166400EBCDFA /* Info.plist */,
+				82A667951BF925AA00EBCDFA /* Interfaces */,
+				822F358C1C2D2D4600E1D42E /* Persistent Structures */,
 				82CF9AE81C293F9000D4677B /* Abstract */,
 				82CF9AF31C29D7F700D4677B /* Nodes */,
 				82CF9AF41C29D84D00D4677B /* Seq */,
 				82CF9AFA1C29F28C00D4677B /* Iterator */,
-				82CF9AF51C29D85A00D4677B /* TransientVector.swift */,
-				82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */,
-				82BACD681C2A0146006BA8F5 /* LazilyPersistentVector.swift */,
-				82BACD6A1C2A01F2006BA8F5 /* PersistentList.swift */,
-				82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */,
-				82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */,
-				82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */,
-				82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */,
-				829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */,
-				829C0AE01C2B182600AA3331 /* TransientHashSet.swift */,
-				829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */,
-				82DD94E51C2B522700064CB7 /* PersistentTreeMap.swift */,
-				82DD94E71C2D0F9000064CB7 /* SortedTreeSeq.swift */,
-				829C0AE41C2B187800AA3331 /* PersistentQueue.swift */,
-				82DD94E31C2B4C5100064CB7 /* SubVector.swift */,
 				82CF9AD81C29387E00D4677B /* MapEntry.swift */,
 				82DD94DD1C2B452700064CB7 /* ArrayChunk.swift */,
 				829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */,
@@ -272,7 +280,7 @@
 				82CF9ADC1C2938E000D4677B /* Obj.swift */,
 				82A6679C1BF9281A00EBCDFA /* Utils.swift */,
 				82DD94DF1C2B4C0500064CB7 /* Reduced.swift */,
-				82A667951BF925AA00EBCDFA /* Interfaces */,
+				82A667321BF9166400EBCDFA /* Info.plist */,
 			);
 			path = Persistent;
 			sourceTree = "<group>";
