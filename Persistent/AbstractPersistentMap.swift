@@ -148,7 +148,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func objectForKey(key : AnyObject, def : AnyObject?) -> AnyObject? {
+	func objectForKey(key : AnyObject, def : AnyObject) -> AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

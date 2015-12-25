@@ -48,7 +48,8 @@ class AbstractTransientMap : ITransientMap {
 	}
 
 	func objectForKey(key: AnyObject) -> AnyObject? {
-		return self.objectForKey(key, def: nil)
+		self.ensureEditable()
+		return self.doobjectForKey(key, notFound: NSNull())
 	}
 
 	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap? {
@@ -71,9 +72,9 @@ class AbstractTransientMap : ITransientMap {
 		return self.doPersistent()
 	}
 
-	func objectForKey(key: AnyObject, def notFound: AnyObject?) -> AnyObject? {
+	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		self.ensureEditable()
-		return self.doobjectForKey(key, notFound: notFound!)!
+		return self.doobjectForKey(key, notFound: notFound)!
 	}
 
 	func count() -> UInt {

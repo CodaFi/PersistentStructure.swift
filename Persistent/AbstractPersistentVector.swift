@@ -136,7 +136,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return self.objectAtIndex(index)
 	}
 
-	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject? {
+	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
 		if i >= 0 && i < Int(self.count()) {
 			return self.objectAtIndex(i)!
 		}
@@ -202,18 +202,24 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("Key must be integer")
 	}
 
-	func objectForKey(key: AnyObject, def notFound: AnyObject?) -> AnyObject? {
+	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
 			if i >= 0 && i < Int(self.count()) {
-				return self.objectAtIndex(i)
+				return self.objectAtIndex(i)!
 			}
 		}
 		return notFound
 	}
 
 	func objectForKey(key: AnyObject) -> AnyObject? {
-		return self.objectForKey(key, def: nil)
+		if Utils.isInteger(key) {
+			let i: Int = (key as! NSNumber).integerValue
+			if i >= 0 && i < Int(self.count()) {
+				return self.objectAtIndex(i)!
+			}
+		}
+		return nil
 	}
 
 	func toArray() -> Array<AnyObject> {

@@ -29,9 +29,9 @@ class ArrayChunk : IChunk {
 		return _array[_off + i]
 	}
 
-	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject? {
+	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
 		if i >= 0 && i < Int(self.count()) {
-			return self.objectAtIndex(i)
+			return self.objectAtIndex(i)!
 		}
 		return notFound
 	}

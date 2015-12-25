@@ -8,5 +8,5 @@
 
 protocol ILookup {
 	func objectForKey(key : AnyObject) -> AnyObject?
-	func objectForKey(key : AnyObject, def : AnyObject?) -> AnyObject?
+	func objectForKey(key : AnyObject, def : AnyObject) -> AnyObject
 }

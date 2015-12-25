@@ -142,7 +142,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return EMPTY.withMeta(self.meta()) as! IPersistentMap?
 	}
 
-	override func objectForKey(key: AnyObject, def notFound: AnyObject?) -> AnyObject? {
+	override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			return _array[i + 1]
@@ -151,7 +151,11 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	}
 
 	override func objectForKey(key: AnyObject) -> AnyObject? {
-		return self.objectForKey(key, def: nil)
+		let i: Int = self.indexOf(key)
+		if i >= 0 {
+			return _array[i + 1]
+		}
+		return nil
 	}
 
 	func capacity() -> UInt {

@@ -159,10 +159,17 @@ class TransientVector : ITransientVector, ICounted {
 	}
 
 	func objectForKey(key: AnyObject) -> AnyObject? {
-		return self.objectForKey(key, def: nil)
+		self.ensureEditable()
+		if Utils.isInteger(key) {
+			let i: Int = (key as? NSNumber)!.integerValue
+			if i >= 0 && i < _count {
+				return self.objectAtIndex(i)!
+			}
+		}
+		return nil
 	}
 
-	func objectForKey(key: AnyObject, def notFound: AnyObject?) -> AnyObject? {
+	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		self.ensureEditable()
 		if Utils.isInteger(key) {
 			let i: Int = (key as? NSNumber)!.integerValue
@@ -179,9 +186,9 @@ class TransientVector : ITransientVector, ICounted {
 		return node[i & 0x01f]
 	}
 
-	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject? {
+	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
 		if i >= 0 && i < Int(self.count()) {
-			return self.objectAtIndex(i)
+			return self.objectAtIndex(i)!
 		}
 		return notFound
 	}

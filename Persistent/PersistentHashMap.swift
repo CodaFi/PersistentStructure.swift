@@ -130,15 +130,17 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return PersistentHashMap(meta: self.meta(), count: addedLeaf.val == nil ? _count : _count + 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue!)
 	}
 
-	override func objectForKey(key: AnyObject?, def notFound: AnyObject?) -> AnyObject? {
-		if key == nil {
-			return _hasNull ? _nullValue! : notFound
+	override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
+		if let r = _root {
+			if let res = r.findWithShift(0, hash: PersistentHashMap.hash(key), key: key, notFound: notFound) {
+				return res
+			}
 		}
-		return _root != nil ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key!), key: key!, notFound: notFound!) : notFound
+		return notFound
 	}
 
-	override func objectForKey(key: AnyObject?) -> AnyObject? {
-		return self.objectForKey(key, def: nil)
+	override func objectForKey(key: AnyObject) -> AnyObject? {
+		return self.objectForKey(key, def: NSNull())
 	}
 
 	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap? {

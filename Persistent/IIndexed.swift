@@ -8,5 +8,5 @@
 
 protocol IIndexed : ICounted {
 	func objectAtIndex(index : Int) -> AnyObject?
-	func objectAtIndex(index : Int, def : AnyObject) -> AnyObject?
+	func objectAtIndex(index : Int, def : AnyObject) -> AnyObject
 }

@@ -227,13 +227,18 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return 1 + ((ll > rr) ? ll : rr)
 	}
 
-	override func objectForKey(key: AnyObject, def: AnyObject?) -> AnyObject? {
-		let n: TreeNode? = self.entryForKey(key) as? TreeNode
-		return (n != nil) ? n!.val() : def
+	override func objectForKey(key: AnyObject, def: AnyObject) -> AnyObject {
+		if let n = self.entryForKey(key) as? TreeNode {
+			return n.val()!
+		}
+		return def
 	}
 
 	override func objectForKey(key: AnyObject) -> AnyObject? {
-		return self.objectForKey(key, def: nil)
+		if let n = self.entryForKey(key) as? TreeNode {
+			return n.val()!
+		}
+		return nil
 	}
 
 	func capacity() -> Int {
