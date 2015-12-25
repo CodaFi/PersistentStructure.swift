@@ -17,8 +17,8 @@ class SeqIterator: NSEnumerator {
 		if _seq == nil {
 			fatalError("Cannot request next object of empty seq.")
 		}
-		let ret: AnyObject = Utils.first(_seq)!
-		_seq = Utils.next(_seq)
+		let ret: AnyObject = Utils.first(_seq!)!
+		_seq = Utils.next(_seq!)
 		return ret
 	}
 }
