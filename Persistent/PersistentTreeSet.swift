@@ -28,14 +28,14 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		return ret
 	}
 
-	init(meta: IPersistentMap?, implementation impl: IPersistentMap?) {
+	init(meta: IPersistentMap?, implementation impl: IPersistentMap) {
 		super.init(impl: impl)
 		_meta = meta
 	}
 
 	override func disjoin(key: AnyObject) -> IPersistentSet? {
 		if self.containsObject(key) {
-			return PersistentTreeSet(meta: self.meta(), implementation: _impl!.without(key))
+			return PersistentTreeSet(meta: self.meta(), implementation: _impl.without(key))
 		}
 		return self
 	}
@@ -44,7 +44,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		if self.containsObject(other) {
 			return self
 		}
-		return PersistentTreeSet(meta: self.meta(), implementation: _impl!.associateKey(other, withValue: other) as? IPersistentMap)
+		return PersistentTreeSet(meta: self.meta(), implementation: _impl.associateKey(other, withValue: other) as! IPersistentMap)
 	}
 
 	override func empty() -> IPersistentCollection {
@@ -55,7 +55,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		return KeySeq.create((_impl as! IReversible).reversedSeq())
 	}
 
-	func withMeta(meta: IPersistentMap) -> IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentTreeSet(meta: meta, implementation: _impl)
 	}
 

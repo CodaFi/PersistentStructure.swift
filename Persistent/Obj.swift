@@ -17,7 +17,7 @@ class Obj: IObj, IMeta {
 		return _meta
 	}
 
-	func withMeta(meta: IPersistentMap) -> IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

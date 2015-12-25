@@ -112,7 +112,7 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		return EMPTY
 	}
 
-	override func withMeta(meta: IPersistentMap) -> IObj {
+	override func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentQueue(meta: meta, count: _count, seq: _front, rev: _rear)
 	}
 

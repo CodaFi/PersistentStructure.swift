@@ -66,7 +66,7 @@ class SubVector: AbstractPersistentVector, IObj {
 		return SubVector(meta: _meta, vector: _v, start: _start, end: _end - 1)
 	}
 
-	func withMeta(meta: IPersistentMap) -> IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj {
 		if meta === _meta {
 			return self
 		}

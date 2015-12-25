@@ -37,7 +37,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		return AbstractPersistentMap.mapisEqual(self, other: obj)
 	}
 
-	class func mapisEqual(m1: IPersistentMap?, other obj: AnyObject) -> Bool {
+	class func mapisEqual(m1: IPersistentMap, other obj: AnyObject) -> Bool {
 		if m1 === obj {
 			return true
 		}
@@ -45,10 +45,10 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return false
 		}
 		let m: IMap? = obj as? IMap
-		if m!.count() != m1!.count() {
+		if m!.count() != m1.count() {
 			return false
 		}
-		for var s = m1!.seq(); s.count() != 0; s = s.next() {
+		for var s = m1.seq(); s.count() != 0; s = s.next() {
 			if let e = s.first() as? IMapEntry {
 				let found: Bool = m!.containsKey(e.key()!)
 				if !found || !Utils.isEqual(e.val(), other: m!.objectForKey(e.key()!)) {
@@ -132,11 +132,11 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap? {
+	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func without(key : AnyObject) -> IPersistentMap? {
+	func without(key : AnyObject) -> IPersistentMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

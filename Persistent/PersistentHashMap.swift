@@ -48,7 +48,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return TransientHashMap.create(self)
 	}
 
-	class func create(other: IMap?) -> IPersistentMap? {
+	class func create(other: IMap?) -> IPersistentMap {
 		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for o: AnyObject in other!.allEntries()!.generate() {
 			let e: IMapEntry = o as! IMapEntry
@@ -115,10 +115,10 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return (_root != nil) ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key!), key: key!) : nil
 	}
 
-	func associateKey(key: AnyObject?, value val: AnyObject) -> IPersistentMap? {
+	func associateKey(key: AnyObject?, value val: AnyObject) -> IPersistentMap {
 		if key == nil {
 			if _hasNull && val === _nullValue {
-				return nil
+				return self
 			}
 			return PersistentHashMap(meta: self.meta(), count: _hasNull ? _count : _count + 1, root: _root, hasNull: true, nullValue: val)
 		}
@@ -143,14 +143,14 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return self.objectForKey(key, def: NSNull())
 	}
 
-	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap? {
+	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap {
 		if self.containsKey(key) {
 			fatalError("Key \(key) already present in hash map \(self)")
 		}
 		return self.associateKey(key, value: val)
 	}
 
-	override func without(key: AnyObject?) -> IPersistentMap? {
+	override func without(key: AnyObject?) -> IPersistentMap {
 		if key == nil {
 			return _hasNull ? PersistentHashMap(meta: self.meta(), count: _count - 1, root: _root, hasNull: false, nullValue: nil) : self
 		}

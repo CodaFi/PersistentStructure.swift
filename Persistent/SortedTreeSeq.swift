@@ -63,7 +63,7 @@ class SortedTreeSeq: AbstractSeq, IObj {
 		return UInt(_cnt)
 	}
 
-	func withMeta(meta: IPersistentMap) -> IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj {
 		return SortedTreeSeq(meta: meta, stack: _stack, ascending: _asc, count: _cnt)
 	}
 }

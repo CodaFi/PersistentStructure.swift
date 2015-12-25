@@ -30,7 +30,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		super.init()
 	}
 
-	init(comp: (AnyObject?, AnyObject?) -> NSComparisonResult, tree: TreeNode?, count: Int, meta: IPersistentMap?) {
+	init(comp: (AnyObject?, AnyObject?) -> NSComparisonResult, tree: TreeNode?, count: Int, meta: IPersistentMap) {
 		_meta = meta
 		_comp = comp
 		_tree = tree
@@ -42,11 +42,11 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return EMPTY
 	}
 
-	class func create(other: IMap?) -> IPersistentMap? {
-		var ret: IPersistentMap? = EMPTY as IPersistentMap?
+	class func create(other: IMap?) -> IPersistentMap {
+		var ret: IPersistentMap = EMPTY as IPersistentMap
 		for o: AnyObject in other!.allEntries()!.generate() {
 			let e: MapEntry = o as! MapEntry
-			ret = ret!.associateKey(e.key()!, withValue: e.val()!) as? IPersistentMap
+			ret = ret.associateKey(e.key()!, withValue: e.val()!) as! IPersistentMap
 		}
 		return ret
 	}
@@ -55,7 +55,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return EMPTY
 	}
 
-	func withMeta(meta: IPersistentMap) -> IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentTreeMap(meta: meta, comparator: _comp, tree: _tree, count: _count)
 	}
 
@@ -64,23 +64,23 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	}
 
 	class func createWithSeq(var items: ISeq?) -> AnyObject {
-		var ret: IPersistentMap? = EMPTY
+		var ret: IPersistentMap = EMPTY
 		for ; items != nil; items = items!.next().next() {
 			if items?.next() == nil {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
-			ret = ret!.associateKey(items!.first()!, withValue: Utils.second(items!)!) as! PersistentTreeMap
+			ret = ret.associateKey(items!.first()!, withValue: Utils.second(items!)!) as! PersistentTreeMap
 		}
 		return ret as! PersistentTreeMap
 	}
 
 	class func createWithComparator(comp: (AnyObject?, AnyObject?) -> NSComparisonResult, var seq items: ISeq?) -> AnyObject {
-		var ret: IPersistentMap? = PersistentTreeMap(comparator: comp)
+		var ret: IPersistentMap = PersistentTreeMap(comparator: comp)
 		for ; items != nil; items = items!.next().next() {
 			if items!.next().count() == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
-			ret = ret!.associateKey(items!.first()!, withValue: Utils.second(items!)!) as! PersistentTreeMap
+			ret = ret.associateKey(items!.first()!, withValue: Utils.second(items!)!) as! PersistentTreeMap
 		}
 		return ret as! PersistentTreeMap
 	}
@@ -89,7 +89,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return self.objectForKey(key) != nil
 	}
 
-	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap? {
+	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap {
 		let found: Box = Box(withVal: nil)
 		let t: TreeNode? = self.add(_tree, key: key, val: val, found: found)
 		if t == nil {
@@ -98,7 +98,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return PersistentTreeMap(meta: self.meta(), comparator: _comp, tree: t?.blacken(), count: _count + 1)
 	}
 
-	func associateKey(key: AnyObject, value val: AnyObject) -> IPersistentMap? {
+	func associateKey(key: AnyObject, value val: AnyObject) -> IPersistentMap {
 		let found: Box = Box(withVal: nil)
 		let t: TreeNode? = self.add(_tree, key: key, val: val, found: found)
 		if t == nil {
@@ -111,7 +111,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return PersistentTreeMap(meta: self.meta(), comparator: _comp, tree: t?.blacken(), count: _count + 1)
 	}
 
-	override func without(key: AnyObject) -> IPersistentMap? {
+	override func without(key: AnyObject) -> IPersistentMap {
 		let found: Box = Box(withVal: nil)
 		let t: TreeNode? = self.remove(_tree, key: key, found: found)
 		if t == nil {

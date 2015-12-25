@@ -153,7 +153,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return UInt(_count)
 	}
 
-	func withMeta(meta: IPersistentMap) -> IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentVector(meta: meta, count: _count, shift: _shift, node: _root!, tail: _tail)
 	}
 

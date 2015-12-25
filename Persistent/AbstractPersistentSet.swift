@@ -7,25 +7,25 @@
 //
 
 class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
-	var _impl: IPersistentMap?
+	var _impl: IPersistentMap
 
 	private var _hash: Int32 = 0
 	private var _hasheq: Int32 = 0
 
-	init(impl: IPersistentMap?) {
+	init(impl: IPersistentMap) {
 		_impl = impl
 	}
 
 	func containsObject(o: AnyObject) -> Bool {
-		return _impl!.containsKey(o)
+		return _impl.containsKey(o)
 	}
 
 	func objectForKey(key: AnyObject) -> AnyObject {
-		return _impl!.objectForKey(key)!
+		return _impl.objectForKey(key)!
 	}
 
 	func count() -> UInt {
-		return _impl!.count()
+		return _impl.count()
 	}
 
 	func seq() -> ISeq {

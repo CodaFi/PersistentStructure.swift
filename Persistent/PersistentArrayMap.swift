@@ -33,7 +33,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 //		self = (ret!.persistent() as! PersistentArrayMap)
 //	}
 
-	func withMeta(meta: IPersistentMap) -> IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentArrayMap(meta: meta, array: _array)
 	}
 
@@ -43,7 +43,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		super.init()
 	}
 
-	func createHT(initial: Array<AnyObject>) -> IPersistentMap? {
+	func createHT(initial: Array<AnyObject>) -> IPersistentMap {
 		return PersistentHashMap.createWithMeta(self.meta(), array: initial)
 	}
 
@@ -74,14 +74,14 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return nil
 	}
 
-	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap? {
+	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap {
 		let i: Int = self.indexOf(key)
 		var newArray: Array<AnyObject> = []
  		if i >= 0 {
 			fatalError("Key \(key) already present in array map \(self)")
 		} else {
 			if _array.count > HASHTABLE_THRESHOLD {
-				return self.createHT(_array)!.associateEx(key, value: val)
+				return self.createHT(_array).associateEx(key, value: val)
 			}
 			newArray.reserveCapacity(_array.count + 2)
 			if _array.count > 0 {
@@ -104,7 +104,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 			newArray[i + 1] = val
 		} else {
 			if _array.count > HASHTABLE_THRESHOLD {
-				return self.createHT(_array)!.associateKey(key, withValue: val)
+				return self.createHT(_array).associateKey(key, withValue: val)
 			}
 			newArray = []
 			newArray.reserveCapacity(_array.count + 2)
@@ -117,12 +117,12 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return PersistentArrayMap(initial: newArray)
 	}
 
-	override func without(key: AnyObject) -> IPersistentMap? {
+	override func without(key: AnyObject) -> IPersistentMap {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			let newlen: Int = _array.count - 2
 			if newlen == 0 {
-				return self.empty() as? IPersistentMap
+				return self.empty() as! IPersistentMap
 			}
 			var newArray: Array<AnyObject> = []
 			newArray.reserveCapacity(newlen)

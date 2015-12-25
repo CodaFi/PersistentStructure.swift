@@ -7,6 +7,6 @@
 //
 
 protocol IPersistentMap : class, IAssociative, ICounted {
-	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap?
-	func without(key : AnyObject) -> IPersistentMap?
+	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap
+	func without(key : AnyObject) -> IPersistentMap
 }
