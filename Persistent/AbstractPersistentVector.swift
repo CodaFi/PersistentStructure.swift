@@ -19,14 +19,14 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		if self.count() > 0 {
 			return VecSeq(vector: self, index: 0)
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	func reversedSeq() -> ISeq? {
 		if self.count() > 0 {
 			return RVecSeq(vector: self, index: Int(self.count()) - 1)
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	class func doisEqual(v: IPersistentVector?, object obj: AnyObject) -> Bool {
@@ -166,8 +166,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func set(index: Int, element: AnyObject) -> AnyObject? {
-//		RequestConcreteImplementation(self, _cmd, Nil)
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func peek() -> AnyObject? {
@@ -259,34 +258,30 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func assocN(i: Int, value val: AnyObject) -> IPersistentVector? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func cons(other: AnyObject) -> IPersistentCollection? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 	
 	func cons(o: AnyObject) -> IPersistentVector? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func empty() -> IPersistentCollection? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func pop() -> IPersistentStack? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func objectAtIndex(i: Int) -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func objectEnumerator() -> NSEnumerator {
 		return VectorListIterator(vec: self, index: 0)
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return 0
 	}
 }
