@@ -6,11 +6,11 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractPersistentVector: NSObject, IPersistentVector, NSFastEnumeration, IList, IRandom, IHashEq /*, Comparable */ {
+class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, Comparable */ {
 	private var _hash: Int
 	private var _hasheq: Int
 
-	override init() {
+	init() {
 		_hash = -1
 		_hasheq = -1
 	}
@@ -96,7 +96,7 @@ class AbstractPersistentVector: NSObject, IPersistentVector, NSFastEnumeration, 
 		return true
 	}
 
-	override func isEqual(object: AnyObject?) -> Bool {
+	func isEqual(object: AnyObject?) -> Bool {
 		return AbstractPersistentVector.doisEqual(self, object: object!)
 	}
 
@@ -104,7 +104,7 @@ class AbstractPersistentVector: NSObject, IPersistentVector, NSFastEnumeration, 
 		return AbstractPersistentVector.doEquiv(self, object: o)
 	}
 
-	override var hash : Int {
+	var hash : Int {
 		if _hash == -1 {
 			var hsh: UInt = 1
 			let i: NSEnumerator = self.objectEnumerator()

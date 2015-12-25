@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractTransientSet: NSObject, ITransientSet {
+class AbstractTransientSet : ITransientSet {
 	var _impl: ITransientMap?
 
 	init(impl: ITransientMap?) {
@@ -26,7 +26,7 @@ class AbstractTransientSet: NSObject, ITransientSet {
 	}
 
 	func containsObject(key: AnyObject) -> Bool {
-		return self != _impl!.objectForKey(key, def: self) as! AbstractTransientSet
+		return self !== _impl!.objectForKey(key, def: self) as! AbstractTransientSet
 	}
 
 	func disjoin(key: AnyObject) -> ITransientSet? {

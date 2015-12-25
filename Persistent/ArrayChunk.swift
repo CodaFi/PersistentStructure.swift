@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class ArrayChunk: NSObject, IChunk {
+class ArrayChunk : IChunk {
 	private var _array: Array<AnyObject>
 	private var _off: Int
 	private var _end: Int

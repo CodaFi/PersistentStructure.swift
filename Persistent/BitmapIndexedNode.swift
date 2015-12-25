@@ -8,17 +8,16 @@
 
 private var EMPTY: BitmapIndexedNode = BitmapIndexedNode.createOnThread(nil, bitmap: 0, array: [])
 
-class BitmapIndexedNode: NSObject, INode {
+class BitmapIndexedNode : INode {
 	var _array: Array<AnyObject>
 
 	private var _bitmap: Int
 	private var _edit: NSThread?
 
-	override init() {
+	init() {
 		_array = []
 		_bitmap = 0
 		_edit = nil
-		super.init()
 	}
 
 	class func empty() -> BitmapIndexedNode {

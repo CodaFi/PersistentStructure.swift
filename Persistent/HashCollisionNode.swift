@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class HashCollisionNode: NSObject, INode {
+class HashCollisionNode : INode {
 	private var _hash: Int
 	private var _count: Int
 	private var _array: Array<AnyObject>
