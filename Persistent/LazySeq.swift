@@ -54,7 +54,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	func count() -> UInt {
 		var c: UInt = 0
 		for var s = self.seq(); s != nil; s = s!.next() {
-			c++
+			c = c.successor()
 		}
 		return c
 	}
@@ -163,7 +163,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 
 	func indexOf(o: AnyObject) -> Int {
 		var s: ISeq? = self.seq()
-		for var i = 0; s != nil; s = s!.next(), i++ {
+		for var i = 0; s != nil; s = s!.next(), i = i.successor() {
 			if Utils.equiv(s!.first(), other: o) {
 				return i
 			}

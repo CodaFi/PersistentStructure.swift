@@ -98,7 +98,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 
 	class func createWithItems(items: Array<AnyObject>) -> PersistentVector {
 		var ret: TransientVector = EMPTY.asTransient() as! TransientVector
-		for var i = 0; i < items.count; i++ {
+		for var i = 0; i < items.count; i = i.successor() {
 			ret = ret.conj(items[i]) as! TransientVector
 		}
 		return ret.persistent() as! PersistentVector
@@ -222,7 +222,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		var step: Int = 0
 		for var i = 0; i < _count; i += step {
 			var array: Array = self.arrayFor(i)
-			for var j = 0; j < array.count; j++ {
+			for var j = 0; j < array.count; j = j.successor() {
 				initial = f(initial, (j + i), array[j])
 				if Utils.isReduced(initial) {
 					return (initial as? IDeref)!.deref()

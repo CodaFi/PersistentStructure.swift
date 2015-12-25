@@ -65,7 +65,7 @@ class BitmapIndexedNode : INode {
 				let jdx: Int = Utils.mask(hash, shift: shift)
 				nodes[jdx] = EMPTY.assocWithShift(shift + 5, hash: hash, key: key, value: val, addedLeaf: addedLeaf)!
 				var j: Int = 0
-				for var i = 0; i < 32; i++ {
+				for var i = 0; i < 32; i = i.successor() {
 					if ((_bitmap >> i) & 1) != 0 {
 						if _array.count <= j {
 							nodes[i] = _array[j + 1] as! INode
@@ -231,7 +231,7 @@ class BitmapIndexedNode : INode {
 				let jdx: Int = Utils.mask(hash, shift: shift)
 				nodes[jdx] = EMPTY.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val, addedLeaf: addedLeaf)!
 				var j: Int = 0
-				for var i = 0; i < 32; i++ {
+				for var i = 0; i < 32; i = i.successor() {
 					if ((_bitmap >> i) & 1) != 0 {
 						if _array.count <= j {
 							nodes[i] = _array[j + 1] as! INode

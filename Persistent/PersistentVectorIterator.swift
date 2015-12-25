@@ -24,7 +24,7 @@ class PersistentVectorIterator: NSEnumerator {
 			_window = _vec.arrayFor(Int(_start))
 			_base += 32
 		}
-		_start++
+		_start = _start.successor()
 		return _window[Int(_start) & 0x01f]
 	}
 }

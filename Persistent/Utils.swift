@@ -9,10 +9,10 @@
 func ArrayCopy(src : Array<AnyObject>, _ srcPos : UInt, var _ dest : Array<AnyObject>, _ destPos : UInt, _ length : UInt) -> Array<AnyObject> {
 	var mergeArr : Array<AnyObject> = []
 	mergeArr.reserveCapacity(Int(length))
-	for var i = Int(srcPos), j = 0; i < Int(srcPos + length); i++, j++ {
+	for var i = Int(srcPos), j = 0; i < Int(srcPos + length); i = i.successor(), j = j.successor() {
 		mergeArr[j] = src[i];
 	}
-	for var i = Int(destPos), j = 0; i < Int(destPos + length); i++, j++ {
+	for var i = Int(destPos), j = 0; i < Int(destPos + length); i = i.successor(), j = j.successor() {
 		dest[i] = mergeArr[j]
 	}
 	return dest;
@@ -61,7 +61,7 @@ class Utils: NSObject {
 		let len: Int = Utils.length(seq)
 		var ret: Array<AnyObject> = []
 		ret.reserveCapacity(len)
-		for var i = 0; seq != nil; i++, seq = seq!.next() {
+		for var i = 0; seq != nil; i = i.successor(), seq = seq!.next() {
 			ret[i] = seq!.first()!
 		}
 		return ret
@@ -70,7 +70,7 @@ class Utils: NSObject {
 	class func length(list: ISeq?) -> Int {
 		var i: Int = 0
 		for var c = list; c != nil; c = c!.next() {
-			i++
+			i = i.successor()
 		}
 		return i
 	}
@@ -93,7 +93,7 @@ class Utils: NSObject {
 				if let cc = s as? (ICounted) {
 					return i + Int(cc.count())
 				}
-				i++
+				i = i.successor()
 			}
 			return i
 		} else if o!.respondsToSelector("length") {
@@ -152,7 +152,7 @@ class Utils: NSObject {
 			fatalError("Range or index out of bounds")
 		} else if let _ = coll as? (ISequential) {
 			var seq: ISeq? = Utils.seq(coll!)
-			for var i = 0; i <= n && seq != nil; i++, seq = seq!.next() {
+			for var i = 0; i <= n && seq != nil; i = i.successor(), seq = seq!.next() {
 				if i == n {
 					return seq!.first()
 				}
@@ -178,7 +178,7 @@ class Utils: NSObject {
 			return notFound
 		} else if let _ = coll as? (ISequential) {
 			var seq: ISeq? = Utils.seq(coll!)
-			for var i = 0; i <= n && seq != nil; i++, seq = seq!.next() {
+			for var i = 0; i <= n && seq != nil; i = i.successor(), seq = seq!.next() {
 				if i == n {
 					return seq!.first()
 				}

@@ -59,7 +59,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 
 	func count() -> UInt {
 		var i : UInt = 1;
-		for var s : ISeq? = self.next(); s != nil; s = s!.next(), i++ {
+		for var s : ISeq? = self.next(); s != nil; s = s!.next(), i = i.successor() {
 			if let ss = s as? ICounted {
 				return i + ss.count();
 			}

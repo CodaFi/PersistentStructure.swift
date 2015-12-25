@@ -18,7 +18,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 
 	class func createWithArray(initial: Array<AnyObject>) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
-		for var i = 0; i < initial.count; i++ {
+		for var i = 0; i < initial.count; i = i.successor() {
 			ret = ret.cons(initial[i])! as! PersistentHashSet
 		}
 		return ret
@@ -42,7 +42,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 
 	class func createWithCheckArray(initial: Array<AnyObject>) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
-		for var i = 0; i < initial.count; i++ {
+		for var i = 0; i < initial.count; i = i.successor() {
 			ret = ret.cons(initial[i])! as! PersistentHashSet
 			if ret.count() != UInt(i + 1) {
 				fatalError("Duplicate key at index \(i)")
@@ -59,14 +59,14 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 			if ret.count() != UInt(i + 1) {
 				fatalError("Duplicate key at index \(i)")
 			}
-			i++
+			i = i.successor()
 		}
 		return ret
 	}
 
 	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
-		for var i = 0; items != nil; items = items!.next(), i++ {
+		for var i = 0; items != nil; items = items!.next(), i = i.successor() {
 			ret = ret.cons(items!.first()!) as! PersistentHashSet
 			if ret.count() != UInt(i + 1) {
 				fatalError("Duplicate key at index \(i)")

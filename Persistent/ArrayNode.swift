@@ -81,7 +81,7 @@ class ArrayNode : INode {
 	}
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
-		for var i = 0; i < _array.count; i++ {
+		for var i = 0; i < _array.count; i = i.successor() {
 			let node: INode? = _array[i] as? INode
 			if node != nil {
 				initial = node!.kvreduce(f, initial: initial)
@@ -111,14 +111,14 @@ class ArrayNode : INode {
 		newArray.reserveCapacity(2 * (_count - 1))
 		var j: Int = 1
 		var bitmap: Int = 0
-		for var i = 0; i < idx; i++ {
+		for var i = 0; i < idx; i = i.successor() {
 			if _array.count > i {
 				newArray[j] = _array[i]
 				bitmap |= 1 << i
 				j += 2
 			}
 		}
-		for var i = idx + 1; i < _array.count; i++ {
+		for var i = idx + 1; i < _array.count; i = i.successor() {
 			if _array.count > i {
 				newArray[j] = _array[i]
 				bitmap |= 1 << i
@@ -133,7 +133,7 @@ class ArrayNode : INode {
 		let node: INode? = _array[idx] as? INode
 		if node == nil {
 			let editable: ArrayNode = self.editAndSetOnThread(edit!, index: idx, node: BitmapIndexedNode.empty().assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val, addedLeaf: addedLeaf))
-			editable._count++
+			editable._count = _count.successor()
 			return editable
 		}
 		let n: INode? = node!.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val, addedLeaf: addedLeaf)

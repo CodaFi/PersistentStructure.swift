@@ -217,7 +217,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 
 	func indexOf(o: AnyObject) -> Int {
 		var s: ISeq? = self.seq()
-		for var i = 0; s != nil; s = s!.next(), i++ {
+		for var i = 0; s != nil; s = s!.next(), i = i.successor() {
 			if Utils.equiv(s!.first(), other: o) {
 				return i
 			}

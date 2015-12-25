@@ -16,7 +16,7 @@ class VectorListIterator: NSEnumerator {
 	}
 
 	override func nextObject() -> AnyObject? {
-		_index++
+		_index = _index.successor()
 		return _vec!.objectAtIndex(Int(_index))
 	}
 }

@@ -76,7 +76,7 @@ class TransientVector : ITransientVector, ICounted {
 		let i: Int = _count
 		if i - self.tailoff() < 32 {
 			_tail[i & 0x01f] = val
-			_count++
+			_count = _count.successor()
 			return self
 		}
 		var newroot : Node
@@ -95,7 +95,7 @@ class TransientVector : ITransientVector, ICounted {
 		}
 		_root = newroot
 		_shift = newshift
-		_count++
+		_count = _count.successor()
 		return self
 	}
 

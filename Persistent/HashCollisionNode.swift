@@ -133,7 +133,7 @@ class HashCollisionNode : INode {
 			if _array.count > 2 * _count {
 				addedLeaf.val = addedLeaf
 				let editable: HashCollisionNode = self.editAndSetOnThread(edit!, index: 2 * _count, withObject: key, index: 2 * _count, withObject: val)
-				editable._count++
+				editable._count = _count.successor()
 				return editable
 			}
 			var newArray: Array<AnyObject> = []

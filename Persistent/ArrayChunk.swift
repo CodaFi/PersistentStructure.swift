@@ -52,7 +52,7 @@ class ArrayChunk : IChunk {
 		if Utils.isReduced(ret) {
 			return ret
 		}
-		for var x = _off + 1; x < _end; x++ {
+		for var x = _off + 1; x < _end; x = x.successor() {
 			ret = f(ret, _array[x])
 			if Utils.isReduced(ret) {
 				return ret

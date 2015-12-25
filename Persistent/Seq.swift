@@ -19,7 +19,7 @@ class Seq : AbstractSeq {
 		if s != nil {
 			return Seq.createWithMeta(meta, nodes: nodes, index: i, seq: s)
 		}
-		for var j = i; j < nodes.count; j++ {
+		for var j = i; j < nodes.count; j = j.successor() {
 			if let ins = nodes[j] as? INode {
 				let ns: ISeq? = ins.nodeSeq()
 				if ns != nil {

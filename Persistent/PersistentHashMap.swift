@@ -81,7 +81,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 
 	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashMap {
 		var ret: ITransientMap? = _EmptyPersistentHashMap.asTransient() as? ITransientMap
-		for var i = 0; items != nil; items = items!.next()!.next(), i++ {
+		for var i = 0; items != nil; items = items!.next()!.next(), i = i.successor() {
 			if items!.next() == nil {
 				fatalError("No value supplied for key: \(items!.first)")
 			}

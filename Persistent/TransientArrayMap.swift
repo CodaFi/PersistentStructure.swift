@@ -43,8 +43,9 @@ class TransientArrayMap: AbstractTransientMap {
 				let ll = PersistentHashMap.createWithMeta(nil, array: _array).asTransient()
 				return (ll as! IAssociative).associateKey(key, withValue: val) as? ITransientMap
 			}
-			_array[_length++] = key
-			_array[_length++] = val
+			_array[_length.successor()] = key
+			_array[_length.successor().successor()] = val
+			_length = _length.successor().successor()
 		}
 		return self
 	}

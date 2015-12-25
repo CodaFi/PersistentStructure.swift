@@ -7,9 +7,7 @@
 //
 
 class AbstractTransientMap : ITransientMap {
-	func ensureEditable() {
-
-	}
+	func ensureEditable() { }
 
 	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap? {
 		return nil

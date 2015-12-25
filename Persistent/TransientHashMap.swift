@@ -37,7 +37,7 @@ class TransientHashMap: AbstractTransientMap {
 				_nullValue = val
 			}
 			if !_hasNull {
-				_count++
+				_count = _count.successor()
 				_hasNull = true
 			}
 			return self
@@ -48,7 +48,7 @@ class TransientHashMap: AbstractTransientMap {
 			_root = n
 		}
 		if _leafFlag.val != nil {
-			_count++
+			_count = _count.successor()
 		}
 		return self
 	}
