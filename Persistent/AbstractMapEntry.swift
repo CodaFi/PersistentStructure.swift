@@ -21,7 +21,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		return LazilyPersistentVector.createOwning([self.key()!, self.val()!]) as? IPersistentVector
 	}
 
-	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector? {
+	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		return self.asVector()!.assocN(i, value: val)
 	}
 

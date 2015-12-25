@@ -151,7 +151,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return PersistentList(meta: _meta, first: o, rest: nil, count: 1)
 	}
 
-	func cons(other : AnyObject) -> IPersistentCollection? {
+	func cons(other : AnyObject) -> IPersistentCollection {
 		return PersistentList(meta: _meta, first: other, rest: nil, count: 1)
 	}
 
@@ -228,10 +228,6 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 
 	func get(index: Int) -> AnyObject {
 		return Utils.nthOf(self, index: index)!
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return 0
 	}
 }
 

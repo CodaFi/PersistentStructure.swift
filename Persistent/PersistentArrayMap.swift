@@ -93,7 +93,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return PersistentArrayMap(initial: newArray)
 	}
 
-	override func associateKey(key: AnyObject, withValue val: AnyObject) -> IAssociative? {
+	override func associateKey(key: AnyObject, withValue val: AnyObject) -> IAssociative {
 		let i: Int = self.indexOf(key)
 		var newArray: Array<AnyObject>
 		if i >= 0 {

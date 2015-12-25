@@ -35,7 +35,7 @@ class SubVector: AbstractPersistentVector, IObj {
 		return _v!.objectAtIndex(_start + i)
 	}
 
-	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector? {
+	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		if _start + i > _end {
 			fatalError("Range or index out of bounds")
 		} else if _start + i == _end {
@@ -48,7 +48,7 @@ class SubVector: AbstractPersistentVector, IObj {
 		return UInt(_end - _start)
 	}
 
-	override func cons(o: AnyObject) -> IPersistentVector? {
+	override func cons(o: AnyObject) -> IPersistentVector {
 		return SubVector(meta: _meta, vector: _v!.assocN(_end, value: o), start: _start, end: _end + 1)
 	}
 

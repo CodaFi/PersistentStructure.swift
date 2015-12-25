@@ -98,7 +98,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func cons(other: AnyObject) -> IPersistentCollection? {
+	func cons(other : AnyObject) -> IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

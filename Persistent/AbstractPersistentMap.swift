@@ -15,7 +15,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		_hasheq = -1
 	}
 
-	func cons(o : AnyObject) -> IPersistentCollection? {
+	func cons(o : AnyObject) -> IPersistentCollection {
 		if let e = o as? IMapEntry {
 			return self.associateKey(e.key()!, withValue: e.val()!)
 		} else if let v = o as? IPersistentVector {
@@ -27,7 +27,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			var ret : IPersistentMap = self
 			for var es : ISeq? = Utils.seq(o); es != nil; es = es!.next() {
 				let e : IMapEntry = es?.first as! IMapEntry
-				ret = ret.associateKey(e.key()!, withValue: e.val()!)! as! IPersistentMap
+				ret = ret.associateKey(e.key()!, withValue: e.val()!) as! IPersistentMap
 			}
 			return ret
 		}
@@ -124,7 +124,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative? {
+	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

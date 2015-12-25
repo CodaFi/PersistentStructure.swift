@@ -114,7 +114,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return PersistentList.empty()
 	}
 
-	func cons(other: AnyObject) -> IPersistentCollection? {
+	func cons(other : AnyObject) -> IPersistentCollection {
 		return AbstractCons(first: other, rest: self)
 	}
 

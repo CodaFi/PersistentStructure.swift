@@ -96,12 +96,13 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		return QueueSeq(f: _front, rev: Utils.seq(_rear!))
 	}
 
-	func cons(other: AnyObject) -> IPersistentCollection? {
-		if _front == nil {
-			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: Utils.list(other), rev: nil)
-		} else {
-			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: _front, rev: (_rear != nil ? _rear : PersistentVector.empty().cons(other)))
-		}
+	func cons(other : AnyObject) -> IPersistentCollection {
+//		if _front == nil {
+//			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: Utils.list(other), rev: nil)
+//		} else {
+//			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: _front, rev: (_rear != nil ? _rear : PersistentVector.empty().cons(other)))
+//		}
+		fatalError("")
 	}
 
 	func empty() -> IPersistentCollection {
@@ -134,9 +135,5 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 
 	func objectEnumerator() -> NSEnumerator {
 		return SeqIterator(seq: self.seq())
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return self.objectEnumerator().countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
 }

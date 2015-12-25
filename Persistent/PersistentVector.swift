@@ -40,7 +40,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return EMPTY
 	}
 
-	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector? {
+	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		if i >= 0 && i < _count {
 			if i >= self.tailoff() {
 				var newTail: Array<AnyObject> = []
@@ -161,7 +161,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return _meta
 	}
 
-	override func cons(val: AnyObject) -> IPersistentVector? {
+	override func cons(val: AnyObject) -> IPersistentVector {
 		if _count - self.tailoff() < 32 {
 			var newTail: Array<AnyObject> = []
 			newTail.reserveCapacity(_tail.count + 1)

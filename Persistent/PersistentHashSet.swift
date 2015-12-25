@@ -19,7 +19,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 	class func createWithArray(initial: Array<AnyObject>) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
 		for var i = 0; i < initial.count; i = i.successor() {
-			ret = ret.cons(initial[i])! as! PersistentHashSet
+			ret = ret.cons(initial[i]) as! PersistentHashSet
 		}
 		return ret
 	}
@@ -35,7 +35,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 	class func createWithSeq(var items: ISeq?) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
 		for ; items != nil; items = items!.next() {
-			ret = ret.cons(items!.first()!)! as! PersistentHashSet
+			ret = ret.cons(items!.first()!) as! PersistentHashSet
 		}
 		return ret
 	}
@@ -43,7 +43,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 	class func createWithCheckArray(initial: Array<AnyObject>) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
 		for var i = 0; i < initial.count; i = i.successor() {
-			ret = ret.cons(initial[i])! as! PersistentHashSet
+			ret = ret.cons(initial[i]) as! PersistentHashSet
 			if ret.count() != UInt(i + 1) {
 				fatalError("Duplicate key at index \(i)")
 			}
@@ -82,11 +82,11 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return self
 	}
 
-	override func cons(other: AnyObject) -> IPersistentCollection? {
+	override func cons(other : AnyObject) -> IPersistentCollection {
 		if self.containsObject(other) {
 			return self
 		}
-		return PersistentHashSet(meta: self.meta(), impl: _impl!.associateKey(0, withValue: other)! as? IPersistentMap)
+		return PersistentHashSet(meta: self.meta(), impl: _impl!.associateKey(0, withValue: other) as? IPersistentMap)
 	}
 
 	override func empty() -> IPersistentCollection {

@@ -9,5 +9,5 @@
 protocol IAssociative : IPersistentCollection, ILookup {
 	func containsKey(key : AnyObject) -> Bool
 	func entryForKey(key : AnyObject) -> IMapEntry?
-	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative?
+	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative
 }

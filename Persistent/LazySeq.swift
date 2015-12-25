@@ -86,7 +86,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 		return PersistentList.empty()
 	}
 
-	func cons(other : AnyObject) -> IPersistentCollection? {
+	func cons(other : AnyObject) -> IPersistentCollection {
 		return Utils.cons(other, to: self.seq())!
 	}
 
@@ -180,9 +180,5 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 
 	func isRealized() -> Bool {
 		return _generatorFunction == nil
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return self.objectEnumerator().countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
 }

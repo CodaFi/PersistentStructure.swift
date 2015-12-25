@@ -194,7 +194,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return nil
 	}
 
-	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative? {
+	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative {
 		if !Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
 			return self.assocN(i, value: value)
@@ -263,11 +263,11 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return .OrderedSame
 	}
 
-	func assocN(i: Int, value val: AnyObject) -> IPersistentVector? {
+	func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func cons(other: AnyObject) -> IPersistentCollection? {
+	func cons(other : AnyObject) -> IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 	

@@ -14,7 +14,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 	class func create(var items: ISeq?) -> PersistentTreeSet {
 		var ret: PersistentTreeSet = EMPTY
 		for ; items != nil; items = items!.next() {
-			ret = ret.cons(items!.first()!)! as! PersistentTreeSet
+			ret = ret.cons(items!.first()!) as! PersistentTreeSet
 		}
 		return ret
 	}
@@ -23,7 +23,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		let impl: PersistentTreeMap = PersistentTreeMap(meta: nil, comparator: comparator)
 		var ret: PersistentTreeSet = PersistentTreeSet(meta: nil, implementation: impl)
 		for ; items != nil; items = items!.next() {
-			ret = ret.cons(items!.first()!)! as! PersistentTreeSet
+			ret = ret.cons(items!.first()!) as! PersistentTreeSet
 		}
 		return ret
 	}
@@ -40,7 +40,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		return self
 	}
 
-	override func cons(other: AnyObject) -> IPersistentCollection? {
+	override func cons(other : AnyObject) -> IPersistentCollection {
 		if self.containsObject(other) {
 			return self
 		}

@@ -217,7 +217,7 @@ class Utils: NSObject {
 		return SubVector(meta: nil, vector: v, start: start, end: end)
 	}
 
-	class func associateKey(key: AnyObject, to val: AnyObject, into coll: AnyObject?) -> IAssociative? {
+	class func associateKey(key: AnyObject, to val: AnyObject, into coll: AnyObject?) -> IAssociative {
 		if coll == nil {
 			return PersistentArrayMap(initial: [])
 		}
