@@ -11,15 +11,15 @@ class NodeSeq: AbstractSeq {
 	private var _startingIndex: Int
 	private var _backingSeq: ISeq?
 
-	convenience init?(array: Array<AnyObject>) {
+	convenience init(array: Array<AnyObject>) {
 		self.init(array: array, index: 0, sequence: nil)
 	}
 
-	convenience init?(array: Array<AnyObject>, index: Int) {
+	convenience init(array: Array<AnyObject>, index: Int) {
 		self.init(meta: nil, array: array, index: index, sequence: nil)
 	}
 
-	convenience init?(array: Array<AnyObject>, index: Int, sequence seq: ISeq?) {
+	convenience init(array: Array<AnyObject>, index: Int, sequence seq: ISeq?) {
 		if seq != nil {
 			self.init(meta: nil, array: array, index: index, sequence: seq)
 			return
@@ -39,7 +39,7 @@ class NodeSeq: AbstractSeq {
 				}
 			}
 		}
-		return nil
+		fatalError("Cannot create NodeSeq from given sequence \(seq)")
 	}
 
 	init(meta: IPersistentMap?, array: Array<AnyObject>, index: Int, sequence seq: ISeq?) {
@@ -77,9 +77,9 @@ class NodeSeq: AbstractSeq {
 		return MapEntry(key: _array[_startingIndex], val: _array[_startingIndex + 1])
 	}
 
-	override func next() -> ISeq? {
-		if _backingSeq != nil {
-			return NodeSeq(array: _array, index: _startingIndex, sequence: _backingSeq!.next())
+	override func next() -> ISeq {
+		if let bs = _backingSeq {
+			return NodeSeq(array: _array, index: _startingIndex, sequence: bs.next())
 		}
 		return NodeSeq(array: _array, index: _startingIndex + 2, sequence: nil)
 	}

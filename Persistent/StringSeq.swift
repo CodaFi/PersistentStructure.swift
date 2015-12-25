@@ -34,11 +34,11 @@ class StringSeq: AbstractSeq, IIndexedSeq {
 		return NSNumber(unsignedShort: _string.characterAtIndex(_index))
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		if _index + 1 < _string.length {
 			return StringSeq(meta: _meta, string: _string, index: _index + 1)
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	func index() -> Int {

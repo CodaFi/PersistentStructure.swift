@@ -70,8 +70,8 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 
 	class func createWithSeq(var items: ISeq?) -> PersistentHashMap {
 		var ret: ITransientMap? = _EmptyPersistentHashMap.asTransient() as? ITransientMap
-		for ; items != nil; items = items!.next()!.next() {
-			if items!.next() == nil {
+		for ; items != nil; items = items!.next().next() {
+			if items!.next().count() == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
 			ret = ret!.associateKey(items!.first()!, value: Utils.second(items!)!)
@@ -81,8 +81,8 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 
 	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashMap {
 		var ret: ITransientMap? = _EmptyPersistentHashMap.asTransient() as? ITransientMap
-		for var i = 0; items != nil; items = items!.next()!.next(), i = i.successor() {
-			if items!.next() == nil {
+		for var i = 0; items != nil; items = items!.next().next(), i = i.successor() {
+			if items!.next().count() == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
 			ret = ret!.associateKey(items!.first()!, value: Utils.second(items!)!)
@@ -181,9 +181,13 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return _count
 	}
 
-	override func seq() -> ISeq? {
-		let s: ISeq? = _root != nil ? _root!.nodeSeq() : nil
-		return _hasNull ? AbstractCons(first: MapEntry(key: nil, val: _nullValue), rest: s) : s
+	override func seq() -> ISeq {
+		if let r = _root {
+			if _hasNull {
+				return AbstractCons(first: MapEntry(key: nil, val: _nullValue), rest: r.nodeSeq())
+			}
+		}
+		return EmptySeq()
 	}
 
 	class func empty() -> IPersistentCollection? {

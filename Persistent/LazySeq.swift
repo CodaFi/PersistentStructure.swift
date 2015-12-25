@@ -38,8 +38,8 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 		return _backingSeq!
 	}
 
-	func seq() -> ISeq? {
-		self.sval()
+	func seq() -> ISeq {
+		let _ = self.sval()
 		if _secondValue != nil {
 			var ls : AnyObject = _secondValue!
 			_secondValue = nil
@@ -48,39 +48,42 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 			}
 			_backingSeq = Utils.seq(ls)
 		}
-		return _backingSeq
+		guard let bs = _backingSeq else {
+			fatalError("Backing Sequence not initialized correctly")
+		}
+		return bs
 	}
 
 	func count() -> UInt {
 		var c: UInt = 0
-		for var s = self.seq(); s != nil; s = s!.next() {
+		for var s = self.seq(); s.count() != 0; s = s.next() {
 			c = c.successor()
 		}
 		return c
 	}
 
 	func first() -> AnyObject? {
-		self.seq()
-		if _backingSeq == nil {
-			return nil
+		let _ = self.seq()
+		if let bb = _backingSeq {
+			return bb.first()
 		}
-		return _backingSeq!.first()
+		return nil
 	}
 
-	func next() -> ISeq? {
-		self.seq()
-		if _backingSeq == nil {
-			return nil
+	func next() -> ISeq {
+		let _ = self.seq()
+		if let bb = _backingSeq {
+			return bb.next()
 		}
-		return _backingSeq!.next()
+		return EmptySeq()
 	}
 
-	func more() -> ISeq? {
-		self.seq()
-		if _backingSeq == nil {
-			return PersistentList.empty() as! ISeq?
+	func more() -> ISeq {
+		let _ = self.seq()
+		if let bb = _backingSeq {
+			return bb.more()
 		}
-		return _backingSeq!.more()
+		return PersistentList.empty()
 	}
 
 	func cons(other : AnyObject) -> IPersistentCollection? {
@@ -132,12 +135,12 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	}
 
 	func isEmpty() -> Bool {
-		return self.seq() == nil
+		return self.seq().count() == 0
 	}
 
 	func containsObject(o: AnyObject) -> Bool {
-		for var s = self.seq(); s != nil; s = s!.next() {
-			if Utils.equiv(s!.first(), other: o) {
+		for var s = self.seq(); s.count() != 0; s = s.next() {
+			if Utils.equiv(s.first(), other: o) {
 				return true
 			}
 		}
@@ -145,7 +148,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	}
 
 	func objectEnumerator() -> NSEnumerator {
-		return SeqIterator(seq: self.seq()!)
+		return SeqIterator(seq: self.seq())
 	}
 
 	func reify() -> IList? {

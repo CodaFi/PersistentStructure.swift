@@ -45,7 +45,10 @@ class Seq : AbstractSeq {
 		return _s!.first()
 	}
 
-	override func next() -> ISeq? {
-		return Seq.createWithMeta(nil, nodes: _nodes, index: _i, seq: _s!.next())
+	override func next() -> ISeq {
+		if let s = Seq.createWithMeta(nil, nodes: _nodes, index: _i, seq: _s!.next()) {
+			return s
+		}
+		return EmptySeq()
 	}
 }

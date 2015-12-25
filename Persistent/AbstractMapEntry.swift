@@ -29,7 +29,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		return 2
 	}
 
-	override func seq() -> ISeq? {
+	override func seq() -> ISeq {
 		return self.asVector()!.seq()
 	}
 

@@ -42,8 +42,8 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 			return false
 		}
 		var ms: ISeq? = Utils.seq(obj)
-		for var s = self.seq(); s != nil; s = s!.next(), ms = ms!.next() {
-			if ms == nil || !Utils.isEqual(s!.first(), other: ms!.first()) {
+		for var s = self.seq(); s.count() != 0; s = s.next(), ms = ms!.next() {
+			if ms == nil || !Utils.isEqual(s.first(), other: ms!.first()) {
 				return false
 			}
 		}
@@ -53,8 +53,8 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	func hash() -> UInt {
 		if _hash == -1 {
 			var hash: UInt = 1
-			for var s = self.seq(); s != nil; s = s!.next() {
-				hash = 31 * hash + (s?.first() == nil ? 0 : UInt(s!.first()!.hash!))
+			for var s = self.seq(); s.count() != 0; s = s.next() {
+				hash = 31 * hash + (s.first() == nil ? 0 : UInt(s.first()!.hash!))
 			}
 			_hash = Int(hash)
 		}
@@ -89,9 +89,9 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		return UInt(_count)
 	}
 
-	func seq() -> ISeq? {
+	func seq() -> ISeq {
 		if _front == nil {
-			return nil
+			return EmptySeq()
 		}
 		return QueueSeq(f: _front, rev: Utils.seq(_rear!))
 	}
@@ -121,8 +121,8 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	}
 
 	func containsObject(anObject: AnyObject) -> Bool {
-		for var s = self.seq(); s != nil; s = s!.next() {
-			if Utils.equiv(s!.first(), other: anObject) {
+		for var s = self.seq(); s.count() != 0; s = s.next() {
+			if Utils.equiv(s.first(), other: anObject) {
 				return true
 			}
 		}

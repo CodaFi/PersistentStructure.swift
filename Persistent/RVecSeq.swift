@@ -26,11 +26,11 @@ class RVecSeq: AbstractSeq, IIndexedSeq {
 		return _backingVector!.objectAtIndex(_startingIndex)!
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		if _startingIndex > 0 {
 			return RVecSeq(vector: _backingVector, index: _startingIndex - 1)
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	func index() -> Int {

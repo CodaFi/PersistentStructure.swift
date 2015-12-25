@@ -27,15 +27,15 @@ final class AbstractCons : AbstractSeq {
 		return _first
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		return _more!.seq()
 	}
 
-	override func more() -> ISeq? {
+	override func more() -> ISeq {
 		if let m = self._more {
 			return m
 		}
-		return PersistentList.empty()! as? ISeq
+		return PersistentList.empty()
 	}
 
 	override func count() -> UInt {

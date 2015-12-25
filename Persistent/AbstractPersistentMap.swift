@@ -48,11 +48,12 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		if m!.count() != m1!.count() {
 			return false
 		}
-		for var s = m1!.seq(); s != nil; s = s!.next() {
-			let e: IMapEntry? = s!.first() as? IMapEntry
-			let found: Bool = m!.containsKey(e!.key()!)
-			if !found || !Utils.isEqual(e!.val(), other: m!.objectForKey(e!.key()!)) {
-				return false
+		for var s = m1!.seq(); s.count() != 0; s = s.next() {
+			if let e = s.first() as? IMapEntry {
+				let found: Bool = m!.containsKey(e.key()!)
+				if !found || !Utils.isEqual(e.val(), other: m!.objectForKey(e.key()!)) {
+					return false
+				}
 			}
 		}
 		return true
@@ -72,10 +73,11 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		}
 
 		for var s : ISeq? = self.seq(); s != nil; s = s!.next() {
-			let e : IMapEntry? = s!.first() as? IMapEntry
-			let found = m!.containsKey(e!.key()!)
-			if !found || Utils.equiv(e!.val(), other: m!.objectForKey(e!.key()!)) {
-				return false
+			if let e = s!.first() as? IMapEntry {
+				let found = m!.containsKey(e.key()!)
+				if !found || Utils.equiv(e.val(), other: m!.objectForKey(e.key()!)) {
+					return false
+				}
 			}
 		}
 		return true
@@ -118,7 +120,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func seq() -> ISeq? {
+	func seq() -> ISeq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

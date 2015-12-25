@@ -23,7 +23,7 @@ class KeySeq : AbstractSeq {
 		return (_seq!.first as! IMapEntry).key()
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		return KeySeq.create(_seq!.next())
 	}
 
@@ -31,10 +31,7 @@ class KeySeq : AbstractSeq {
 		return KeySeq(meta: meta, seq: _seq)
 	}
 
-	class func create(seq: ISeq?) -> KeySeq? {
-		if seq == nil {
-			return nil
-		}
+	class func create(seq: ISeq) -> KeySeq {
 		return KeySeq(seq: seq)
 	}
 }

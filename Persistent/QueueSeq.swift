@@ -26,12 +26,12 @@ class QueueSeq: AbstractSeq {
 		return _f!.first()
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		var f1: ISeq? = _f!.next()
 		var r1: ISeq? = _rseq
 		if f1 == nil {
 			if _rseq == nil {
-				return nil
+				return EmptySeq()
 			}
 			f1 = _rseq
 			r1 = nil

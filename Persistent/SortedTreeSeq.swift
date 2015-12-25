@@ -48,13 +48,12 @@ class SortedTreeSeq: AbstractSeq {
 		return _stack?.first()
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		let t = _stack?.first() as! TreeNode
-		let nextstack = SortedTreeSeq.pushNode(_asc ? t.right() : t.left(), stack: _stack?.next(), ascending: _asc)
-		if nextstack != nil {
+		if let nextstack = SortedTreeSeq.pushNode(_asc ? t.right() : t.left(), stack: _stack?.next(), ascending: _asc) {
 			return SortedTreeSeq(stack: nextstack, ascending: _asc, count: _cnt - 1)
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	override func count() -> UInt {

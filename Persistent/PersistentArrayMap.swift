@@ -179,11 +179,11 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return nil
 	}
 
-	override func seq() -> ISeq? {
+	override func seq() -> ISeq {
 		if _array.count > 0 {
-			return Seq.create(_array)
+			return Seq.create(_array)!
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	func meta() -> IPersistentMap? {

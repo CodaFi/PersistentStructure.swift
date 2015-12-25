@@ -8,6 +8,6 @@
 
 protocol IChunkedSeq : ISeq, ISequential {
 	func chunkedFirst() -> IChunk?
-	func chunkedNext() -> ISeq?
-	func chunkedMore() -> ISeq?
+	func chunkedNext() -> ISeq
+	func chunkedMore() -> ISeq
 }

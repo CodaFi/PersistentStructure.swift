@@ -26,11 +26,11 @@ class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
 		return _vector!.objectAtIndex(_index)!
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		if UInt(_index + 1) < _vector!.count() {
 			return VecSeq(vector: _vector, index: _index + 1)
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	func index() -> Int {

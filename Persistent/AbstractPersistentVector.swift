@@ -15,14 +15,14 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		_hasheq = -1
 	}
 
-	func seq() -> ISeq? {
+	func seq() -> ISeq {
 		if self.count() > 0 {
 			return VecSeq(vector: self, index: 0)
 		}
 		return EmptySeq()
 	}
 
-	func reversedSeq() -> ISeq? {
+	func reversedSeq() -> ISeq {
 		if self.count() > 0 {
 			return RVecSeq(vector: self, index: Int(self.count()) - 1)
 		}
@@ -229,8 +229,8 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func containsObject(o: AnyObject) -> Bool {
-		for var s = self.seq(); s != nil; s = s!.next() {
-			if Utils.equiv(s!.first(), other: o) {
+		for var s = self.seq(); s.count() != 0; s = s.next() {
+			if Utils.equiv(s.first(), other: o) {
 				return true
 			}
 		}

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class LazilyPersistentVector: NSObject {
+class LazilyPersistentVector {
 	class func createOwning(items: Array<AnyObject>) -> LazilyPersistentVector {
 		if items.count == 0 {
 			return PersistentVector.empty() as! LazilyPersistentVector

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-var _SingletonEmptyList: EmptyList = EmptyList(meta: nil)
+private var EMPTY: EmptyList = EmptyList(meta: nil)
 
 class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	private var _first: AnyObject
@@ -20,8 +20,12 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		super.init()
 	}
 
+	class func empty() -> ISeq {
+		return EMPTY
+	}
+
 	class func empty() -> IPersistentCollection? {
-		return _SingletonEmptyList
+		return EMPTY
 	}
 
 	init(meta: IPersistentMap?, first: AnyObject, rest: IPersistentList?, count: Int) {
@@ -32,7 +36,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	}
 
 	class func create(initial: IList?) -> IPersistentList? {
-		var ret: IPersistentList? = PersistentList.empty() as! IPersistentList?
+		var ret: IPersistentList? = EMPTY
 		let it: NSEnumerator = initial!.objectEnumerator()
 		var obj: AnyObject? = it.nextObject()
 		while obj != nil {
@@ -46,11 +50,11 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return _first
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		if _count == 1 {
-			return nil
+			return EmptySeq()
 		}
-		return _rest as! ISeq?
+		return _rest as! ISeq
 	}
 
 	func peek() -> AnyObject? {
@@ -59,14 +63,14 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 
 	func pop() -> IPersistentStack? {
 		if _rest == nil {
-			return _SingletonEmptyList.withMeta(_meta)
+			return EMPTY.withMeta(_meta)
 		}
 		return _rest
 	}
 
 	func pop() -> IPersistentList? {
 		if _rest == nil {
-			return _SingletonEmptyList.withMeta(_meta)
+			return EMPTY.withMeta(_meta)
 		}
 		return _rest
 	}
@@ -88,22 +92,22 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 
 	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = self.first()
-		for var s = self.next(); s != nil; s = s!.next() {
-			ret = combine(ret, s!.first()!)
+		for var s = self.next(); s.count() != 0; s = s.next() {
+			ret = combine(ret, s.first()!)
 		}
 		return ret
 	}
 
 	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = combine(initial, self.first())
-		for var s = self.next(); s != nil; s = s!.next() {
-			ret = combine(ret, s!.first()!)
+		for var s = self.next(); s.count() != 0; s = s.next() {
+			ret = combine(ret, s.first()!)
 		}
 		return ret
 	}
 
 	override func empty() -> IPersistentCollection? {
-		return _SingletonEmptyList.withMeta(_meta)
+		return EMPTY.withMeta(_meta)
 	}
 }
 
@@ -142,11 +146,11 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return nil
 	}
 
-	func next() -> ISeq? {
-		return nil
+	func next() -> ISeq {
+		return self
 	}
 
-	func more() -> ISeq? {
+	func more() -> ISeq {
 		return self
 	}
 
@@ -182,8 +186,8 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return 0
 	}
 
-	func seq() -> ISeq? {
-		return nil
+	func seq() -> ISeq {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func isEmpty() -> Bool {

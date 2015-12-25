@@ -7,5 +7,5 @@
 //
 
 protocol ISeqable {
-	func seq() -> ISeq?
+	func seq() -> ISeq
 }

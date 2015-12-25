@@ -203,14 +203,14 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return ret
 	}
 
-	func chunkedSeq() -> IChunkedSeq? {
+	func chunkedSeq() -> IChunkedSeq {
 		if self.count() == 0 {
-			return nil
+			return EmptySeq()
 		}
 		return ChunkedSeq(vec: self, index: 0, offset: 0)
 	}
 
-	override func seq() -> ISeq? {
+	override func seq() -> ISeq {
 		return self.chunkedSeq()
 	}
 

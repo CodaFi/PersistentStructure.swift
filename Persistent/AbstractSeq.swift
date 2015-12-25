@@ -95,28 +95,27 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return NSEnumerator()
 	}
 
-	func seq() -> ISeq? {
+	func seq() -> ISeq {
 		return self
 	}
 
 	func first() -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func next() -> ISeq? {
-		return nil
+	func next() -> ISeq {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func empty() -> IPersistentCollection? {
 		return PersistentList.empty()
 	}
 
-	func more() -> ISeq? {
-		let s : ISeq? = self.next()
-		if (s == nil) {
-			return PersistentList.empty() as? ISeq
+	func more() -> ISeq {
+		if let s : ISeq = self.next() {
+			return s
 		}
-		return s;
+		return PersistentList.empty()
 	}
 
 	func cons(other: AnyObject) -> IPersistentCollection? {

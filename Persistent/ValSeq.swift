@@ -23,7 +23,7 @@ class ValSeq: AbstractSeq {
 		return (_seq!.first() as! IMapEntry).val()
 	}
 
-	override func next() -> ISeq? {
+	override func next() -> ISeq {
 		return ValSeq.create(_seq!.next())
 	}
 
@@ -31,10 +31,7 @@ class ValSeq: AbstractSeq {
 		return ValSeq(meta: meta, seq: _seq)
 	}
 
-	class func create(seq: ISeq?) -> ValSeq? {
-		if seq == nil {
-			return nil
-		}
+	class func create(seq: ISeq) -> ValSeq {
 		return ValSeq(seq: seq)
 	}
 }

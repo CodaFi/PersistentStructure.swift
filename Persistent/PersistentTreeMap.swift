@@ -65,7 +65,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	class func createWithSeq(var items: ISeq?) -> AnyObject {
 		var ret: IPersistentMap? = EMPTY
-		for ; items != nil; items = items!.next()!.next() {
+		for ; items != nil; items = items!.next().next() {
 			if items?.next() == nil {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
@@ -76,8 +76,8 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	class func createWithComparator(comp: (AnyObject?, AnyObject?) -> NSComparisonResult, var seq items: ISeq?) -> AnyObject {
 		var ret: IPersistentMap? = PersistentTreeMap(comparator: comp)
-		for ; items != nil; items = items!.next()!.next() {
-			if items!.next() == nil {
+		for ; items != nil; items = items!.next().next() {
+			if items!.next().count() == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
 			ret = ret!.associateKey(items!.first()!, withValue: Utils.second(items!)!) as! PersistentTreeMap
@@ -123,18 +123,18 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return PersistentTreeMap(meta: self.meta(), comparator: _comp, tree: t?.blacken(), count: _count - 1)
 	}
 
-	override func seq() -> ISeq? {
+	override func seq() -> ISeq {
 		if _count > 0 {
 			return SortedTreeSeq.createWithRoot(_tree, ascending: true, count: _count)
 		}
-		return nil
+		return EmptySeq()
 	}
 
-	func reversedSeq() -> ISeq? {
+	func reversedSeq() -> ISeq {
 		if _count > 0 {
 			return SortedTreeSeq.createWithRoot(_tree, ascending: false, count: _count)
 		}
-		return nil
+		return EmptySeq()
 	}
 
 	func comparator() -> (AnyObject?, AnyObject?) -> NSComparisonResult {

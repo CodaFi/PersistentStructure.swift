@@ -28,7 +28,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return _impl!.count()
 	}
 
-	func seq() -> ISeq? {
+	func seq() -> ISeq {
 		return KeySeq.create(self.seq())
 	}
 
@@ -62,8 +62,8 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	func hash() -> UInt {
 		if _hash == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s != nil; s = s?.next() {
-				let e: AnyObject = s!.first()!
+			for var s = self.seq(); s.count() != 0; s = s.next() {
+				let e: AnyObject = s.first()!
 				hash += Int32(Utils.hash(e))
 			}
 			_hash = hash
@@ -74,8 +74,8 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	func hasheq() -> Int {
 		if _hasheq == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s != nil; s = s!.next() {
-				hash += Utils.hasheq(s!.first())
+			for var s = self.seq(); s.count() != 0; s = s.next() {
+				hash += Utils.hasheq(s.first())
 			}
 			_hasheq = hash
 		}
