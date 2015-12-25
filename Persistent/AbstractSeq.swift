@@ -9,7 +9,7 @@
 class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 	private let _hash : Int
 	private let _hasheq : Int
-	private let _it : SeqIterator = SeqIterator(seq: nil)
+	private let _it : SeqIterator = SeqIterator(seq: EmptySeq())
 	internal let _meta : IPersistentMap?
 
 	init() {

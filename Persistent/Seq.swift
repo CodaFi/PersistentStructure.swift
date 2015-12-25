@@ -9,13 +9,13 @@
 class Seq : AbstractSeq {
 	private var _nodes : Array<AnyObject>
 	private var _i : Int
-	private var _s : ISeq?
+	private var _s : ISeq
 
-	class func create(nodes: Array<AnyObject>) -> ISeq? {
+	class func create(nodes: Array<AnyObject>) -> ISeq {
 		return Seq.createWithMeta(nil, nodes: nodes, index: 0, seq: nil)
 	}
 
-	class func createWithMeta(meta: IPersistentMap?, nodes: Array<AnyObject>, index i: Int, seq s: ISeq?) -> ISeq? {
+	class func createWithMeta(meta: IPersistentMap?, nodes: Array<AnyObject>, index i: Int, seq s: ISeq?) -> ISeq {
 		if s != nil {
 			return Seq.createWithMeta(meta, nodes: nodes, index: i, seq: s)
 		}
@@ -27,10 +27,10 @@ class Seq : AbstractSeq {
 				}
 			}
 		}
-		return nil
+		fatalError("Unable to construct seq")
 	}
 
-	init(meta: IPersistentMap?, nodes: Array<AnyObject>, index i: Int, seq: ISeq?) {
+	init(meta: IPersistentMap?, nodes: Array<AnyObject>, index i: Int, seq: ISeq) {
 		_nodes = nodes
 		_i = i
 		_s = seq
@@ -42,13 +42,10 @@ class Seq : AbstractSeq {
 	}
 
 	override func first() -> AnyObject? {
-		return _s!.first()
+		return _s.first()
 	}
 
 	override func next() -> ISeq {
-		if let s = Seq.createWithMeta(nil, nodes: _nodes, index: _i, seq: _s!.next()) {
-			return s
-		}
-		return EmptySeq()
+		return Seq.createWithMeta(nil, nodes: _nodes, index: _i, seq: _s.next())
 	}
 }

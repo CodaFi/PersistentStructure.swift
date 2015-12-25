@@ -9,19 +9,19 @@
 class NodeSeq: AbstractSeq {
 	private var _array: Array<AnyObject>
 	private var _startingIndex: Int
-	private var _backingSeq: ISeq?
+	private var _backingSeq: ISeq
 
 	convenience init(array: Array<AnyObject>) {
 		self.init(array: array, index: 0, sequence: nil)
 	}
 
 	convenience init(array: Array<AnyObject>, index: Int) {
-		self.init(meta: nil, array: array, index: index, sequence: nil)
+		self.init(array: array, index: index, sequence: nil)
 	}
 
 	convenience init(array: Array<AnyObject>, index: Int, sequence seq: ISeq?) {
-		if seq != nil {
-			self.init(meta: nil, array: array, index: index, sequence: seq)
+		if let s = seq {
+			self.init(meta: nil, array: array, index: index, sequence: s)
 			return
 		}
 
@@ -30,19 +30,17 @@ class NodeSeq: AbstractSeq {
 //				self.init(meta: nil, array: array, index: j, sequence: nil)
 //				return
 //			}
-			let node: INode? = array[j + 1] as? INode
-			if node != nil {
-				let nodeSeq: ISeq? = node?.nodeSeq()
-				if nodeSeq != nil {
-					self.init(meta: nil, array: array, index: j + 2, sequence: nodeSeq)
-					return
-				}
+
+			if let node = array[j + 1] as? INode {
+				let nodeSeq: ISeq = node.nodeSeq()
+				self.init(meta: nil, array: array, index: j + 2, sequence: nodeSeq)
+				return
 			}
 		}
 		fatalError("Cannot create NodeSeq from given sequence \(seq)")
 	}
 
-	init(meta: IPersistentMap?, array: Array<AnyObject>, index: Int, sequence seq: ISeq?) {
+	init(meta: IPersistentMap?, array: Array<AnyObject>, index: Int, sequence seq: ISeq) {
 		_array = array
 		_startingIndex = index
 		_backingSeq = seq
@@ -71,16 +69,13 @@ class NodeSeq: AbstractSeq {
 	}
 
 	override func first() -> AnyObject? {
-		if _backingSeq != nil {
-			return _backingSeq?.first()
+		if let v = _backingSeq.first() {
+			return v
 		}
 		return MapEntry(key: _array[_startingIndex], val: _array[_startingIndex + 1])
 	}
 
 	override func next() -> ISeq {
-		if let bs = _backingSeq {
-			return NodeSeq(array: _array, index: _startingIndex, sequence: bs.next())
-		}
-		return NodeSeq(array: _array, index: _startingIndex + 2, sequence: nil)
+		return NodeSeq(array: _array, index: _startingIndex, sequence: _backingSeq.next())
 	}
 }

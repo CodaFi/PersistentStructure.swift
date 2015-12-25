@@ -190,13 +190,13 @@ class Utils: NSObject {
 		return nil
 	}
 
-	class func cons(x: AnyObject, to coll: AnyObject?) -> ISeq? {
+	class func cons(x: AnyObject, to coll: AnyObject?) -> ISeq {
 		if coll == nil {
 			return PersistentList(first: x)
 		} else if let cc = coll as? (ISeq) {
 			return AbstractCons(first: x, rest: cc)
 		} else {
-			return AbstractCons(first: x, rest: Utils.seq(coll!))
+			return AbstractCons(first: x, rest: Utils.seq(coll!)!)
 		}
 	}
 

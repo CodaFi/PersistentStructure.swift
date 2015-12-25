@@ -8,5 +8,5 @@
 
 protocol ITransientVector : ITransientAssociative, IIndexed {
 	func assocN(i : Int, value : AnyObject) -> ITransientVector
-	func pop() -> ITransientVector?
+	func pop() -> ITransientVector
 }

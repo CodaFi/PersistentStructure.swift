@@ -7,25 +7,25 @@
 //
 
 class SortedTreeSeq: AbstractSeq, IObj {
-	private var _stack: ISeq?
+	private var _stack: ISeq
 	private var _asc: Bool
 	private var _cnt: Int
 
-	init(stack: ISeq?, ascending asc: Bool) {
+	init(stack: ISeq, ascending asc: Bool) {
 		_stack = stack
 		_asc = asc
 		_cnt = -1
 		super.init()
 	}
 
-	init(stack: ISeq?, ascending asc: Bool, count: Int) {
+	init(stack: ISeq, ascending asc: Bool, count: Int) {
 		_stack = stack
 		_asc = asc
 		_cnt = count
 		super.init()
 	}
 
-	init(meta: IPersistentMap?, stack: ISeq?, ascending asc: Bool, count: Int) {
+	init(meta: IPersistentMap?, stack: ISeq, ascending asc: Bool, count: Int) {
 		_stack = stack
 		_asc = asc
 		_cnt = count
@@ -33,10 +33,10 @@ class SortedTreeSeq: AbstractSeq, IObj {
 	}
 
 	class func createWithRoot(t: TreeNode?, ascending asc: Bool, count cnt: Int) -> SortedTreeSeq {
-		return SortedTreeSeq(stack: SortedTreeSeq.pushNode(t, stack: nil, ascending: asc), ascending: asc, count: cnt)
+		return SortedTreeSeq(stack: SortedTreeSeq.pushNode(t, stack: EmptySeq(), ascending: asc), ascending: asc, count: cnt)
 	}
 
-	class func pushNode(var t: TreeNode?, var stack: ISeq?, ascending asc: Bool) -> ISeq? {
+	class func pushNode(var t: TreeNode?, var stack: ISeq, ascending asc: Bool) -> ISeq {
 		while t != nil {
 			stack = Utils.cons(t!, to: stack)
 			t = asc ? t!.left() : t!.right()
@@ -45,15 +45,13 @@ class SortedTreeSeq: AbstractSeq, IObj {
 	}
 
 	override func first() -> AnyObject? {
-		return _stack?.first()
+		return _stack.first()
 	}
 
 	override func next() -> ISeq {
-		let t = _stack?.first() as! TreeNode
-		if let nextstack = SortedTreeSeq.pushNode(_asc ? t.right() : t.left(), stack: _stack?.next(), ascending: _asc) {
-			return SortedTreeSeq(stack: nextstack, ascending: _asc, count: _cnt - 1)
-		}
-		return EmptySeq()
+		let t = _stack.first() as! TreeNode
+		let nextstack = SortedTreeSeq.pushNode(_asc ? t.right() : t.left(), stack: _stack.next(), ascending: _asc)
+		return SortedTreeSeq(stack: nextstack, ascending: _asc, count: _cnt - 1)
 	}
 
 	override func count() -> UInt {

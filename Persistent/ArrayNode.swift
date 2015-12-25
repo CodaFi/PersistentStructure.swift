@@ -76,7 +76,7 @@ class ArrayNode : INode {
 		return node!.findWithShift(shift + 5, hash: hash, key: key, notFound: notFound)
 	}
 
-	func nodeSeq() -> ISeq? {
+	func nodeSeq() -> ISeq {
 		return Seq.create(_array)
 	}
 

@@ -87,11 +87,11 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	}
 
 	func cons(other : AnyObject) -> IPersistentCollection {
-		return Utils.cons(other, to: self.seq())!
+		return Utils.cons(other, to: self.seq())
 	}
 
 	func cons(o: AnyObject) -> ISeq {
-		return Utils.cons(o, to: self.seq())!
+		return Utils.cons(o, to: self.seq())
 	}
 
 	func empty() -> IPersistentCollection {

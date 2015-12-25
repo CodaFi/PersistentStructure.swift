@@ -29,7 +29,7 @@ class AbstractTransientMap : ITransientMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func conj(o: AnyObject) -> ITransientCollection? {
+	func conj(o: AnyObject) -> ITransientCollection {
 		self.ensureEditable()
 		if let e = o as? MapEntry {
 			return self.associateKey(e.key()!, value: e.val()!)
@@ -39,10 +39,10 @@ class AbstractTransientMap : ITransientMap {
 			}
 			return self.associateKey(v.objectAtIndex(0)!, value: v.objectAtIndex(1)!)
 		}
-		var ret: ITransientMap? = self
+		var ret: ITransientMap = self
 		for var es = Utils.seq(o); es != nil; es = es!.next() {
 			let e: MapEntry = es!.first() as! MapEntry
-			ret = ret!.associateKey(e.key()!, value: e.val()!)
+			ret = ret.associateKey(e.key()!, value: e.val()!)
 		}
 		return ret
 	}

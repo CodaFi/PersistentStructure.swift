@@ -71,7 +71,7 @@ class TransientVector : ITransientVector, ICounted {
 		return ret
 	}
 
-	func conj(val: AnyObject) -> ITransientCollection? {
+	func conj(val: AnyObject) -> ITransientCollection {
 		self.ensureEditable()
 		let i: Int = _count
 		if i - self.tailoff() < 32 {
@@ -229,7 +229,7 @@ class TransientVector : ITransientVector, ICounted {
 		return ret
 	}
 
-	func pop() -> ITransientVector? {
+	func pop() -> ITransientVector {
 		self.ensureEditable()
 		if _count == 0 {
 			fatalError("Can't pop from an empty vector")

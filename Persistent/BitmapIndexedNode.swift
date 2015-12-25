@@ -150,7 +150,7 @@ class BitmapIndexedNode : INode {
 		return notFound
 	}
 
-	func nodeSeq() -> ISeq? {
+	func nodeSeq() -> ISeq {
 		return NodeSeq(array: _array)
 	}
 

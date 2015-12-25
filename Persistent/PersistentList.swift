@@ -10,12 +10,12 @@ private var EMPTY: EmptyList = EmptyList(meta: nil)
 
 class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	private var _first: AnyObject
-	private var _rest: IPersistentList?
+	private var _rest: IPersistentList
 	private var _count: Int
 
 	init(first: AnyObject) {
 		_first = first
-		_rest = nil
+		_rest = EMPTY
 		_count = 1
 		super.init()
 	}
@@ -24,7 +24,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return EMPTY
 	}
 
-	init(meta: IPersistentMap?, first: AnyObject, rest: IPersistentList?, count: Int) {
+	init(meta: IPersistentMap?, first: AnyObject, rest: IPersistentList, count: Int) {
 		_first = first
 		_rest = rest
 		_count = count
@@ -58,17 +58,17 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	}
 
 	func pop() -> IPersistentStack {
-		if let r = _rest {
-			return r
+		if _rest.count() != 0 {
+			return _rest
 		}
 		return EMPTY.withMeta(_meta)
 	}
 
 	func pop() -> IPersistentList? {
-		if _rest == nil {
-			return EMPTY.withMeta(_meta)
+		if _rest.count() != 0 {
+			return _rest
 		}
-		return _rest
+		return EMPTY.withMeta(_meta)
 	}
 
 	override func count() -> UInt {
@@ -148,15 +148,15 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 	func cons(o: AnyObject) -> PersistentList {
-		return PersistentList(meta: _meta, first: o, rest: nil, count: 1)
+		return PersistentList(meta: _meta, first: o, rest: EMPTY, count: 1)
 	}
 
 	func cons(other : AnyObject) -> IPersistentCollection {
-		return PersistentList(meta: _meta, first: other, rest: nil, count: 1)
+		return PersistentList(meta: _meta, first: other, rest: EMPTY, count: 1)
 	}
 
 	func cons(other: AnyObject) -> ISeq {
-		return PersistentList(meta: _meta, first: other, rest: nil, count: 1)
+		return PersistentList(meta: _meta, first: other, rest: EMPTY, count: 1)
 	}
 
 	func empty() -> IPersistentCollection {

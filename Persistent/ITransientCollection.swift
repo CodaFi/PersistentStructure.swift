@@ -7,6 +7,6 @@
 //
 
 protocol ITransientCollection {
-	func conj(val : AnyObject) -> ITransientCollection?
+	func conj(val : AnyObject) -> ITransientCollection
 	func persistent() -> IPersistentCollection
 }

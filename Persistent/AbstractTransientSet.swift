@@ -17,7 +17,7 @@ class AbstractTransientSet : ITransientSet {
 		return _impl.count()
 	}
 
-	func conj(val: AnyObject) -> ITransientCollection? {
+	func conj(val: AnyObject) -> ITransientCollection {
 		let m: ITransientMap = _impl.associateKey(val, value: val)
 		if m !== _impl {
 			_impl = m

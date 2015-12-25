@@ -154,7 +154,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	func seqFrom(key: AnyObject, ascending: Bool) -> ISeq? {
 		if _count > 0 {
-			var stack: ISeq? = nil
+			var stack: ISeq = EmptySeq()
 			var t: TreeNode? = _tree
 			while t != nil {
 				let c: NSComparisonResult = self.doCompare(key, k2: t!.key()!)
@@ -177,41 +177,37 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 					}
 				}
 			}
-			if stack != nil {
-				return SortedTreeSeq(stack: stack, ascending: ascending)
-			}
+			return SortedTreeSeq(stack: stack, ascending: ascending)
 		}
 		return nil
 	}
 
 	func minKey() -> AnyObject? {
-		let t: TreeNode? = self.min()
-		return t != nil ? t!.key() : nil
+		return self.min()?.key()
 	}
 
 	func min() -> TreeNode? {
-		var t: TreeNode? = _tree
-		if t != nil {
-			while t!.left() != nil {
-				t = t!.left()
+		if var t = _tree {
+			while let left = t.left() {
+				t = left
 			}
+			return t
 		}
-		return t
+		return nil
 	}
 
 	func maxKey() -> AnyObject? {
-		let t: TreeNode? = self.max()
-		return t != nil ? t!.key() : nil
+		return self.max()?.key()
 	}
 
 	func max() -> TreeNode? {
-		var t: TreeNode? = _tree
-		if t != nil {
-			while t!.right() != nil {
-				t = t!.right()
+		if var t = _tree {
+			while let right = t.right() {
+				t = right
 			}
+			return t
 		}
-		return t
+		return nil
 	}
 
 	func depth() -> Int32 {
