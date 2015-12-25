@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>PersistentStructure.xcscheme</key>
+		<key>Persistent.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>C9A9C4EC1960B6C90026C133</key>
+		<key>82A6672C1BF9166400EBCDFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C9A9C4F71960B6CA0026C133</key>
+		<key>82A667361BF9166400EBCDFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
