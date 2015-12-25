@@ -30,10 +30,10 @@ class Murmur3: NSObject {
 	}
 
 	class func mixCollHash(hash: UInt, count: UInt) -> UInt {
-		let outhash: UInt = 0
-		let _ : Int8 = 0
-//		sprintf(buffer, "%lu", hash);
-//		MurmurHash3_x86_128(buffer, strlen(buffer) as! Int32, 0, &outhash)
+		var outhash: UInt = 0
+		let buffer = UnsafeMutablePointer<CChar>.alloc(65)
+//		buffer.initialize(hash)
+		MurmurHash3_x86_128(buffer, 65, 0, &outhash)
 		return outhash
 	}
 }

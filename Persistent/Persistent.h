@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "murmur3.h"
 
 //! Project version number for Persistent.
 FOUNDATION_EXPORT double PersistentVersionNumber;

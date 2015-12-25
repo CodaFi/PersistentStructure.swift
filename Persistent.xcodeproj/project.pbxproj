@@ -14,6 +14,8 @@
 		822F358A1C2D233A00E1D42E /* ValSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F35891C2D233A00E1D42E /* ValSeq.swift */; };
 		822F358E1C2D31E000E1D42E /* EmptySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F358D1C2D31E000E1D42E /* EmptySeq.swift */; };
 		8230B0071C2D6CD40068D04B /* Clojure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0061C2D6CD40068D04B /* Clojure.swift */; };
+		8230B00A1C2DBC9F0068D04B /* murmur3.c in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0081C2DBC9F0068D04B /* murmur3.c */; };
+		8230B00B1C2DBC9F0068D04B /* murmur3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8230B0091C2DBC9F0068D04B /* murmur3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		829C0ADF1C2B180600AA3331 /* PersistentHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */; };
 		829C0AE11C2B182600AA3331 /* TransientHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE01C2B182600AA3331 /* TransientHashSet.swift */; };
 		829C0AE31C2B185800AA3331 /* PersistentTreeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */; };
@@ -118,6 +120,8 @@
 		822F35891C2D233A00E1D42E /* ValSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValSeq.swift; sourceTree = "<group>"; };
 		822F358D1C2D31E000E1D42E /* EmptySeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySeq.swift; sourceTree = "<group>"; };
 		8230B0061C2D6CD40068D04B /* Clojure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clojure.swift; sourceTree = "<group>"; };
+		8230B0081C2DBC9F0068D04B /* murmur3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = murmur3.c; sourceTree = "<group>"; };
+		8230B0091C2DBC9F0068D04B /* murmur3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = murmur3.h; sourceTree = "<group>"; };
 		829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentHashSet.swift; sourceTree = "<group>"; };
 		829C0AE01C2B182600AA3331 /* TransientHashSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientHashSet.swift; sourceTree = "<group>"; };
 		829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentTreeSet.swift; sourceTree = "<group>"; };
@@ -285,6 +289,8 @@
 				82CF9ADC1C2938E000D4677B /* Obj.swift */,
 				82A6679C1BF9281A00EBCDFA /* Utils.swift */,
 				82DD94DF1C2B4C0500064CB7 /* Reduced.swift */,
+				8230B0081C2DBC9F0068D04B /* murmur3.c */,
+				8230B0091C2DBC9F0068D04B /* murmur3.h */,
 				82A667321BF9166400EBCDFA /* Info.plist */,
 			);
 			path = Persistent;
@@ -405,6 +411,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8230B00B1C2DBC9F0068D04B /* murmur3.h in Headers */,
 				82A667311BF9166400EBCDFA /* Persistent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,6 +568,7 @@
 				82CF9AEE1C29D24800D4677B /* ArrayNode.swift in Sources */,
 				82A6677A1BF922B100EBCDFA /* IPersistentVector.swift in Sources */,
 				82BACD6F1C2A304B006BA8F5 /* TransientArrayMap.swift in Sources */,
+				8230B00A1C2DBC9F0068D04B /* murmur3.c in Sources */,
 				82A667821BF9233E00EBCDFA /* ISeq.swift in Sources */,
 				82A6678E1BF9249C00EBCDFA /* ITransientCollection.swift in Sources */,
 				82A667681BF9200C00EBCDFA /* IMeta.swift in Sources */,
