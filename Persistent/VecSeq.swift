@@ -1,0 +1,63 @@
+//
+//  VecSeq.swift
+//  Persistent
+//
+//  Created by Robert Widmann on 12/22/15.
+//  Copyright © 2015 TypeLift. All rights reserved.
+//
+
+class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
+	private var _vector: IPersistentVector?
+	private var _index: Int
+
+	init(vector: IPersistentVector?, index i: Int) {
+		_vector = vector
+		_index = i
+		super.init()
+	}
+
+	init(meta: IPersistentMap?, vector v: IPersistentVector?, index i: Int) {
+		_vector = v
+		_index = i
+		super.init(meta: meta)
+	}
+
+	override func first() -> AnyObject {
+		return _vector!.objectAtIndex(_index)!
+	}
+
+	override func next() -> ISeq? {
+		if UInt(_index + 1) < _vector!.count() {
+			return VecSeq(vector: _vector, index: _index + 1)
+		}
+		return nil
+	}
+
+	func index() -> Int {
+		return _index
+	}
+
+	override func count() -> UInt {
+		return _vector!.count() - UInt(_index)
+	}
+
+	func withMeta(meta: IPersistentMap?) -> AnyObject {
+		return VecSeq(meta: meta, vector: _vector, index: _index)
+	}
+
+	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
+		var ret: AnyObject = _vector!.objectAtIndex(_index)!
+		for var x = UInt(_index + 1); x < _vector!.count(); x++ {
+			ret = combine(ret, _vector!.objectAtIndex(Int(x))!)
+		}
+		return ret
+	}
+
+	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
+		var ret: AnyObject = combine(initial, _vector!.objectAtIndex(_index)!)
+		for var x = UInt(_index + 1); x < _vector!.count(); x++ {
+			ret = combine(ret, _vector!.objectAtIndex(Int(x))!)
+		}
+		return ret
+	}
+}
