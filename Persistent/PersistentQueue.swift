@@ -6,16 +6,16 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: nil, rev: nil)
+private var EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: EmptySeq(), rev: PersistentVector.empty())
 
 class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	private var _count: Int
-	private var _front: ISeq?
-	private var _rear: IPersistentVector?
+	private var _front: ISeq
+	private var _rear: IPersistentVector
 	private var _hash: Int
 	private var _hasheq: Int
 
-	init(meta: IPersistentMap?, count cnt: Int, seq f: ISeq?, rev r: IPersistentVector?) {
+	init(meta: IPersistentMap?, count cnt: Int, seq f: ISeq, rev r: IPersistentVector) {
 		_count = cnt
 		_front = f
 		_rear = r
@@ -69,18 +69,15 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	}
 
 	func peek() -> AnyObject? {
-		return Utils.first(_front!)
+		return Utils.first(_front)
 	}
 
 	func pop() -> IPersistentStack {
-		if _front == nil {
-			return self
-		}
-		var f1: ISeq? = _front!.next()
-		var r1: IPersistentVector? = _rear
-		if f1 == nil {
-			f1 = Utils.seq(_rear!)
-			r1 = nil
+		var f1: ISeq = _front.next()
+		var r1: IPersistentVector = _rear
+		if f1.count() == 0 {
+			f1 = Utils.seq(_rear)
+			r1 = PersistentVector.empty()
 		}
 		return PersistentQueue(meta: self.meta(), count: _count - 1, seq: f1, rev: r1)
 	}
@@ -90,19 +87,18 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	}
 
 	func seq() -> ISeq {
-		if _front == nil {
+		if _front.count() == 0 {
 			return EmptySeq()
 		}
-		return QueueSeq(f: _front, rev: Utils.seq(_rear!))
+		return QueueSeq(f: _front, rev: Utils.seq(_rear))
 	}
 
 	func cons(other : AnyObject) -> IPersistentCollection {
-//		if _front == nil {
-//			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: Utils.list(other), rev: nil)
-//		} else {
-//			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: _front, rev: (_rear != nil ? _rear : PersistentVector.empty().cons(other)))
-//		}
-		fatalError("")
+		if _front.count() == 0 {
+			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: Utils.list(other), rev: PersistentVector.empty())
+		} else {
+			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: _front, rev: (_rear.count() != 0 ? _rear : PersistentVector.empty().cons(other)))
+		}
 	}
 
 	func empty() -> IPersistentCollection {
