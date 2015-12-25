@@ -174,7 +174,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func isEmpty() -> Bool {
+	var isEmpty : Bool {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

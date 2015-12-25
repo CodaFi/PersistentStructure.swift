@@ -81,7 +81,7 @@ class HashCollisionNode : INode {
 	}
 
 	func findIndex(key: AnyObject) -> Int {
-		for var i = 0; i < 2 * _count; i += 2 {
+		for i in 0.stride(to: 2 * _count, by: 2) {
 			if Utils.equiv(key, other: _array[i]) {
 				return i
 			}

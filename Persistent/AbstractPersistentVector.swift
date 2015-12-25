@@ -140,7 +140,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func indexOf(o: AnyObject) -> Int {
-		for var i = 0; i < Int(self.count); i = i.successor() {
+		for i in (0..<self.count) {
 			if Utils.equiv((self.objectAtIndex(i))!, other: (o)) {
 				return i
 			}
@@ -222,7 +222,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return Utils.seqToArray(self.seq())
 	}
 
-	func isEmpty() -> Bool {
+	var isEmpty : Bool {
 		return self.count == 0
 	}
 
@@ -253,7 +253,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		} else if self.count > v.count {
 			return .OrderedDescending
 		}
-		for var i = 0; i < Int(self.count); i = i.successor() {
+		for i in (0..<self.count) {
 			let c: NSComparisonResult = Utils.compare(self.objectAtIndex(i), to: v.objectAtIndex(i))
 			if c != .OrderedSame {
 				return c

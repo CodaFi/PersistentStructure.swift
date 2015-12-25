@@ -20,7 +20,7 @@ class TransientArrayMap: AbstractTransientMap {
 	}
 
 	func indexOf(key: AnyObject) -> Int {
-		for var i = 0; i < _length; i += 2 {
+		for i in 0.stride(to: _length, by: 2) {
 			if TransientArrayMap.equalKey(_array[i], other: key) {
 				return i
 			}

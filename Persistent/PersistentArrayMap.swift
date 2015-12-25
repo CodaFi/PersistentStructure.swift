@@ -48,8 +48,8 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	}
 
 	class func createWithCheck(initial: Array<AnyObject>) -> PersistentArrayMap {
-		for var i = 0; i < initial.count; i += 2 {
-			for var j = i + 2; j < initial.count; j += 2 {
+		for i in 0.stride(to: initial.count, by: 2) {
+			for j in (i + 2).stride(to: initial.count, by: 2) {
 				if PersistentArrayMap.equalKey(initial[i], other: initial[j]) {
 					fatalError("Duplicate key found at index \(i)")
 				}
@@ -166,7 +166,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	}
 
 	func indexOfObject(key: AnyObject) -> Int {
-		for var i = 0; i < _array.count; i += 2 {
+		for i in 0.stride(to: _array.count, by: 2) {
 			if _array[i].isEqual(key) {
 				return i
 			}
@@ -194,7 +194,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	}
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
-		for var i = 0; i < _array.count; i += 2 {
+		for i in 0.stride(to: _array.count, by: 2) {
 			initial = f(initial, _array[i], _array[i + 1])
 			if Utils.isReduced(initial) {
 				return (initial as? IDeref)!.deref()

@@ -18,7 +18,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 
 	class func createWithArray(initial: Array<AnyObject>) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
-		for var i = 0; i < initial.count; i = i.successor() {
+		for i in (0..<initial.count) {
 			ret = ret.cons(initial[i]) as! PersistentHashSet
 		}
 		return ret
@@ -42,7 +42,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 
 	class func createWithCheckArray(initial: Array<AnyObject>) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
-		for var i = 0; i < initial.count; i = i.successor() {
+		for i in (0..<initial.count) {
 			ret = ret.cons(initial[i]) as! PersistentHashSet
 			if ret.count != (i + 1) {
 				fatalError("Duplicate key at index \(i)")

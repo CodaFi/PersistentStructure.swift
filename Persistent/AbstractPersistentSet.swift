@@ -86,7 +86,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return Utils.seqToArray(self.seq())
 	}
 
-	func isEmpty() -> Bool {
+	var isEmpty : Bool {
 		return self.count == 0
 	}
 

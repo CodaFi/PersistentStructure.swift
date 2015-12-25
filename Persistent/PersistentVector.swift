@@ -101,7 +101,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 
 	class func createWithItems(items: Array<AnyObject>) -> PersistentVector {
 		var ret: TransientVector = EMPTY.asTransient() as! TransientVector
-		for var i = 0; i < items.count; i = i.successor() {
+		for i in (0..<items.count) {
 			ret = ret.conj(items[i]) as! TransientVector
 		}
 		return ret.persistent() as! PersistentVector
@@ -219,7 +219,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
 		var step: Int = 0
-		for var i = 0; i < _count; i += step {
+		for i in 0.stride(to: _count, by: step) {
 			var array: Array = self.arrayFor(i)
 			for var j = 0; j < array.count; j = j.successor() {
 				initial = f(initial, (j + i), array[j])

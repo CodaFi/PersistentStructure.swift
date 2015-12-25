@@ -9,7 +9,7 @@
 protocol ICollection : class, ICounted {
 	func containsObject(object : AnyObject) -> Bool
 	func toArray() -> Array<AnyObject>
-	func isEmpty() -> Bool
+	var isEmpty : Bool { get }
 }
 
 extension ICollection {

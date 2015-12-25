@@ -127,7 +127,7 @@ class Utils: NSObject {
 		return Utils.nthFrom(Utils.ret1s(coll as? ISeq, null: nil), index: n)
 	}
 
-	class func nthOf(coll: AnyObject, index n: Int, notFound: AnyObject) -> AnyObject? {
+	class func nthOf(coll: AnyObject, index n: Int, notFound: AnyObject) -> AnyObject {
 		if let v = coll as? (IIndexed) {
 			return v.objectAtIndex(n, def: notFound)
 		}
@@ -152,17 +152,16 @@ class Utils: NSObject {
 			var seq: ISeq? = Utils.seq(coll!)
 			for var i = 0; i <= n && seq != nil; i = i.successor(), seq = seq!.next() {
 				if i == n {
-					return seq!.first()
+					return seq!.first()!
 				}
 			}
 			fatalError("Range or index out of bounds")
 		} else {
-//			RequestConcreteImplementation(coll, "nthFrom:index:", coll.dynamicType)
+			fatalError("nthFrom:index:")
 		}
-		return nil
 	}
 
-	class func nthFrom(coll: AnyObject?, index n: Int, notFound: AnyObject) -> AnyObject? {
+	class func nthFrom(coll: AnyObject?, index n: Int, notFound: AnyObject) -> AnyObject {
 		if coll == nil {
 			return notFound
 		} else if n < 0 {
@@ -175,17 +174,16 @@ class Utils: NSObject {
 			}
 			return notFound
 		} else if let _ = coll as? (ISequential) {
-			var seq: ISeq? = Utils.seq(coll!)
-			for var i = 0; i <= n && seq != nil; i = i.successor(), seq = seq!.next() {
+			var seq: ISeq = Utils.seq(coll!)
+			for var i = 0; i <= n && seq.count != 0; i = i.successor(), seq = seq.next() {
 				if i == n {
-					return seq!.first()
+					return seq.first()!
 				}
 			}
 			return notFound
 		} else {
-//			RequestConcreteImplementation(coll, "nthFrom:index:", coll.class())
+			fatalError("nthFrom:index:")
 		}
-		return nil
 	}
 
 	class func cons(x: AnyObject, to coll: AnyObject?) -> ISeq {
@@ -256,15 +254,11 @@ class Utils: NSObject {
 		return seq!.next()
 	}
 
-	class func more(x: AnyObject) -> ISeq? {
+	class func more(x: AnyObject) -> ISeq {
 		if let ss = x as? (ISeq) {
 			return ss.more()
 		}
-		let seq: ISeq? = Utils.seq(x)
-		if seq == nil {
-			return nil
-		}
-		return seq!.more()
+		return Utils.seq(x).more()
 	}
 
 	class func ret1o(ret: AnyObject, null: AnyObject?) -> AnyObject {

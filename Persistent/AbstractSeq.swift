@@ -82,7 +82,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return []
 	}
 
-	func isEmpty() -> Bool {
+	var isEmpty : Bool {
 		return true
 	}
 

@@ -13,6 +13,7 @@
 		822B2AA01BFEB47300146A7F /* Seq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9F1BFEB47300146A7F /* Seq.swift */; };
 		822F358A1C2D233A00E1D42E /* ValSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F35891C2D233A00E1D42E /* ValSeq.swift */; };
 		822F358E1C2D31E000E1D42E /* EmptySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F358D1C2D31E000E1D42E /* EmptySeq.swift */; };
+		8230B0071C2D6CD40068D04B /* Clojure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0061C2D6CD40068D04B /* Clojure.swift */; };
 		829C0ADF1C2B180600AA3331 /* PersistentHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */; };
 		829C0AE11C2B182600AA3331 /* TransientHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE01C2B182600AA3331 /* TransientHashSet.swift */; };
 		829C0AE31C2B185800AA3331 /* PersistentTreeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */; };
@@ -116,6 +117,7 @@
 		822B2A9F1BFEB47300146A7F /* Seq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seq.swift; sourceTree = "<group>"; };
 		822F35891C2D233A00E1D42E /* ValSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValSeq.swift; sourceTree = "<group>"; };
 		822F358D1C2D31E000E1D42E /* EmptySeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySeq.swift; sourceTree = "<group>"; };
+		8230B0061C2D6CD40068D04B /* Clojure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clojure.swift; sourceTree = "<group>"; };
 		829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentHashSet.swift; sourceTree = "<group>"; };
 		829C0AE01C2B182600AA3331 /* TransientHashSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientHashSet.swift; sourceTree = "<group>"; };
 		829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentTreeSet.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				82CF9AF41C29D84D00D4677B /* Seq */,
 				82CF9AFA1C29F28C00D4677B /* Iterator */,
 				82CF9AD81C29387E00D4677B /* MapEntry.swift */,
+				8230B0061C2D6CD40068D04B /* Clojure.swift */,
 				82DD94DD1C2B452700064CB7 /* ArrayChunk.swift */,
 				829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */,
 				82BACD741C2A33F0006BA8F5 /* Box.swift */,
@@ -523,6 +526,7 @@
 				82BACD6B1C2A01F2006BA8F5 /* PersistentList.swift in Sources */,
 				82A6676C1BF9216D00EBCDFA /* IObj.swift in Sources */,
 				829C0AE71C2B1D4F00AA3331 /* Murmur3.swift in Sources */,
+				8230B0071C2D6CD40068D04B /* Clojure.swift in Sources */,
 				82A667761BF9226200EBCDFA /* IPersistentSet.swift in Sources */,
 				82BACD651C29FD2F006BA8F5 /* PersistentVector.swift in Sources */,
 				82A6674A1BF91C0100EBCDFA /* IAssociative.swift in Sources */,

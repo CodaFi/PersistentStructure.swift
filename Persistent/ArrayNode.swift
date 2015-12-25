@@ -79,7 +79,7 @@ class ArrayNode : INode {
 	}
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
-		for var i = 0; i < _array.count; i = i.successor() {
+		for i in (0..<_array.count) {
 			let node: INode? = _array[i] as? INode
 			if node != nil {
 				initial = node!.kvreduce(f, initial: initial)
@@ -109,14 +109,14 @@ class ArrayNode : INode {
 		newArray.reserveCapacity(2 * (_count - 1))
 		var j: Int = 1
 		var bitmap: Int = 0
-		for var i = 0; i < idx; i = i.successor() {
+		for i in (0..<idx) {
 			if _array.count > i {
 				newArray[j] = _array[i]
 				bitmap |= 1 << i
 				j += 2
 			}
 		}
-		for var i = idx + 1; i < _array.count; i = i.successor() {
+		for i in ((idx + 1)..<_array.count) {
 			if _array.count > i {
 				newArray[j] = _array[i]
 				bitmap |= 1 << i

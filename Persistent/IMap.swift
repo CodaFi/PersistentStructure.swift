@@ -13,7 +13,7 @@ protocol IMap {
 	func containsKey(key: AnyObject) -> Bool
 	func containsValue(value: AnyObject) -> Bool
 	func allEntries() -> ISet
-	func isEmpty() -> Bool
+	var isEmpty : Bool { get }
 	func allKeys() -> ISet
 	var count: Int { get }
 	func values() -> ICollection

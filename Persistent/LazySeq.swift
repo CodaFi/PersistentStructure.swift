@@ -13,8 +13,8 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	private var _secondValue: AnyObject?
 	private var _backingSeq: ISeq?
 
-	init(g: () -> AnyObject?) {
-		_generatorFunction = g
+	init(generator: () -> AnyObject?) {
+		_generatorFunction = generator
 	}
 
 	init(meta: IPersistentMap?, seq: ISeq?) {
@@ -130,7 +130,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 		return Utils.seqToArray(self.seq())
 	}
 
-	func isEmpty() -> Bool {
+	var isEmpty : Bool {
 		return self.seq().count == 0
 	}
 

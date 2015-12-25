@@ -179,7 +179,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func isEmpty() -> Bool {
+	var isEmpty : Bool {
 		return true
 	}
 
