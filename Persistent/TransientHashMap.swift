@@ -15,7 +15,7 @@ class TransientHashMap: AbstractTransientMap {
 	private var _leafFlag: Box = Box()
 
 	class func create(m: PersistentHashMap) -> TransientHashMap {
-		return TransientHashMap.createOnThread(NSThread.currentThread(), root: m.root(), count: Int(m.count()), hasNull: m.hasNull(), nullValue: m.nullValue())
+		return TransientHashMap.createOnThread(NSThread.currentThread(), root: m.root(), count: Int(m.count), hasNull: m.hasNull(), nullValue: m.nullValue())
 	}
 
 	override init() { }
@@ -59,7 +59,7 @@ class TransientHashMap: AbstractTransientMap {
 	}
 
 	override func doPersistent() -> IPersistentMap {
-		return PersistentHashMap(count: UInt(_count), root: _root, hasNull: _hasNull, nullValue: _nullValue)
+		return PersistentHashMap(count: _count, root: _root, hasNull: _hasNull, nullValue: _nullValue)
 	}
 
 	override func doobjectForKey(key: AnyObject?,  notFound: AnyObject) -> AnyObject? {

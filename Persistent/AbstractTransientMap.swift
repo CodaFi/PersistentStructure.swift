@@ -40,7 +40,7 @@ class AbstractTransientMap : ITransientMap {
 			return self.associateKey(k1, value: v1)
 		}
 		var ret: ITransientMap = self
-		for var es : ISeq = Utils.seq(o); es.count() != 0; es = es.next() {
+		for var es : ISeq = Utils.seq(o); es.count != 0; es = es.next() {
 			let e: MapEntry = es.first() as! MapEntry
 			ret = ret.associateKey(e.key(), value: e.val())
 		}
@@ -77,8 +77,8 @@ class AbstractTransientMap : ITransientMap {
 		return self.doobjectForKey(key, notFound: notFound)!
 	}
 
-	func count() -> UInt {
+	var count : Int {
 		self.ensureEditable()
-		return UInt(self.doCount())
+		return self.doCount()
 	}
 }

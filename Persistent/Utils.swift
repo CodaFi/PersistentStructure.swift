@@ -75,7 +75,7 @@ class Utils: NSObject {
 
 	class func count(o: AnyObject) -> Int {
 		if let ic = o as? (ICounted) {
-			return Int(ic.count())
+			return Int(ic.count)
 		}
 		return Utils.countFrom(Utils.ret1o(o, null: nil))
 	}
@@ -89,7 +89,7 @@ class Utils: NSObject {
 			var i: Int = 0
 			for ; s != nil; s = s!.next() {
 				if let cc = s as? (ICounted) {
-					return i + Int(cc.count())
+					return i + Int(cc.count)
 				}
 				i = i.successor()
 			}
@@ -206,7 +206,7 @@ class Utils: NSObject {
 	}
 
 	class func subvecOf(v: IPersistentVector?, start: Int, end: Int) -> IPersistentVector? {
-		if end < start || start < 0 || end > Int(v!.count()) {
+		if end < start || start < 0 || end > Int(v!.count) {
 			fatalError("Range or index out of bounds")
 		}
 		if start == end {

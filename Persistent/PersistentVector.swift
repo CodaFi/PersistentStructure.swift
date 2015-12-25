@@ -149,8 +149,8 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return ret
 	}
 
-	override func count() -> UInt {
-		return UInt(_count)
+	override var count : Int {
+		return _count
 	}
 
 	func withMeta(meta: IPersistentMap?) -> IObj {
@@ -207,7 +207,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	}
 
 	func chunkedSeq() -> IChunkedSeq {
-		if self.count() == 0 {
+		if self.count == 0 {
 			return EmptySeq()
 		}
 		return ChunkedSeq(vec: self, index: 0, offset: 0)

@@ -42,7 +42,7 @@ class StringSeq: AbstractSeq, IIndexedSeq {
 		return _index
 	}
 
-	override func count() -> UInt {
-		return UInt(_string.length - _index)
+	override var count : Int {
+		return _string.length - _index
 	}
 }

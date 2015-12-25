@@ -24,8 +24,8 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return _impl.objectForKey(key)!
 	}
 
-	func count() -> UInt {
-		return _impl.count()
+	var count : Int {
+		return _impl.count
 	}
 
 	func seq() -> ISeq {
@@ -44,7 +44,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 			return false
 		}
 		let m: ISet? = obj as? ISet
-		if m?.count() != s1?.count() {
+		if m?.count != s1?.count {
 			return false
 		}
 		for aM: AnyObject in m!.generate() {
@@ -62,7 +62,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	func hash() -> UInt {
 		if _hash == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s.count() != 0; s = s.next() {
+			for var s = self.seq(); s.count != 0; s = s.next() {
 				let e: AnyObject = s.first()!
 				hash += Int32(Utils.hash(e))
 			}
@@ -74,7 +74,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	func hasheq() -> Int {
 		if _hasheq == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s.count() != 0; s = s.next() {
+			for var s = self.seq(); s.count != 0; s = s.next() {
 				hash += Utils.hasheq(s.first())
 			}
 			_hasheq = hash
@@ -87,7 +87,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	}
 
 	func isEmpty() -> Bool {
-		return self.count() == 0
+		return self.count == 0
 	}
 
 	func objectEnumerator() -> NSEnumerator {

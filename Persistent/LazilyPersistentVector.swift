@@ -17,7 +17,7 @@ class LazilyPersistentVector {
 	}
 
 	class func create(coll: ICollection?) -> IPersistentVector {
-		if !(coll is ISeq) && coll!.count() <= 32 {
+		if !(coll is ISeq) && coll!.count <= 32 {
 			return LazilyPersistentVector.createOwning(coll!.toArray())
 		}
 		return PersistentVector.createWithSeq(Utils.seq(coll!))

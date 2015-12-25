@@ -58,8 +58,8 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return PersistentArrayMap(initial: initial)
 	}
 
-	override func count() -> UInt {
-		return UInt(_array.count) / 2
+	override var count : Int {
+		return _array.count / 2
 	}
 
 	override func containsKey(key: AnyObject) -> Bool {
@@ -162,7 +162,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	}
 
 	func capacity() -> UInt {
-		return self.count()
+		return UInt(self.count)
 	}
 
 	func indexOfObject(key: AnyObject) -> Int {

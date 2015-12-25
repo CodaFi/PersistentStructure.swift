@@ -42,7 +42,7 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 			return false
 		}
 		var ms: ISeq? = Utils.seq(obj)
-		for var s = self.seq(); s.count() != 0; s = s.next(), ms = ms!.next() {
+		for var s = self.seq(); s.count != 0; s = s.next(), ms = ms!.next() {
 			if ms == nil || !Utils.isEqual(s.first(), other: ms!.first()) {
 				return false
 			}
@@ -53,7 +53,7 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	func hash() -> UInt {
 		if _hash == -1 {
 			var hash: UInt = 1
-			for var s = self.seq(); s.count() != 0; s = s.next() {
+			for var s = self.seq(); s.count != 0; s = s.next() {
 				hash = 31 * hash + (s.first() == nil ? 0 : UInt(s.first()!.hash!))
 			}
 			_hash = Int(hash)
@@ -75,29 +75,29 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	func pop() -> IPersistentStack {
 		var f1: ISeq = _front.next()
 		var r1: IPersistentVector = _rear
-		if f1.count() == 0 {
+		if f1.count == 0 {
 			f1 = Utils.seq(_rear)
 			r1 = PersistentVector.empty()
 		}
 		return PersistentQueue(meta: self.meta(), count: _count - 1, seq: f1, rev: r1)
 	}
 
-	func count() -> UInt {
-		return UInt(_count)
+	var count : Int {
+		return _count
 	}
 
 	func seq() -> ISeq {
-		if _front.count() == 0 {
+		if _front.count == 0 {
 			return EmptySeq()
 		}
 		return QueueSeq(f: _front, rev: Utils.seq(_rear))
 	}
 
 	func cons(other : AnyObject) -> IPersistentCollection {
-		if _front.count() == 0 {
+		if _front.count == 0 {
 			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: Utils.list(other), rev: PersistentVector.empty())
 		} else {
-			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: _front, rev: (_rear.count() != 0 ? _rear : PersistentVector.empty().cons(other)))
+			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: _front, rev: (_rear.count != 0 ? _rear : PersistentVector.empty().cons(other)))
 		}
 	}
 
@@ -117,11 +117,11 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	}
 
 	func isEmpty() -> Bool {
-		return self.count() == 0
+		return self.count == 0
 	}
 
 	func containsObject(anObject: AnyObject) -> Bool {
-		for var s = self.seq(); s.count() != 0; s = s.next() {
+		for var s = self.seq(); s.count != 0; s = s.next() {
 			if Utils.equiv(s.first(), other: anObject) {
 				return true
 			}

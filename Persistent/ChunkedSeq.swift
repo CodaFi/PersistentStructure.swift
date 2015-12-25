@@ -41,14 +41,14 @@ class ChunkedSeq: AbstractSeq, IChunkedSeq {
 	}
 
 	func chunkedNext() -> ISeq {
-		if UInt(_i + _node.count) < _vec.count() {
+		if (_i + _node.count) < _vec.count {
 			return ChunkedSeq(vec: _vec, index: _node.count, offset: 0)
 		}
 		return EmptySeq()
 	}
 
 	func chunkedMore() -> ISeq {
-		if self.chunkedNext().count() != 0 {
+		if self.chunkedNext().count != 0 {
 			return self.chunkedNext()
 		}
 		return PersistentList.empty()
@@ -72,7 +72,7 @@ class ChunkedSeq: AbstractSeq, IChunkedSeq {
 		return self.chunkedNext()
 	}
 
-	override func count() -> UInt {
-		return _vec.count() - UInt(_i + _offset)
+	override var count : Int {
+		return _vec.count - (_i + _offset)
 	}
 }

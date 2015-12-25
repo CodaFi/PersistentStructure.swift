@@ -16,15 +16,15 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func seq() -> ISeq {
-		if self.count() > 0 {
+		if self.count > 0 {
 			return VecSeq(vector: self, index: 0)
 		}
 		return EmptySeq()
 	}
 
 	func reversedSeq() -> ISeq {
-		if self.count() > 0 {
-			return RVecSeq(vector: self, index: Int(self.count()) - 1)
+		if self.count > 0 {
+			return RVecSeq(vector: self, index: Int(self.count) - 1)
 		}
 		return EmptySeq()
 	}
@@ -35,7 +35,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		}
 		if obj is (IList) || obj is (IPersistentVector) {
 			let ma: ICollection? = obj as? ICollection
-			if ma!.count() != v?.count() /*|| ma!.hash() != v!.hash()*/ {
+			if ma!.count != v?.count /*|| ma!.hash() != v!.hash()*/ {
 				return false
 			}
 			var objec: AnyObject?
@@ -53,7 +53,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 				return false
 			}
 			var ms: ISeq? = Utils.seq(obj)
-			for var i = 0; i < Int(v!.count()); i = i.successor(), ms = ms!.next() {
+			for var i = 0; i < Int(v!.count); i = i.successor(), ms = ms!.next() {
 				if ms == nil || !Utils.isEqual(v!.objectAtIndex(i), other: ms!.first()) {
 					return false
 				}
@@ -71,7 +71,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 				return false
 			}
 
-			if ma.count() != v.count() {
+			if ma.count != v.count {
 				return false
 			}
 
@@ -86,7 +86,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 				return false
 			}
 			var ms: ISeq? = Utils.seq(obj)
-			for var i = 0; i < Int(v.count()); i = i.successor(), ms = ms!.next() {
+			for var i = 0; i < Int(v.count); i = i.successor(), ms = ms!.next() {
 				if ms == nil || !Utils.equiv((v.objectAtIndex(i)), other: ms!.first()) {
 					return false
 				}
@@ -133,14 +133,14 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
-		if i >= 0 && i < Int(self.count()) {
+		if i >= 0 && i < Int(self.count) {
 			return self.objectAtIndex(i)!
 		}
 		return notFound
 	}
 
 	func indexOf(o: AnyObject) -> Int {
-		for var i = 0; i < Int(self.count()); i = i.successor() {
+		for var i = 0; i < Int(self.count); i = i.successor() {
 			if Utils.equiv((self.objectAtIndex(i))!, other: (o)) {
 				return i
 			}
@@ -149,7 +149,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func lastIndexOf(o: AnyObject) -> Int {
-		for var i = Int(self.count()) - 1; i >= 0; i-- {
+		for var i = Int(self.count) - 1; i >= 0; i-- {
 			if Utils.equiv(self.objectAtIndex(i)!, other: (o)) {
 				return i
 			}
@@ -166,8 +166,8 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func peek() -> AnyObject? {
-		if self.count() > 0 {
-			return self.objectAtIndex(Int(self.count()) - 1)
+		if self.count > 0 {
+			return self.objectAtIndex(Int(self.count) - 1)
 		}
 		return nil
 	}
@@ -177,13 +177,13 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 			return false
 		}
 		let i: Int = (key as! NSNumber).integerValue
-		return i >= 0 && i < Int(self.count())
+		return i >= 0 && i < Int(self.count)
 	}
 
 	func entryForKey(key: AnyObject) -> IMapEntry? {
 		if !Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
-			if i >= 0 && i < Int(self.count()) {
+			if i >= 0 && i < Int(self.count) {
 				return MapEntry(key: key, val: self.objectAtIndex(i)!)
 			}
 		}
@@ -201,7 +201,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
-			if i >= 0 && i < Int(self.count()) {
+			if i >= 0 && i < Int(self.count) {
 				return self.objectAtIndex(i)!
 			}
 		}
@@ -211,7 +211,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	func objectForKey(key: AnyObject) -> AnyObject? {
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
-			if i >= 0 && i < Int(self.count()) {
+			if i >= 0 && i < Int(self.count) {
 				return self.objectAtIndex(i)!
 			}
 		}
@@ -223,15 +223,15 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func isEmpty() -> Bool {
-		return self.count() == 0
+		return self.count == 0
 	}
 
-	func count() -> UInt {
+	var count : Int {
 		return 0
 	}
 
 	func containsObject(o: AnyObject) -> Bool {
-		for var s = self.seq(); s.count() != 0; s = s.next() {
+		for var s = self.seq(); s.count != 0; s = s.next() {
 			if Utils.equiv(s.first(), other: o) {
 				return true
 			}
@@ -240,7 +240,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func length() -> Int {
-		return Int(self.count())
+		return Int(self.count)
 	}
 
 	func compareTo(o: AnyObject) -> NSComparisonResult {
@@ -248,12 +248,12 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 			fatalError("Cannot compare to non-persistent vector type")
 		}
 
-		if self.count() < v.count() {
+		if self.count < v.count {
 			return .OrderedAscending
-		} else if self.count() > v.count() {
+		} else if self.count > v.count {
 			return .OrderedDescending
 		}
-		for var i = 0; i < Int(self.count()); i = i.successor() {
+		for var i = 0; i < Int(self.count); i = i.successor() {
 			let c: NSComparisonResult = Utils.compare(self.objectAtIndex(i), to: v.objectAtIndex(i))
 			if c != .OrderedSame {
 				return c

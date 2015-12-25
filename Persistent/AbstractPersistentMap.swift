@@ -25,7 +25,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return self.associateKey(k1, withValue: v1)
 		} else {
 			var ret : IPersistentMap = self
-			for var es : ISeq = Utils.seq(o); es.count() != 0; es = es.next() {
+			for var es : ISeq = Utils.seq(o); es.count != 0; es = es.next() {
 				let e : IMapEntry = es.first() as! IMapEntry
 				ret = ret.associateKey(e.key(), withValue: e.val()) as! IPersistentMap
 			}
@@ -48,10 +48,10 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return false
 		}
 
-		if m.count() != m1.count() {
+		if m.count != m1.count {
 			return false
 		}
-		for var s = m1.seq(); s.count() != 0; s = s.next() {
+		for var s = m1.seq(); s.count != 0; s = s.next() {
 			if let e = s.first() as? IMapEntry {
 				let found: Bool = m.containsKey(e.key())
 				if !found || !Utils.isEqual(e.val(), other: m.objectForKey(e.key())) {
@@ -70,15 +70,18 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return false
 		}
 
-		let m : IMap? = obj as? IMap
-		if m!.count() != self.count() {
+		guard let m = obj as? IMap else {
+			return false
+		}
+
+		if m.count != self.count {
 			return false
 		}
 
 		for var s : ISeq? = self.seq(); s != nil; s = s!.next() {
 			if let e = s!.first() as? IMapEntry {
-				let found = m!.containsKey(e.key())
-				if !found || Utils.equiv(e.val(), other: m!.objectForKey(e.key())) {
+				let found = m.containsKey(e.key())
+				if !found || Utils.equiv(e.val(), other: m.objectForKey(e.key())) {
 					return false
 				}
 			}
@@ -143,7 +146,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func count() -> UInt {
+	var count : Int {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
@@ -167,7 +170,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func allEntries() -> ISet? {
+	func allEntries() -> ISet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
@@ -175,11 +178,11 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func allKeys() -> ISet? {
+	func allKeys() -> ISet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func values() -> ICollection? {
+	func values() -> ICollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

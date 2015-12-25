@@ -13,8 +13,8 @@ class AbstractTransientSet : ITransientSet {
 		_impl = impl
 	}
 
-	func count() -> UInt {
-		return _impl.count()
+	var count : Int {
+		return _impl.count
 	}
 
 	func conj(val: AnyObject) -> ITransientCollection {

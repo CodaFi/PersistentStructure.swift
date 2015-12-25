@@ -44,7 +44,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	class func create(other: IMap?) -> IPersistentMap {
 		var ret: IPersistentMap = EMPTY as IPersistentMap
-		for o: AnyObject in other!.allEntries()!.generate() {
+		for o: AnyObject in other!.allEntries().generate() {
 			let e: MapEntry = o as! MapEntry
 			ret = ret.associateKey(e.key(), withValue: e.val()) as! IPersistentMap
 		}
@@ -77,7 +77,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	class func createWithComparator(comp: (AnyObject?, AnyObject?) -> NSComparisonResult, var seq items: ISeq?) -> AnyObject {
 		var ret: IPersistentMap = PersistentTreeMap(comparator: comp)
 		for ; items != nil; items = items!.next().next() {
-			if items!.next().count() == 0 {
+			if items!.next().count == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
 			ret = ret.associateKey(items!.first()!, withValue: Utils.second(items!)!) as! PersistentTreeMap
@@ -241,8 +241,8 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return _count
 	}
 
-	override func count() -> UInt {
-		return UInt(_count)
+	override var count : Int {
+		return _count
 	}
 
 	override func entryForKey(aKey: AnyObject) -> IMapEntry? {

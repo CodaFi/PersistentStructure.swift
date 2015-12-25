@@ -54,11 +54,11 @@ class SortedTreeSeq: AbstractSeq, IObj {
 		return SortedTreeSeq(stack: nextstack, ascending: _asc, count: _cnt - 1)
 	}
 
-	override func count() -> UInt {
+	override var count : Int {
 		if _cnt < 0 {
-			return super.count()
+			return super.count
 		}
-		return UInt(_cnt)
+		return _cnt
 	}
 
 	func withMeta(meta: IPersistentMap?) -> IObj {

@@ -7,27 +7,27 @@
 //
 
 class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
-	private var _vector: IPersistentVector?
+	private var _vector: IPersistentVector
 	private var _index: Int
 
-	init(vector: IPersistentVector?, index i: Int) {
+	init(vector: IPersistentVector, index i: Int) {
 		_vector = vector
 		_index = i
 		super.init()
 	}
 
-	init(meta: IPersistentMap?, vector v: IPersistentVector?, index i: Int) {
+	init(meta: IPersistentMap?, vector v: IPersistentVector, index i: Int) {
 		_vector = v
 		_index = i
 		super.init(meta: meta)
 	}
 
 	override func first() -> AnyObject {
-		return _vector!.objectAtIndex(_index)!
+		return _vector.objectAtIndex(_index)!
 	}
 
 	override func next() -> ISeq {
-		if UInt(_index + 1) < _vector!.count() {
+		if (_index + 1) < _vector.count {
 			return VecSeq(vector: _vector, index: _index + 1)
 		}
 		return EmptySeq()
@@ -37,8 +37,8 @@ class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
 		return _index
 	}
 
-	override func count() -> UInt {
-		return _vector!.count() - UInt(_index)
+	override var count : Int {
+		return _vector.count - _index
 	}
 
 	func withMeta(meta: IPersistentMap?) -> AnyObject {
@@ -46,17 +46,17 @@ class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
 	}
 
 	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
-		var ret: AnyObject = _vector!.objectAtIndex(_index)!
-		for var x = UInt(_index + 1); x < _vector!.count(); x = x.successor() {
-			ret = combine(ret, _vector!.objectAtIndex(Int(x))!)
+		var ret: AnyObject = _vector.objectAtIndex(_index)!
+		for var x = _index + 1; x < _vector.count; x = x.successor() {
+			ret = combine(ret, _vector.objectAtIndex(x)!)
 		}
 		return ret
 	}
 
 	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
-		var ret: AnyObject = combine(initial, _vector!.objectAtIndex(_index)!)
-		for var x = UInt(_index + 1); x < _vector!.count(); x = x.successor() {
-			ret = combine(ret, _vector!.objectAtIndex(Int(x))!)
+		var ret: AnyObject = combine(initial, _vector.objectAtIndex(_index)!)
+		for var x = _index + 1; x < _vector.count; x = x.successor() {
+			ret = combine(ret, _vector.objectAtIndex(x)!)
 		}
 		return ret
 	}

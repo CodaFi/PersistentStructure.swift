@@ -7,7 +7,7 @@
 //
 
 protocol IPersistentCollection : ISeqable {
-	func count() -> UInt
+	var count : Int { get }
 	func cons(other : AnyObject) -> IPersistentCollection
 	func empty() -> IPersistentCollection
 	func equiv(o : AnyObject) -> Bool

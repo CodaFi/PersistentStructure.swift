@@ -37,8 +37,8 @@ class RVecSeq: AbstractSeq, IIndexedSeq {
 		return _startingIndex
 	}
 
-	override func count() -> UInt {
-		return UInt(_startingIndex + 1)
+	override var count : Int {
+		return _startingIndex + 1
 	}
 
 	func withMeta(meta: IPersistentMap?) -> AnyObject {

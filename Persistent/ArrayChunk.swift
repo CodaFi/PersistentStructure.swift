@@ -30,14 +30,14 @@ class ArrayChunk : IChunk {
 	}
 
 	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
-		if i >= 0 && i < Int(self.count()) {
+		if i >= 0 && i < self.count {
 			return self.objectAtIndex(i)!
 		}
 		return notFound
 	}
 
-	func count() -> UInt {
-		return UInt(_end - _off)
+	var count : Int {
+		return _end - _off
 	}
 
 	func tail() -> IChunk {

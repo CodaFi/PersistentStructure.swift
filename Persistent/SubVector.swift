@@ -44,8 +44,8 @@ class SubVector: AbstractPersistentVector, IObj {
 		return SubVector(meta: _meta, vector: _v!.assocN(_start + i, value: val), start: _start, end: _end)
 	}
 
-	override func count() -> UInt {
-		return UInt(_end - _start)
+	override var count : Int {
+		return _end - _start
 	}
 
 	override func cons(o: AnyObject) -> IPersistentVector {

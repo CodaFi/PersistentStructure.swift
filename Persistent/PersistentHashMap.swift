@@ -10,13 +10,13 @@ private var EMPTY: PersistentHashMap = PersistentHashMap(count: 0, root: nil, ha
 private var _NOT_FOUND: AnyObject = NSNull()
 
 class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
-	private var _count: UInt
+	private var _count: Int
 	private var _root: INode?
 	private var _hasNull: Bool
 	private var _nullValue: AnyObject?
 	private var _meta: IPersistentMap?
 
-	init(count: UInt, root: INode?, hasNull: Bool, nullValue: AnyObject?) {
+	init(count: Int, root: INode?, hasNull: Bool, nullValue: AnyObject?) {
 		_count = count
 		_root = root
 		_hasNull = hasNull
@@ -24,7 +24,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		_meta = nil
 	}
 
-	init(meta: IPersistentMap?, count: UInt, root: INode?, hasNull: Bool, nullValue: AnyObject?) {
+	init(meta: IPersistentMap?, count: Int, root: INode?, hasNull: Bool, nullValue: AnyObject?) {
 		_meta = meta
 		_count = count
 		_root = root
@@ -50,7 +50,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 
 	class func create(other: IMap?) -> IPersistentMap {
 		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
-		for o: AnyObject in other!.allEntries()!.generate() {
+		for o: AnyObject in other!.allEntries().generate() {
 			let e: IMapEntry = o as! IMapEntry
 			ret = ret!.associateKey(e.key(), value: e.val())
 		}
@@ -71,7 +71,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	class func createWithSeq(var items: ISeq?) -> PersistentHashMap {
 		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for ; items != nil; items = items!.next().next() {
-			if items!.next().count() == 0 {
+			if items!.next().count == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
 			ret = ret!.associateKey(items!.first()!, value: Utils.second(items!)!)
@@ -82,11 +82,11 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashMap {
 		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for var i = 0; items != nil; items = items!.next().next(), i = i.successor() {
-			if items!.next().count() == 0 {
+			if items!.next().count == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
 			ret = ret!.associateKey(items!.first()!, value: Utils.second(items!)!)
-			if ret!.count() != UInt(i + 1) {
+			if ret!.count != (i + 1) {
 				fatalError("Duplicate key: \(items!.first)")
 			}
 		}
@@ -173,7 +173,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return initial
 	}
 
-	override func count() -> UInt {
+	override var count : Int {
 		return _count
 	}
 

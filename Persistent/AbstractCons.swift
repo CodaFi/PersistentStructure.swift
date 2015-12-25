@@ -35,8 +35,8 @@ final class AbstractCons : AbstractSeq {
 		return _more
 	}
 
-	override func count() -> UInt {
-		return UInt(1 + Utils.count(_more))
+	override var count : Int {
+		return 1 + Utils.count(_more)
 	}
 
 	func withMeta(meta : IPersistentMap) -> AbstractCons {

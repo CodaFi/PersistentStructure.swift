@@ -25,7 +25,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		return self.asVector().assocN(i, value: val)
 	}
 
-	override func count() -> UInt {
+	override var count : Int {
 		return 2
 	}
 

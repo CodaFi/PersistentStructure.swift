@@ -7,5 +7,5 @@
 //
 
 protocol ICounted {
-	func count() -> UInt
+	var count : Int { get }
 }

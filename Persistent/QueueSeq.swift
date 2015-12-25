@@ -29,8 +29,8 @@ class QueueSeq: AbstractSeq {
 	override func next() -> ISeq {
 		var f1: ISeq = _f.next()
 		var r1: ISeq = _rseq
-		if f1.count() == 0 {
-			if _rseq.count() == 0 {
+		if f1.count == 0 {
+			if _rseq.count == 0 {
 				return EmptySeq()
 			}
 			f1 = _rseq
@@ -39,8 +39,8 @@ class QueueSeq: AbstractSeq {
 		return QueueSeq(f: f1, rev: r1)
 	}
 
-	override func count() -> UInt {
-		return UInt(Utils.count(_f) + Utils.count(_rseq))
+	override var count : Int {
+		return Utils.count(_f) + Utils.count(_rseq)
 	}
 
 	func withMeta(meta: IPersistentMap?) -> ISeq? {

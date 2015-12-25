@@ -58,21 +58,21 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	}
 
 	func pop() -> IPersistentStack {
-		if _rest.count() != 0 {
+		if _rest.count != 0 {
 			return _rest
 		}
 		return EMPTY.withMeta(_meta)
 	}
 
 	func pop() -> IPersistentList? {
-		if _rest.count() != 0 {
+		if _rest.count != 0 {
 			return _rest
 		}
 		return EMPTY.withMeta(_meta)
 	}
 
-	override func count() -> UInt {
-		return UInt(_count)
+	override var count : Int {
+		return _count
 	}
 
 	func cons(o: AnyObject) -> PersistentList {
@@ -88,7 +88,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 
 	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = self.first()
-		for var s = self.next(); s.count() != 0; s = s.next() {
+		for var s = self.next(); s.count != 0; s = s.next() {
 			ret = combine(ret, s.first()!)
 		}
 		return ret
@@ -96,7 +96,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 
 	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = combine(initial, self.first())
-		for var s = self.next(); s.count() != 0; s = s.next() {
+		for var s = self.next(); s.count != 0; s = s.next() {
 			ret = combine(ret, s.first()!)
 		}
 		return ret
@@ -174,7 +174,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		fatalError("Can't pop empty list")
 	}
 
-	func count() -> UInt {
+	var count : Int {
 		return 0
 	}
 

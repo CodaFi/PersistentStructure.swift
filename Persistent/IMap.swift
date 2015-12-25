@@ -12,9 +12,9 @@ protocol IMap {
 
 	func containsKey(key: AnyObject) -> Bool
 	func containsValue(value: AnyObject) -> Bool
-	func allEntries() -> ISet?
+	func allEntries() -> ISet
 	func isEmpty() -> Bool
-	func allKeys() -> ISet?
-	func count() -> UInt
-	func values() -> ICollection?
+	func allKeys() -> ISet
+	var count: Int { get }
+	func values() -> ICollection
 }

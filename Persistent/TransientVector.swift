@@ -13,7 +13,7 @@ class TransientVector : ITransientVector, ICounted {
 	private var _tail: Array<AnyObject>
 
 	init(v: PersistentVector) {
-		_count = Int(v.count())
+		_count = Int(v.count)
 		_shift = v.shift()
 		_root = TransientVector.editableRoot(v.root())
 		_tail = TransientVector.editableTail(v.tail())
@@ -26,9 +26,9 @@ class TransientVector : ITransientVector, ICounted {
 		_tail = tail
 	}
 
-	func count() -> UInt {
+	var count : Int {
 		self.ensureEditable()
-		return UInt(_count)
+		return _count
 	}
 
 	func ensureEditableNode(node: Node) -> Node {
@@ -187,7 +187,7 @@ class TransientVector : ITransientVector, ICounted {
 	}
 
 	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
-		if i >= 0 && i < Int(self.count()) {
+		if i >= 0 && i < Int(self.count) {
 			return self.objectAtIndex(i)!
 		}
 		return notFound
