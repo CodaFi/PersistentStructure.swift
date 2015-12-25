@@ -41,8 +41,8 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		fatalError("Collection does not admit an empty representation")
 	}
 
-	override func pop() -> IPersistentStack? {
-		return LazilyPersistentVector.createOwning([self.key()!]) as? IPersistentStack
+	override func pop() -> IPersistentStack {
+		return LazilyPersistentVector.createOwning([self.key()!]) as! IPersistentStack
 	}
 
 	func setValue(value: AnyObject) -> AnyObject? {

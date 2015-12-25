@@ -7,5 +7,5 @@
 //
 
 protocol ITransientAssociative : ITransientCollection, ILookup {
-	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap?
+	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap
 }

@@ -236,7 +236,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return initial
 	}
 
-	override func pop() -> IPersistentStack? {
+	override func pop() -> IPersistentStack {
 		if _count == 0 {
 			fatalError("Can't pop from an empty vector")
 		}

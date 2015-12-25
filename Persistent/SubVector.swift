@@ -59,7 +59,7 @@ class SubVector: AbstractPersistentVector, IObj {
 		return PersistentVector.empty()
 	}
 
-	override func pop() -> IPersistentStack? {
+	override func pop() -> IPersistentStack {
 		if _end - 1 == _start {
 			return PersistentVector.empty()
 		}

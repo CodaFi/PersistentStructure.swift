@@ -7,6 +7,6 @@
 //
 
 protocol ITransientVector : ITransientAssociative, IIndexed {
-	func assocN(i : Int, value : AnyObject) -> ITransientVector?
+	func assocN(i : Int, value : AnyObject) -> ITransientVector
 	func pop() -> ITransientVector?
 }

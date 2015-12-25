@@ -193,7 +193,7 @@ class TransientVector : ITransientVector, ICounted {
 		return notFound
 	}
 
-	func assocN(i: Int, value val: AnyObject) -> ITransientVector? {
+	func assocN(i: Int, value val: AnyObject) -> ITransientVector {
 		self.ensureEditable()
 		if i >= 0 && i < _count {
 			if i >= self.tailoff() {
@@ -204,15 +204,15 @@ class TransientVector : ITransientVector, ICounted {
 			return self
 		}
 		if i == _count {
-			return self.conj(val) as! ITransientVector?
+			return self.conj(val) as! ITransientVector
 		}
 		fatalError("Range or index out of bounds")
 	}
 
-	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap? {
+	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
 		if Utils.isInteger(key) {
 			let i: Int = (key as? NSNumber)!.integerValue
-			return self.assocN(i, value: val)! as? ITransientMap
+			return self.assocN(i, value: val) as! ITransientMap
 		}
 		fatalError("Key must be an integer")
 	}

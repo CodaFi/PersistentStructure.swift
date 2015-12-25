@@ -7,18 +7,18 @@
 //
 
 class AbstractTransientSet : ITransientSet {
-	var _impl: ITransientMap?
+	var _impl: ITransientMap
 
-	init(impl: ITransientMap?) {
+	init(impl: ITransientMap) {
 		_impl = impl
 	}
 
 	func count() -> UInt {
-		return _impl!.count()
+		return _impl.count()
 	}
 
 	func conj(val: AnyObject) -> ITransientCollection? {
-		let m: ITransientMap? = _impl!.associateKey(val, value: val)
+		let m: ITransientMap = _impl.associateKey(val, value: val)
 		if m !== _impl {
 			_impl = m
 		}
@@ -26,11 +26,11 @@ class AbstractTransientSet : ITransientSet {
 	}
 
 	func containsObject(key: AnyObject) -> Bool {
-		return self !== _impl!.objectForKey(key, def: self) as! AbstractTransientSet
+		return self !== _impl.objectForKey(key, def: self) as! AbstractTransientSet
 	}
 
-	func disjoin(key: AnyObject) -> ITransientSet? {
-		let m: ITransientMap? = _impl!.without(key)
+	func disjoin(key: AnyObject) -> ITransientSet {
+		let m: ITransientMap = _impl.without(key)
 		if m !== _impl {
 			_impl = m
 		}
@@ -38,7 +38,7 @@ class AbstractTransientSet : ITransientSet {
 	}
 
 	func objectForKey(key: AnyObject) -> AnyObject? {
-		return _impl!.objectForKey(key)!
+		return _impl.objectForKey(key)!
 	}
 
 	func persistent() -> IPersistentCollection {

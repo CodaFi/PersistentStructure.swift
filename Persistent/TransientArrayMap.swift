@@ -32,7 +32,7 @@ class TransientArrayMap: AbstractTransientMap {
 		return Utils.equiv(k1, other: k2)
 	}
 
-	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap? {
+	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			if _array[i + 1] !== val {
@@ -41,7 +41,7 @@ class TransientArrayMap: AbstractTransientMap {
 		} else {
 			if _length >= _array.count {
 				let ll = PersistentHashMap.createWithMeta(nil, array: _array).asTransient()
-				return (ll as! IAssociative).associateKey(key, withValue: val) as? ITransientMap
+				return (ll as! IAssociative).associateKey(key, withValue: val) as! ITransientMap
 			}
 			_array[_length.successor()] = key
 			_array[_length.successor().successor()] = val
@@ -50,7 +50,7 @@ class TransientArrayMap: AbstractTransientMap {
 		return self
 	}
 
-	override func doWithout(key: AnyObject) -> ITransientMap? {
+	override func doWithout(key: AnyObject) -> ITransientMap {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			if _length >= 2 {

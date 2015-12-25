@@ -75,7 +75,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return ret
 	}
 
-	override func disjoin(key: AnyObject) -> IPersistentSet? {
+	override func disjoin(key: AnyObject) -> IPersistentSet {
 		if self.containsObject(key) {
 			return PersistentHashSet(meta: self.meta(), impl: _impl.without(key))
 		}
@@ -101,7 +101,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 	}
 
 	func asTransient() -> ITransientCollection {
-		return TransientHashSet(impl: (_impl as! PersistentHashMap).asTransient() as? ITransientMap)
+		return TransientHashSet(impl: (_impl as! PersistentHashMap).asTransient() as! ITransientMap)
 	}
 
 	func meta() -> IPersistentMap? {

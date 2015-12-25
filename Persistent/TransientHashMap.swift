@@ -31,19 +31,9 @@ class TransientHashMap: AbstractTransientMap {
 		return map
 	}
 
-	override func doassociateKey(key: AnyObject?,  val: AnyObject?) -> ITransientMap? {
-		if key == nil {
-			if _nullValue !== val {
-				_nullValue = val
-			}
-			if !_hasNull {
-				_count = _count.successor()
-				_hasNull = true
-			}
-			return self
-		}
+	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
 		_leafFlag.val = nil
-		let n: INode? = (_root == nil ? BitmapIndexedNode.empty() : _root)!.assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key!, val: val!, addedLeaf: _leafFlag)
+		let n: INode? = (_root == nil ? BitmapIndexedNode.empty() : _root)!.assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, val: val, addedLeaf: _leafFlag)
 		if n !== _root {
 			_root = n
 		}
@@ -53,21 +43,12 @@ class TransientHashMap: AbstractTransientMap {
 		return self
 	}
 
-	override func doWithout(key: AnyObject?) -> ITransientMap? {
-		if key == nil {
-			if !_hasNull {
-				return self
-			}
-			_hasNull = false
-			_nullValue = nil
-			_count--
-			return self
-		}
+	override func doWithout(key: AnyObject) -> ITransientMap {
 		if _root == nil {
 			return self
 		}
 		_leafFlag.val = nil
-		let n: INode? = _root!.withoutOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key!, addedLeaf: _leafFlag)
+		let n: INode? = _root!.withoutOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, addedLeaf: _leafFlag)
 		if n !== _root {
 			_root = n
 		}

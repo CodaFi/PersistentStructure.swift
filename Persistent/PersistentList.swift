@@ -57,11 +57,11 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return self.first()
 	}
 
-	func pop() -> IPersistentStack? {
-		if _rest == nil {
-			return EMPTY.withMeta(_meta)
+	func pop() -> IPersistentStack {
+		if let r = _rest {
+			return r
 		}
-		return _rest
+		return EMPTY.withMeta(_meta)
 	}
 
 	func pop() -> IPersistentList? {
@@ -171,7 +171,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		fatalError("Can't pop empty list")
 	}
 
-	func pop() -> IPersistentStack? {
+	func pop() -> IPersistentStack {
 		fatalError("Can't pop empty list")
 	}
 

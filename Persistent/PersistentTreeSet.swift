@@ -33,7 +33,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		_meta = meta
 	}
 
-	override func disjoin(key: AnyObject) -> IPersistentSet? {
+	override func disjoin(key: AnyObject) -> IPersistentSet {
 		if self.containsObject(key) {
 			return PersistentTreeSet(meta: self.meta(), implementation: _impl.without(key))
 		}

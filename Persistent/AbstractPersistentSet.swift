@@ -94,7 +94,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return SeqIterator(seq: self.seq())
 	}
 
-	func disjoin(key: AnyObject) -> IPersistentSet? {
+	func disjoin(key: AnyObject) -> IPersistentSet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

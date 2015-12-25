@@ -72,7 +72,7 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		return Utils.first(_front!)
 	}
 
-	func pop() -> IPersistentStack? {
+	func pop() -> IPersistentStack {
 		if _front == nil {
 			return self
 		}

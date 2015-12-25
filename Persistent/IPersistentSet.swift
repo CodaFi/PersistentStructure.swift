@@ -7,7 +7,7 @@
 //
 
 protocol IPersistentSet : class, IPersistentCollection, ICounted {
-	func disjoin(key : AnyObject) -> IPersistentSet?
+	func disjoin(key : AnyObject) -> IPersistentSet
 	func containsObject(key : AnyObject) -> Bool
 	func objectForKey(key : AnyObject) -> AnyObject
 }

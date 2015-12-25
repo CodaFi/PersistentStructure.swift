@@ -279,7 +279,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func pop() -> IPersistentStack? {
+	func pop() -> IPersistentStack {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

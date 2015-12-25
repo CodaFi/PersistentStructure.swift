@@ -8,6 +8,6 @@
 
 class TransientHashSet: AbstractTransientSet {
 	override func persistent() -> IPersistentCollection {
-		return PersistentHashSet(meta: nil, impl: _impl!.persistent())
+		return PersistentHashSet(meta: nil, impl: _impl.persistent())
 	}
 }

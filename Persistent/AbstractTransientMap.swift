@@ -9,11 +9,11 @@
 class AbstractTransientMap : ITransientMap {
 	func ensureEditable() { }
 
-	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap? {
+	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func doWithout(key: AnyObject) -> ITransientMap? {
+	func doWithout(key: AnyObject) -> ITransientMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
@@ -52,12 +52,12 @@ class AbstractTransientMap : ITransientMap {
 		return self.doobjectForKey(key, notFound: NSNull())
 	}
 
-	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap? {
+	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
 		self.ensureEditable()
 		return self.doassociateKey(key, val: val)
 	}
 
-	func without(key: AnyObject) -> ITransientMap? {
+	func without(key: AnyObject) -> ITransientMap {
 		self.ensureEditable()
 		return self.doWithout(key)
 	}

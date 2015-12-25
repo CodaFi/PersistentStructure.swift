@@ -8,5 +8,5 @@
 
 protocol IPersistentStack : IPersistentCollection {
 	func peek() -> AnyObject?
-	func pop() -> IPersistentStack?
+	func pop() -> IPersistentStack
 }
