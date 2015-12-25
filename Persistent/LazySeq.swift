@@ -122,7 +122,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 		if self.seq().count() == 0 {
 			return self.seq().equiv(other)
 		} else {
-			return (other is ISequential || other is IList) && Utils.seq(other) == nil
+			return (other is ISequential || other is IList)
 		}
 	}
 
