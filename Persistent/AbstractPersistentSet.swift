@@ -29,7 +29,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	}
 
 	func seq() -> ISeq {
-		return KeySeq.create(self.seq())
+		return KeySeq(seq: self.seq())
 	}
 
 	func isEqual(o: AnyObject) -> Bool {
@@ -88,10 +88,6 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 
 	func isEmpty() -> Bool {
 		return self.count == 0
-	}
-
-	func objectEnumerator() -> NSEnumerator {
-		return SeqIterator(seq: self.seq())
 	}
 
 	func disjoin(key: AnyObject) -> IPersistentSet {

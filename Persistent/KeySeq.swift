@@ -7,31 +7,27 @@
 //
 
 class KeySeq : AbstractSeq {
-	private var _seq: ISeq?
+	private var _seq: ISeq
 
-	init(seq: ISeq?) {
+	init(seq: ISeq) {
 		_seq = seq
 		super.init()
 	}
 
-	init(meta: IPersistentMap?, seq: ISeq?) {
-		super.init(meta: meta)
+	init(meta: IPersistentMap?, seq: ISeq) {
 		_seq = seq
+		super.init(meta: meta)
 	}
 
 	override func first() -> AnyObject? {
-		return (_seq!.first as! IMapEntry).key()
+		return (_seq.first as! IMapEntry).key()
 	}
 
 	override func next() -> ISeq {
-		return KeySeq.create(_seq!.next())
+		return KeySeq(seq: _seq.next())
 	}
 
 	func withMeta(meta: IPersistentMap?) -> KeySeq {
 		return KeySeq(meta: meta, seq: _seq)
-	}
-
-	class func create(seq: ISeq) -> KeySeq {
-		return KeySeq(seq: seq)
 	}
 }

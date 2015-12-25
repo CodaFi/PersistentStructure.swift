@@ -36,7 +36,7 @@ class HashCollisionNode : INode {
 			addedLeaf.val = addedLeaf
 			return HashCollisionNode(edit: _edit, hash: hash, count: _count + 1, array: newArray)
 		}
-		return BitmapIndexedNode.createOnThread(nil, bitmap: Utils.bitPos(_hash, shift: shift), array: [ NSNull(), self ])
+		return BitmapIndexedNode(onThread: nil, bitmap: Utils.bitPos(_hash, shift: shift), array: [ NSNull(), self ])
 	}
 
 	func withoutWithShift(shift: Int, hash: Int, key: AnyObject) -> INode? {

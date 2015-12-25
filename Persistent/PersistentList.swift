@@ -31,13 +31,10 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		super.init(meta: meta)
 	}
 
-	class func create(initial: IList?) -> IPersistentList? {
+	class func create(initial: IList) -> IPersistentList? {
 		var ret: IPersistentList? = EMPTY
-		let it: NSEnumerator = initial!.objectEnumerator()
-		var obj: AnyObject? = it.nextObject()
-		while obj != nil {
-			ret = ret!.cons(obj!) as? IPersistentList
-			obj = it.nextObject()
+		for obj in initial.generate() {
+			ret = ret!.cons(obj) as? IPersistentList
 		}
 		return ret
 	}
@@ -190,9 +187,6 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return false
 	}
 
-	func objectEnumerator() -> NSEnumerator {
-		return NSEnumerator()
-	}
 
 	func toArray() -> Array<AnyObject> {
 		return Utils._emptyArray()

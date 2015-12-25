@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: BitmapIndexedNode = BitmapIndexedNode.createOnThread(nil, bitmap: 0, array: [])
+private var EMPTY: BitmapIndexedNode = BitmapIndexedNode(onThread: nil, bitmap: 0, array: [])
 
 class BitmapIndexedNode : INode {
 	var _array: Array<AnyObject>
@@ -28,12 +28,10 @@ class BitmapIndexedNode : INode {
 		return Utils.bitCount(UInt(_bitmap & (bit - 1)))
 	}
 
-	class func createOnThread(edit: NSThread?, bitmap: Int, array: Array<AnyObject>) -> BitmapIndexedNode {
-		let node: BitmapIndexedNode = BitmapIndexedNode()
-		node._bitmap = bitmap
-		node._array = array
-		node._edit = edit
-		return node
+	init(onThread edit: NSThread?, bitmap: Int, array: Array<AnyObject>) {
+		_bitmap = bitmap
+		_array = array
+		_edit = edit
 	}
 
 	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject, addedLeaf: Box) -> INode? {
@@ -47,16 +45,16 @@ class BitmapIndexedNode : INode {
 				if n === valOrNode {
 					return self
 				}
-				return BitmapIndexedNode.createOnThread(nil, bitmap: _bitmap, array: Utils.cloneAndSetObject(_array, index: 2 * idx + 1, node: n!))
+				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSetObject(_array, index: 2 * idx + 1, node: n!))
 			}
 			if Utils.equiv(key, other: (keyOrNull)) {
 				if val === valOrNode {
 					return self
 				}
-				return BitmapIndexedNode.createOnThread(nil, bitmap: _bitmap, array: Utils.cloneAndSetObject(_array, index: 2 * idx + 1, node: val))
+				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSetObject(_array, index: 2 * idx + 1, node: val))
 			}
 			addedLeaf.val = addedLeaf
-			return BitmapIndexedNode.createOnThread(nil, bitmap: _bitmap, array: Utils.cloneAndSet(_array, index: 2 * idx, withObject: NSNull(), index: 2 * idx + 1, withObject: Utils.createNodeWithShift(shift + 5, key: keyOrNull!, value: valOrNode!, hash: hash, key: key, value: val)!))
+			return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSet(_array, index: 2 * idx, withObject: NSNull(), index: 2 * idx + 1, withObject: Utils.createNodeWithShift(shift + 5, key: keyOrNull!, value: valOrNode!, hash: hash, key: key, value: val)!))
 		} else {
 			let n: Int = Utils.bitCount(UInt(_bitmap))
 			if n >= 16 {
@@ -75,7 +73,7 @@ class BitmapIndexedNode : INode {
 						j += 2
 					}
 				}
-				return ArrayNode.createOnThread(nil, count: n + 1, array: nodes)
+				return ArrayNode(onThread: nil, count: n + 1, array: nodes)
 			} else {
 				var newArray: Array<AnyObject> = []
 				newArray.reserveCapacity(2 * (n + 1))
@@ -84,7 +82,7 @@ class BitmapIndexedNode : INode {
 				addedLeaf.val = addedLeaf
 				newArray[2 * idx + 1] = val
 				ArrayCopy(_array, UInt(2 * idx), newArray, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
-				return BitmapIndexedNode.createOnThread(nil, bitmap: _bitmap | bit, array: newArray)
+				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap | bit, array: newArray)
 			}
 		}
 	}
@@ -103,15 +101,15 @@ class BitmapIndexedNode : INode {
 				return self
 			}
 			if n != nil {
-				return BitmapIndexedNode.createOnThread(nil, bitmap: _bitmap, array: Utils.cloneAndSetNode(_array, index: 2 * idx + 1, node: n))
+				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSetNode(_array, index: 2 * idx + 1, node: n))
 			}
 			if _bitmap == bit {
 				return nil
 			}
-			return BitmapIndexedNode.createOnThread(nil, bitmap: _bitmap ^ bit, array: Utils.removePair(_array, index: idx))
+			return BitmapIndexedNode(onThread: nil, bitmap: _bitmap ^ bit, array: Utils.removePair(_array, index: idx))
 		}
 		if Utils.equiv(key, other: (keyOrNull)) {
-			return BitmapIndexedNode.createOnThread(nil, bitmap: _bitmap ^ _bitmap, array: Utils.removePair(_array, index: idx))
+			return BitmapIndexedNode(onThread: nil, bitmap: _bitmap ^ _bitmap, array: Utils.removePair(_array, index: idx))
 		}
 		return self
 	}
@@ -166,7 +164,7 @@ class BitmapIndexedNode : INode {
 		var newArray: Array<AnyObject> = []
 		newArray.reserveCapacity(n >= 0 ? 2 * (n + 1) : 4)
 		ArrayCopy(_array, 0, newArray, 0, UInt(2 * n))
-		return BitmapIndexedNode.createOnThread(_edit, bitmap: _bitmap, array: newArray)
+		return BitmapIndexedNode(onThread: _edit, bitmap: _bitmap, array: newArray)
 	}
 
 	func editAndSet(edit: NSThread, index i: Int, object a: AnyObject) -> BitmapIndexedNode {
@@ -241,7 +239,7 @@ class BitmapIndexedNode : INode {
 						j += 2
 					}
 				}
-				return ArrayNode.createOnThread(edit, count: n + 1, array: nodes)
+				return ArrayNode(onThread: edit, count: n + 1, array: nodes)
 			} else {
 				var newArray: Array<AnyObject> = []
 				newArray.reserveCapacity(2 * (n + 4))

@@ -128,8 +128,4 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		}
 		return false
 	}
-
-	func objectEnumerator() -> NSEnumerator {
-		return SeqIterator(seq: self.seq())
-	}
 }

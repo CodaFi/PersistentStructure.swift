@@ -57,17 +57,6 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return ret!.persistent()
 	}
 
-	/*
-	class func createV(init: va_list) -> PersistentHashMap {
-		var ret: ITransientMap? = _EmptyPersistentHashMap.asTransient as! ITransientMap?
-		for var curVal = va_arg(init, idt); curVal != nil; curVal = va_arg(init, idt) {
-		var nxtVal: AnyObject = va_arg(init, idt)
-		ret = ret.associateKey(curVal, value: nxtVal)
-		}
-		return ret.persistent as! PersistentHashMap
-	}
-*/
-
 	class func createWithSeq(var items: ISeq?) -> PersistentHashMap {
 		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for ; items != nil; items = items!.next().next() {
@@ -158,9 +147,6 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return PersistentHashMap(meta: self.meta(), count: _count - 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue)
 	}
 
-	func objectEnumerator() -> NSEnumerator {
-		return SeqIterator(seq: self.seq())
-	}
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
 		initial = _hasNull ? f(initial, nil, _nullValue) : initial

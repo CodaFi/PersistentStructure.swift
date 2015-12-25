@@ -34,16 +34,16 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 			return true
 		}
 		if obj is (IList) || obj is (IPersistentVector) {
-			let ma: ICollection? = obj as? ICollection
-			if ma!.count != v?.count /*|| ma!.hash() != v!.hash()*/ {
+			guard let ma = obj as? ICollection, va = v as? IList else {
 				return false
 			}
-			var objec: AnyObject?
-			let i1 = (v as? IList)!.objectEnumerator()
-			let i2 = ma!.objectEnumerator()
-			while objec != nil  {
-				objec = i1.nextObject()
-				if !Utils.isEqual(objec, other: i2.nextObject()) {
+
+			if ma.count != va.count /*|| ma.hash() != v!.hash()*/ {
+				return false
+			}
+
+			for (l, r) in zip(ma.generate(), va.generate()) {
+				if !Utils.isEqual(l, other: r) {
 					return false
 				}
 			}
@@ -284,9 +284,5 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 
 	func objectAtIndex(i: Int) -> AnyObject? {
 		fatalError("\(__FUNCTION__) unimplemented")
-	}
-
-	func objectEnumerator() -> NSEnumerator {
-		return VectorListIterator(vec: self, index: 0)
 	}
 }

@@ -86,10 +86,6 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return true
 	}
 
-	func objectEnumerator() -> NSEnumerator {
-		return NSEnumerator()
-	}
-
 	func seq() -> ISeq {
 		return self
 	}

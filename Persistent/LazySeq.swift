@@ -143,10 +143,6 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 		return false
 	}
 
-	func objectEnumerator() -> NSEnumerator {
-		return SeqIterator(seq: self.seq())
-	}
-
 	func reify() -> IList? {
 		return nil
 	}

@@ -15,20 +15,18 @@ class TransientHashMap: AbstractTransientMap {
 	private var _leafFlag: Box = Box()
 
 	class func create(m: PersistentHashMap) -> TransientHashMap {
-		return TransientHashMap.createOnThread(NSThread.currentThread(), root: m.root(), count: Int(m.count), hasNull: m.hasNull(), nullValue: m.nullValue())
+		return TransientHashMap(onThread: NSThread.currentThread(), root: m.root(), count: Int(m.count), hasNull: m.hasNull(), nullValue: m.nullValue())
 	}
 
 	override init() { }
 
-	class func createOnThread(thread: NSThread?, root: INode?, count: Int, hasNull: Bool, nullValue: AnyObject) -> TransientHashMap {
-		let map: TransientHashMap = TransientHashMap()
-		map._edit = thread
-		map._root = root
-		map._count = count
-		map._hasNull = hasNull
-		map._nullValue = nullValue
-		map._leafFlag = Box()
-		return map
+	init(onThread thread: NSThread?, root: INode?, count: Int, hasNull: Bool, nullValue: AnyObject) {
+		_edit = thread
+		_root = root
+		_count = count
+		_hasNull = hasNull
+		_nullValue = nullValue
+		_leafFlag = Box()
 	}
 
 	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {

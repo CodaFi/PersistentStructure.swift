@@ -386,11 +386,11 @@ class Utils: NSObject {
 	}
 
 	class func keys(coll: AnyObject) -> ISeq {
-		return KeySeq.create(Utils.seq(coll))
+		return KeySeq(seq: Utils.seq(coll))
 	}
 
 	class func vals(coll: AnyObject) -> ISeq {
-		return ValSeq.create(Utils.seq(coll))
+		return ValSeq(seq: Utils.seq(coll))
 	}
 
 	class func list(arg1: AnyObject) -> ISeq {

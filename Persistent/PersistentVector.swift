@@ -217,10 +217,6 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return self.chunkedSeq()
 	}
 
-	override func objectEnumerator() -> NSEnumerator {
-		return PersistentVectorIterator(vec: self, start: 0)
-	}
-
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
 		var step: Int = 0
 		for var i = 0; i < _count; i += step {

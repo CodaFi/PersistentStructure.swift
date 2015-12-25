@@ -24,10 +24,6 @@ class SubVector: AbstractPersistentVector, IObj {
 		_end = end
 	}
 
-	override func objectEnumerator() -> NSEnumerator {
-		return NSEnumerator()
-	}
-
 	override func objectAtIndex(i: Int) -> AnyObject? {
 		if (_start + i >= _end) || (i < 0) {
 			fatalError("Range or index out of bounds")

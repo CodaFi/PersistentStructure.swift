@@ -24,11 +24,11 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		super.init()
 	}
 
-//	init(other: IMap?) {
-//		var ret: ITransientMap? = EMPTY.asTransient as? ITransientMap
-//		for o: AnyObject in other!.allEntries()!.generate() {
+//	init(other: IMap) {
+//		var ret: ITransientMap = EMPTY.asTransient() as! ITransientMap
+//		for o: AnyObject in other.allEntries().generate() {
 //			var e: MapEntry = o as! MapEntry
-//			ret = ret!.associateKey(e.key()!, value: e.val()!)
+//			ret = ret.associateKey(e.key(), value: e.val())
 //		}
 //		self = (ret!.persistent() as! PersistentArrayMap)
 //	}
@@ -180,10 +180,6 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 
 	class func equalKey(k1: AnyObject, other k2: AnyObject) -> Bool {
 		return Utils.equiv(k1, other: k2)
-	}
-
-	func objectEnumerator() -> NSEnumerator? {
-		return nil
 	}
 
 	override func seq() -> ISeq {
