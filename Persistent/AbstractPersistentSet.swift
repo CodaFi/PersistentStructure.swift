@@ -95,18 +95,14 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	}
 
 	func disjoin(key: AnyObject) -> IPersistentSet? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func cons(other: AnyObject) -> IPersistentCollection? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func empty() -> IPersistentCollection? {
-		return nil
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return 0
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

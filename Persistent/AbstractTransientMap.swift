@@ -10,23 +10,23 @@ class AbstractTransientMap : ITransientMap {
 	func ensureEditable() { }
 
 	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func doWithout(key: AnyObject) -> ITransientMap? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func doobjectForKey(key: AnyObject?,  notFound: AnyObject) -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func doCount() -> Int {
-		return 0
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func doPersistent() -> IPersistentMap? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func conj(o: AnyObject) -> ITransientCollection? {

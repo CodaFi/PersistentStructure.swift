@@ -15,7 +15,6 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		} else {
 			fatalError("Range or index out of bounds")
 		}
-		return nil
 	}
 
 	func asVector() -> IPersistentVector? {
@@ -39,7 +38,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	}
 
 	override func empty() -> IPersistentCollection? {
-		return nil
+		fatalError("Collection does not admit an empty representation")
 	}
 
 	override func pop() -> IPersistentStack? {
@@ -47,14 +46,14 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	}
 
 	func setValue(value: AnyObject) -> AnyObject? {
-		return nil
+		fatalError("setValue unimplemented")
 	}
 
 	func key() -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func val() -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

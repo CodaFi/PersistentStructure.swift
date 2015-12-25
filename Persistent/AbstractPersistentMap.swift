@@ -115,66 +115,66 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 	}
 
 	func empty() -> IPersistentCollection? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func seq() -> ISeq? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func entryForKey(key : AnyObject) -> IMapEntry? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func without(key : AnyObject) -> IPersistentMap? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func count() -> UInt {
-		return 0
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func objectForKey(key: AnyObject) -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func objectForKey(key : AnyObject, def : AnyObject?) -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func setObject(val: AnyObject, forKey key: AnyObject) -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func containsKey(key: AnyObject) -> Bool {
-		return false
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func containsValue(value: AnyObject) -> Bool {
-		return false
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func allEntries() -> ISet? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func isEmpty() -> Bool {
-		return true
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func allKeys() -> ISet? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func values() -> ICollection? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }
