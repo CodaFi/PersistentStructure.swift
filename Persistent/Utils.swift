@@ -385,15 +385,15 @@ class Utils: NSObject {
 		return .OrderedDescending
 	}
 
-	class func keys(coll: AnyObject) -> ISeq? {
+	class func keys(coll: AnyObject) -> ISeq {
 		return KeySeq.create(Utils.seq(coll))
 	}
 
-	class func vals(coll: AnyObject) -> ISeq? {
+	class func vals(coll: AnyObject) -> ISeq {
 		return ValSeq.create(Utils.seq(coll))
 	}
 
-	class func list(arg1: AnyObject) -> ISeq? {
+	class func list(arg1: AnyObject) -> ISeq {
 		return PersistentList(first: arg1)
 	}
 }

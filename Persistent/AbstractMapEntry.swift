@@ -33,7 +33,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		return self.asVector().seq()
 	}
 
-	override func cons(o: AnyObject) -> IPersistentVector? {
+	override func cons(o: AnyObject) -> IPersistentVector {
 		return self.asVector().cons(o)
 	}
 

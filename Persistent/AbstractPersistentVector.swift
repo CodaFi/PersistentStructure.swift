@@ -270,7 +270,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 	
-	func cons(o: AnyObject) -> IPersistentVector? {
+	func cons(o: AnyObject) -> IPersistentVector {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
