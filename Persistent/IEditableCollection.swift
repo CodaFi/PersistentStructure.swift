@@ -7,5 +7,5 @@
 //
 
 protocol IEditableCollection {
-	func asTransient() -> ITransientCollection?
+	func asTransient() -> ITransientCollection
 }

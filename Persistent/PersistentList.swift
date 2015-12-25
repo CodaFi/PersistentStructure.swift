@@ -129,13 +129,10 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return 1
 	}
 
-	func isEqual(other: AnyObject?) -> Bool {
-		if let o = other {
-			return (o is ISequential
-				|| o is IList)
-				&& Utils.seq(o) == nil
-		}
-		return false
+	func isEqual(other: AnyObject) -> Bool {
+		return (other is ISequential
+			|| other is IList)
+			&& Utils.seq(other) == nil
 	}
 
 	func equiv(o: AnyObject) -> Bool {

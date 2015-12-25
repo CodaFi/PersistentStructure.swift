@@ -7,7 +7,7 @@
 //
 
 protocol IList : ICollection {
-	func isEqual(other : AnyObject?) -> Bool
+	func isEqual(other : AnyObject) -> Bool
 	func lastIndexOf(other : AnyObject) -> Int
 	func subListFromIndex(fromIndex : Int, toIndex: Int) -> IList?
 }

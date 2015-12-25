@@ -97,7 +97,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return PersistentHashSet(meta: meta, impl: _impl)
 	}
 
-	func asTransient() -> ITransientCollection? {
+	func asTransient() -> ITransientCollection {
 		return TransientHashSet(impl: (_impl as! PersistentHashMap).asTransient() as? ITransientMap)
 	}
 

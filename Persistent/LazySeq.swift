@@ -118,16 +118,12 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 		return Utils.hasheq(self.seq())
 	}
 
-	func isEqual(other : AnyObject?) -> Bool {
-		if let o = other {
-			let s: ISeq? = self.seq()
-			if s != nil {
-				return s!.equiv(o)
-			} else {
-				return (o is ISequential || o is IList) && Utils.seq(o) == nil
-			}
+	func isEqual(other : AnyObject) -> Bool {
+		if self.seq().count() == 0 {
+			return self.seq().equiv(other)
+		} else {
+			return (other is ISequential || other is IList) && Utils.seq(other) == nil
 		}
-		return false
 	}
 
 	func toArray() -> Array<AnyObject> {

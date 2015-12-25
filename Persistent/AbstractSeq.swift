@@ -38,17 +38,13 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 	}
 
 	func isEqual(obj: AnyObject) -> Bool {
-		return self.isEqual(.Some(obj))
-	}
-
-	func isEqual(obj: AnyObject?) -> Bool {
 		if self === obj {
 			return true
 		}
 		if !(obj is ISequential || obj is IList) {
 			return false
 		}
-		var ms: ISeq? = Utils.seq(obj!)
+		var ms: ISeq? = Utils.seq(obj)
 		for var s : ISeq? = self.seq(); s != nil; s = s!.next(), ms = ms!.next() {
 			if ms == nil || !Utils.isEqual(s!.first(), other: ms!.first()) {
 				return false

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var _EmptyPersistentHashMap: PersistentHashMap = PersistentHashMap(count: 0, root: nil, hasNull: false, nullValue: nil)
+private var EMPTY: PersistentHashMap = PersistentHashMap(count: 0, root: nil, hasNull: false, nullValue: nil)
 private var _NOT_FOUND: AnyObject = NSNull()
 
 class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
@@ -44,12 +44,12 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return _nullValue!
 	}
 
-	func asTransient() -> ITransientCollection? {
+	func asTransient() -> ITransientCollection {
 		return TransientHashMap.create(self)
 	}
 
 	class func create(other: IMap?) -> IPersistentMap? {
-		var ret: ITransientMap? = _EmptyPersistentHashMap.asTransient()! as? ITransientMap
+		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for o: AnyObject in other!.allEntries()!.generate() {
 			let e: IMapEntry = o as! IMapEntry
 			ret = ret!.associateKey(e.key()!, value: e.val()!)
@@ -69,7 +69,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 */
 
 	class func createWithSeq(var items: ISeq?) -> PersistentHashMap {
-		var ret: ITransientMap? = _EmptyPersistentHashMap.asTransient() as? ITransientMap
+		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for ; items != nil; items = items!.next().next() {
 			if items!.next().count() == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
@@ -80,7 +80,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	}
 
 	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashMap {
-		var ret: ITransientMap? = _EmptyPersistentHashMap.asTransient() as? ITransientMap
+		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for var i = 0; items != nil; items = items!.next().next(), i = i.successor() {
 			if items!.next().count() == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
@@ -193,7 +193,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	}
 
 	class func empty() -> IPersistentCollection? {
-		return _EmptyPersistentHashMap
+		return EMPTY
 	}
 
 	func withMeta(meta: IPersistentMap?) -> PersistentHashMap {

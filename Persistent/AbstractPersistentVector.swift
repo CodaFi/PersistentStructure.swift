@@ -96,8 +96,8 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return true
 	}
 
-	func isEqual(object: AnyObject?) -> Bool {
-		return AbstractPersistentVector.doisEqual(self, object: object!)
+	func isEqual(object: AnyObject) -> Bool {
+		return AbstractPersistentVector.doisEqual(self, object: object)
 	}
 
 	func equiv(o: AnyObject) -> Bool {

@@ -204,7 +204,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return initial
 	}
 
-	func asTransient() -> ITransientCollection? {
+	func asTransient() -> ITransientCollection {
 		return TransientArrayMap(array: _array)
 	}
 }

@@ -112,7 +112,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return EmptyNode
 	}
 
-	func asTransient() -> ITransientCollection? {
+	func asTransient() -> ITransientCollection {
 		return TransientVector(v: self)
 	}
 

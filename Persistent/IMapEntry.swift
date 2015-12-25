@@ -10,6 +10,6 @@ protocol IMapEntry : class {
 	func key() -> AnyObject?
 	func val() -> AnyObject?
 
-	func isEqual(o : AnyObject?) -> Bool
+	func isEqual(o : AnyObject) -> Bool
 	func setValue(value : AnyObject) -> AnyObject?
 }
