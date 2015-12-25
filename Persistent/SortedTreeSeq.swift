@@ -32,8 +32,8 @@ class SortedTreeSeq: AbstractSeq, IObj {
 		super.init(meta: meta)
 	}
 
-	class func createWithRoot(t: TreeNode?, ascending asc: Bool, count cnt: Int) -> SortedTreeSeq {
-		return SortedTreeSeq(stack: SortedTreeSeq.pushNode(t, stack: EmptySeq(), ascending: asc), ascending: asc, count: cnt)
+	convenience init(withRoot t: TreeNode?, ascending asc: Bool, count cnt: Int) {
+		self.init(stack: SortedTreeSeq.pushNode(t, stack: EmptySeq(), ascending: asc), ascending: asc, count: cnt)
 	}
 
 	class func pushNode(var t: TreeNode?, var stack: ISeq, ascending asc: Bool) -> ISeq {

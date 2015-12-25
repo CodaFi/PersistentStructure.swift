@@ -75,7 +75,7 @@ class ArrayNode : INode {
 	}
 
 	func nodeSeq() -> ISeq {
-		return Seq.create(_array)
+		return Seq(nodes: _array)
 	}
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {

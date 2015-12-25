@@ -125,14 +125,14 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	override func seq() -> ISeq {
 		if _count > 0 {
-			return SortedTreeSeq.createWithRoot(_tree, ascending: true, count: _count)
+			return SortedTreeSeq(withRoot: _tree, ascending: true, count: _count)
 		}
 		return EmptySeq()
 	}
 
 	func reversedSeq() -> ISeq {
 		if _count > 0 {
-			return SortedTreeSeq.createWithRoot(_tree, ascending: false, count: _count)
+			return SortedTreeSeq(withRoot: _tree, ascending: false, count: _count)
 		}
 		return EmptySeq()
 	}
@@ -147,7 +147,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	func seq(ascending: Bool) -> ISeq? {
 		if _count > 0 {
-			return SortedTreeSeq.createWithRoot(_tree, ascending: ascending, count: _count)
+			return SortedTreeSeq(withRoot: _tree, ascending: ascending, count: _count)
 		}
 		return nil
 	}

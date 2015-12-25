@@ -184,7 +184,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 
 	override func seq() -> ISeq {
 		if _array.count > 0 {
-			return Seq.create(_array)
+			return Seq(nodes: _array)
 		}
 		return EmptySeq()
 	}

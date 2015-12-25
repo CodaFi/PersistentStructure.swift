@@ -14,8 +14,8 @@ class TransientHashMap: AbstractTransientMap {
 	private var _nullValue: AnyObject?
 	private var _leafFlag: Box = Box()
 
-	class func create(m: PersistentHashMap) -> TransientHashMap {
-		return TransientHashMap(onThread: NSThread.currentThread(), root: m.root(), count: Int(m.count), hasNull: m.hasNull(), nullValue: m.nullValue())
+	convenience init(withMap m: PersistentHashMap) {
+		self.init(onThread: NSThread.currentThread(), root: m.root(), count: Int(m.count), hasNull: m.hasNull(), nullValue: m.nullValue())
 	}
 
 	override init() { }
@@ -63,7 +63,7 @@ class TransientHashMap: AbstractTransientMap {
 	override func doobjectForKey(key: AnyObject?,  notFound: AnyObject) -> AnyObject? {
 		if key == nil {
 			if _hasNull {
-				return _nullValue!
+				return _nullValue
 			} else {
 				return notFound
 			}

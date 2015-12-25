@@ -45,7 +45,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	}
 
 	func asTransient() -> ITransientCollection {
-		return TransientHashMap.create(self)
+		return TransientHashMap(withMap: self)
 	}
 
 	class func create(other: IMap?) -> IPersistentMap {
@@ -83,7 +83,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	}
 
 	class func createWithMeta(meta: IPersistentMap?, array: Array<AnyObject>) -> PersistentHashMap {
-		return PersistentHashMap.createWithSeq(Seq.create(array))
+		return PersistentHashMap.createWithSeq(Seq(nodes: array))
 	}
 
 	class func hash(k: AnyObject) -> Int {
