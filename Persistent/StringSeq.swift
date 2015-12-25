@@ -10,10 +10,7 @@ class StringSeq: AbstractSeq, IIndexedSeq {
 	private var _string: NSString
 	private var _index: Int
 
-	convenience init?(s: NSString) {
-		if s.length == 0 {
-			return nil
-		}
+	convenience init(s: NSString) {
 		self.init(meta: nil, string: s, index: 0)
 	}
 

@@ -20,7 +20,7 @@ func ArrayCopy(src : Array<AnyObject>, _ srcPos : UInt, var _ dest : Array<AnyOb
 
 
 class Utils: NSObject {
-	class func seq(coll: AnyObject) -> ISeq? {
+	class func seq(coll: AnyObject) -> ISeq {
 		if let cc = coll as? AbstractSeq {
 			return cc
 		} else if let cc = coll as? LazySeq {
@@ -30,11 +30,9 @@ class Utils: NSObject {
 		}
 	}
 
-	class func seqFrom(coll: AnyObject?) -> ISeq? {
+	class func seqFrom(coll: AnyObject) -> ISeq {
 		if let cc = coll as? (ISeqable) {
 			return cc.seq()
-		} else if coll == nil {
-			return nil
 		} else if let cc = coll as? NSString {
 			return StringSeq(s: cc)
 		} else {
@@ -196,7 +194,7 @@ class Utils: NSObject {
 		} else if let cc = coll as? (ISeq) {
 			return AbstractCons(first: x, rest: cc)
 		} else {
-			return AbstractCons(first: x, rest: Utils.seq(coll!)!)
+			return AbstractCons(first: x, rest: Utils.seq(coll!))
 		}
 	}
 
@@ -388,11 +386,11 @@ class Utils: NSObject {
 	}
 
 	class func keys(coll: AnyObject) -> ISeq? {
-		return KeySeq.create(Utils.seq(coll)!)
+		return KeySeq.create(Utils.seq(coll))
 	}
 
 	class func vals(coll: AnyObject) -> ISeq? {
-		return ValSeq.create(Utils.seq(coll)!)
+		return ValSeq.create(Utils.seq(coll))
 	}
 
 	class func list(arg1: AnyObject) -> ISeq? {

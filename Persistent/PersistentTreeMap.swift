@@ -46,7 +46,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		var ret: IPersistentMap = EMPTY as IPersistentMap
 		for o: AnyObject in other!.allEntries()!.generate() {
 			let e: MapEntry = o as! MapEntry
-			ret = ret.associateKey(e.key()!, withValue: e.val()!) as! IPersistentMap
+			ret = ret.associateKey(e.key(), withValue: e.val()) as! IPersistentMap
 		}
 		return ret
 	}
@@ -157,7 +157,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 			var stack: ISeq = EmptySeq()
 			var t: TreeNode? = _tree
 			while t != nil {
-				let c: NSComparisonResult = self.doCompare(key, k2: t!.key()!)
+				let c: NSComparisonResult = self.doCompare(key, k2: t!.key())
 				if c == .OrderedSame {
 					stack = Utils.cons(t!, to: stack)
 					return SortedTreeSeq(stack: stack, ascending: ascending)
@@ -225,14 +225,14 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	override func objectForKey(key: AnyObject, def: AnyObject) -> AnyObject {
 		if let n = self.entryForKey(key) as? TreeNode {
-			return n.val()!
+			return n.val()
 		}
 		return def
 	}
 
 	override func objectForKey(key: AnyObject) -> AnyObject? {
 		if let n = self.entryForKey(key) as? TreeNode {
-			return n.val()!
+			return n.val()
 		}
 		return nil
 	}
@@ -248,7 +248,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	override func entryForKey(aKey: AnyObject) -> IMapEntry? {
 		var t: TreeNode? = _tree
 		while t != nil {
-			let c: NSComparisonResult = self.doCompare(aKey, k2: t!.key()!)
+			let c: NSComparisonResult = self.doCompare(aKey, k2: t!.key())
 			if c == .OrderedSame {
 				return t
 			} else if c == .OrderedDescending {
@@ -271,7 +271,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 			}
 			return RedTreeValue(key: key, val: val!)
 		}
-		let c: NSComparisonResult = self.doCompare(key, k2: t!.key()!)
+		let c: NSComparisonResult = self.doCompare(key, k2: t!.key())
 		if c == .OrderedSame {
 			found.val = t
 			return nil
@@ -290,7 +290,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		if t == nil {
 			return nil
 		}
-		let c: NSComparisonResult = self.doCompare(key, k2: t!.key()!)
+		let c: NSComparisonResult = self.doCompare(key, k2: t!.key())
 		if c == .OrderedSame {
 			found.val = t
 			return PersistentTreeMap.append(t!.left()!, right: t!.right()!)
@@ -301,16 +301,16 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		}
 		if c == .OrderedDescending {
 			if let _ = t!.left() as? BlackTreeNode {
-				return PersistentTreeMap.balanceLeftDel(t!.key()!, val: t!.val()!, del: del!, right: t!.right()!)
+				return PersistentTreeMap.balanceLeftDel(t!.key(), val: t!.val(), del: del!, right: t!.right()!)
 			} else {
-				return PersistentTreeMap.red(t!.key()!, val: t!.val()!, left: del!, right: t!.right()!)
+				return PersistentTreeMap.red(t!.key(), val: t!.val(), left: del!, right: t!.right()!)
 			}
 		}
 
 		if let _ = t!.right() as? BlackTreeNode {
-			return PersistentTreeMap.balanceRightDel(t!.key()!, val: t!.val()!, del: del!, left: t!.left()!)
+			return PersistentTreeMap.balanceRightDel(t!.key(), val: t!.val(), del: del!, left: t!.left()!)
 		}
-		return PersistentTreeMap.red(t!.key()!, val: t!.val()!, left: t!.left()!, right: del!)
+		return PersistentTreeMap.red(t!.key(), val: t!.val(), left: t!.left()!, right: del!)
 	}
 
 	class func append(left: TreeNode?,  right: TreeNode?) -> TreeNode? {
@@ -322,21 +322,21 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 			if let _ = right as? RedTreeNode {
 				let app: TreeNode? = PersistentTreeMap.append(left!.right(), right: right!.left())
 				if let _ = app as? RedTreeNode {
-					return PersistentTreeMap.red(app!.key()!, val: app!.val(), left: PersistentTreeMap.red(left!.key()!, val: left!.val()!, left: left!.left()!, right: app!.left()!), right: PersistentTreeMap.red(right!.key()!, val: right!.val()!, left: app!.right(), right: right!.right()!))
+					return PersistentTreeMap.red(app!.key(), val: app!.val(), left: PersistentTreeMap.red(left!.key(), val: left!.val(), left: left!.left()!, right: app!.left()!), right: PersistentTreeMap.red(right!.key(), val: right!.val(), left: app!.right(), right: right!.right()!))
 				} else {
-					return PersistentTreeMap.red(left!.key()!, val: left!.val()!, left: left!.left()!, right: PersistentTreeMap.red(right!.key()!, val: right!.val()!, left: app, right: right!.right()!))
+					return PersistentTreeMap.red(left!.key(), val: left!.val(), left: left!.left()!, right: PersistentTreeMap.red(right!.key(), val: right!.val(), left: app, right: right!.right()!))
 				}
 			} else {
-				return PersistentTreeMap.red(left!.key()!, val: left!.val()!, left: left!.left()!, right: PersistentTreeMap.append(left!.right()!, right: right))
+				return PersistentTreeMap.red(left!.key(), val: left!.val(), left: left!.left()!, right: PersistentTreeMap.append(left!.right()!, right: right))
 			}
 		} else if let _ = right as? RedTreeNode {
-			return PersistentTreeMap.red(right!.key()!, val: right!.val()!, left: PersistentTreeMap.append(left, right: right!.left()!), right: right!.right()!)
+			return PersistentTreeMap.red(right!.key(), val: right!.val(), left: PersistentTreeMap.append(left, right: right!.left()!), right: right!.right()!)
 		} else {
 			let app: TreeNode? = PersistentTreeMap.append(left!.right()!, right: right!.left()!)
 			if let _ = app as? RedTreeNode {
-				return PersistentTreeMap.red(app!.key()!, val: app!.val(), left: PersistentTreeMap.black(left!.key()!, val: left!.val()!, left: left!.left()!, right: app!.left()!), right: PersistentTreeMap.black(right!.key()!, val: right!.val()!, left: app!.right(), right: right!.right()!))
+				return PersistentTreeMap.red(app!.key(), val: app!.val(), left: PersistentTreeMap.black(left!.key(), val: left!.val(), left: left!.left()!, right: app!.left()!), right: PersistentTreeMap.black(right!.key(), val: right!.val(), left: app!.right(), right: right!.right()!))
 			} else {
-				return PersistentTreeMap.balanceLeftDel(left!.key()!, val: left!.val()!, del: left!.left()!, right: PersistentTreeMap.black(right!.key()!, val: right!.val()!, left: app, right: right!.right()!))
+				return PersistentTreeMap.balanceLeftDel(left!.key(), val: left!.val(), del: left!.left()!, right: PersistentTreeMap.black(right!.key(), val: right!.val(), left: app, right: right!.right()!))
 			}
 		}
 	}
@@ -347,7 +347,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		} else if let _ = right as? BlackTreeNode {
 			return PersistentTreeMap.rightBalance(key, val: val, left: del, ins: right.redden()!)
 		} else if let _ = right as? RedTreeNode, let _ = right.left() as? BlackTreeNode {
-			return PersistentTreeMap.red(right.left()!.key()!, val: right.left()!.val()!, left: PersistentTreeMap.black(key, val: val, left: del, right: right.left()!.left()!), right: PersistentTreeMap.rightBalance(right.key()!, val: right.val()!, left: right.left()!.right()!, ins: right.right()!.redden()!))
+			return PersistentTreeMap.red(right.left()!.key(), val: right.left()!.val(), left: PersistentTreeMap.black(key, val: val, left: del, right: right.left()!.left()!), right: PersistentTreeMap.rightBalance(right.key(), val: right.val(), left: right.left()!.right()!, ins: right.right()!.redden()!))
 		} else {
 			fatalError("Invariant violation")
 		}
@@ -360,7 +360,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		} else if let _ = left as? BlackTreeNode {
 			return PersistentTreeMap.leftBalance(key, val: val, ins: left.redden()!, right: del)
 		} else if let _ = left as? RedTreeNode, let _ = left.right() as? BlackTreeNode {
-			return PersistentTreeMap.red(left.right()!.key()!, val: left.right()!.val(), left: PersistentTreeMap.leftBalance(left.key()!, val: left.val()!, ins: left.left()!.redden()!, right: left.right()!.left()!), right: PersistentTreeMap.black(key, val: val, left: left.right()!.right(), right: del))
+			return PersistentTreeMap.red(left.right()!.key(), val: left.right()!.val(), left: PersistentTreeMap.leftBalance(left.key(), val: left.val(), ins: left.left()!.redden()!, right: left.right()!.left()!), right: PersistentTreeMap.black(key, val: val, left: left.right()!.right(), right: del))
 		} else {
 			fatalError("Invariant violation")
 		}
@@ -369,9 +369,9 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	class func leftBalance(key: AnyObject, val: AnyObject, ins: TreeNode, right: TreeNode) -> TreeNode? {
 		if let _ = ins as? RedTreeNode, let _ = ins.left() as? RedTreeNode {
-			return PersistentTreeMap.red(ins.key()!, val: ins.val(), left: ins.left()!.blacken()!, right: PersistentTreeMap.black(key, val: val, left: ins.right(), right: right))
+			return PersistentTreeMap.red(ins.key(), val: ins.val(), left: ins.left()!.blacken()!, right: PersistentTreeMap.black(key, val: val, left: ins.right(), right: right))
 		} else if let _ = ins as? RedTreeNode, let _ = ins.right() as? RedTreeNode {
-			return PersistentTreeMap.red(ins.right()!.key()!, val: ins.right()!.val()!, left: PersistentTreeMap.black(ins.key()!, val: ins.val(), left: ins.left(), right: ins.right()!.left()!), right: PersistentTreeMap.black(key, val: val, left: ins.right()!.right()!, right: right))
+			return PersistentTreeMap.red(ins.right()!.key(), val: ins.right()!.val(), left: PersistentTreeMap.black(ins.key(), val: ins.val(), left: ins.left(), right: ins.right()!.left()!), right: PersistentTreeMap.black(key, val: val, left: ins.right()!.right()!, right: right))
 		} else {
 			return PersistentTreeMap.black(key, val: val, left: ins, right: right)
 		}
@@ -379,17 +379,17 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 
 	class func rightBalance(key: AnyObject, val: AnyObject, left: TreeNode, ins: TreeNode) -> TreeNode? {
 		if let _ = ins as? RedTreeNode, let _ = ins.right() as? RedTreeNode {
-			return PersistentTreeMap.red(ins.key()!, val: ins.val(), left: PersistentTreeMap.black(key, val: val, left: left, right: ins.left()), right: ins.right()!.blacken()!)
+			return PersistentTreeMap.red(ins.key(), val: ins.val(), left: PersistentTreeMap.black(key, val: val, left: left, right: ins.left()), right: ins.right()!.blacken()!)
 		} else if let _ = ins as? RedTreeNode, let _ = left as? RedTreeNode {
-			return PersistentTreeMap.red(ins.left()!.key()!, val: ins.left()!.val()!, left: PersistentTreeMap.black(key, val: val, left: left, right: ins.left()!.left()!), right: PersistentTreeMap.black(ins.key()!, val: ins.val(), left: ins.left()!.right()!, right: ins.left()!.val()! as? TreeNode))
+			return PersistentTreeMap.red(ins.left()!.key(), val: ins.left()!.val(), left: PersistentTreeMap.black(key, val: val, left: left, right: ins.left()!.left()!), right: PersistentTreeMap.black(ins.key(), val: ins.val(), left: ins.left()!.right()!, right: ins.left()!.val() as? TreeNode))
 		} else {
 			return PersistentTreeMap.black(key, val: val, left: left, right: ins)
 		}
 	}
 
 	func replace(t: TreeNode, key: AnyObject, val: AnyObject) -> TreeNode {
-		let c: NSComparisonResult = self.doCompare(key, k2: t.key()!)
-		return t.replaceKey(t.key()!, byValue: (c == .OrderedSame) ? val : t.val()!, left: (c == .OrderedDescending) ? self.replace(t.left()!, key: key, val: val) : t.left()!, right: (c == .OrderedAscending) ? self.replace(t.right()!, key: key, val: val) : t.right()!)!
+		let c: NSComparisonResult = self.doCompare(key, k2: t.key())
+		return t.replaceKey(t.key(), byValue: (c == .OrderedSame) ? val : t.val(), left: (c == .OrderedDescending) ? self.replace(t.left()!, key: key, val: val) : t.left()!, right: (c == .OrderedAscending) ? self.replace(t.right()!, key: key, val: val) : t.right()!)!
 	}
 
 	class func red(key: AnyObject, val: AnyObject?, left: TreeNode?, right: TreeNode?) -> RedTreeNode {

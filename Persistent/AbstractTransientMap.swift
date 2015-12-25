@@ -32,7 +32,7 @@ class AbstractTransientMap : ITransientMap {
 	func conj(o: AnyObject) -> ITransientCollection {
 		self.ensureEditable()
 		if let e = o as? MapEntry {
-			return self.associateKey(e.key()!, value: e.val()!)
+			return self.associateKey(e.key(), value: e.val())
 		} else if let v: IPersistentVector = o as? IPersistentVector {
 			if v.count() != 2 {
 				fatalError("Vector arg to map conj: must be a pair")
@@ -40,9 +40,9 @@ class AbstractTransientMap : ITransientMap {
 			return self.associateKey(v.objectAtIndex(0)!, value: v.objectAtIndex(1)!)
 		}
 		var ret: ITransientMap = self
-		for var es = Utils.seq(o); es != nil; es = es!.next() {
-			let e: MapEntry = es!.first() as! MapEntry
-			ret = ret.associateKey(e.key()!, value: e.val()!)
+		for var es : ISeq = Utils.seq(o); es.count() != 0; es = es.next() {
+			let e: MapEntry = es.first() as! MapEntry
+			ret = ret.associateKey(e.key(), value: e.val())
 		}
 		return ret
 	}

@@ -18,7 +18,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	}
 
 	func asVector() -> IPersistentVector? {
-		return LazilyPersistentVector.createOwning([self.key()!, self.val()!]) as? IPersistentVector
+		return LazilyPersistentVector.createOwning([self.key(), self.val()]) as? IPersistentVector
 	}
 
 	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
@@ -42,18 +42,18 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	}
 
 	override func pop() -> IPersistentStack {
-		return LazilyPersistentVector.createOwning([self.key()!]) as! IPersistentStack
+		return LazilyPersistentVector.createOwning([self.key()]) as! IPersistentStack
 	}
 
 	func setValue(value: AnyObject) -> AnyObject? {
 		fatalError("setValue unimplemented")
 	}
 
-	func key() -> AnyObject? {
+	func key() -> AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func val() -> AnyObject? {
+	func val() -> AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

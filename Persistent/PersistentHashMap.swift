@@ -52,7 +52,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
 		for o: AnyObject in other!.allEntries()!.generate() {
 			let e: IMapEntry = o as! IMapEntry
-			ret = ret!.associateKey(e.key()!, value: e.val()!)
+			ret = ret!.associateKey(e.key(), value: e.val())
 		}
 		return ret!.persistent()
 	}
@@ -101,18 +101,12 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return Utils.hasheq(k)
 	}
 
-	override func containsKey(key: AnyObject?) -> Bool {
-		if key == nil {
-			return _hasNull
-		}
-		return (_root != nil) ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key!), key: key!, notFound: _NOT_FOUND) !== _NOT_FOUND : false
+	override func containsKey(key: AnyObject) -> Bool {
+		return (_root != nil) ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key), key: key, notFound: _NOT_FOUND) !== _NOT_FOUND : false
 	}
 
-	override func entryForKey(key: AnyObject?) -> IMapEntry? {
-		if key == nil {
-			return _hasNull ? MapEntry(key: nil, val: _nullValue) : nil
-		}
-		return (_root != nil) ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key!), key: key!) : nil
+	override func entryForKey(key: AnyObject) -> IMapEntry? {
+		return (_root != nil) ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key), key: key) : nil
 	}
 
 	func associateKey(key: AnyObject?, value val: AnyObject) -> IPersistentMap {
@@ -185,9 +179,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 
 	override func seq() -> ISeq {
 		if let r = _root {
-			if _hasNull {
-				return AbstractCons(first: MapEntry(key: nil, val: _nullValue), rest: r.nodeSeq())
-			}
+			return r.nodeSeq()
 		}
 		return EmptySeq()
 	}

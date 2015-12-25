@@ -17,17 +17,17 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 
 	func cons(o : AnyObject) -> IPersistentCollection {
 		if let e = o as? IMapEntry {
-			return self.associateKey(e.key()!, withValue: e.val()!)
+			return self.associateKey(e.key(), withValue: e.val())
 		} else if let v = o as? IPersistentVector {
-			if v.count() != 2 {
+			guard let k1 = v.objectAtIndex(0), v1 = v.objectAtIndex(1) else {
 				fatalError("Vector arg to map conj must be a pair")
 			}
-			return self.associateKey(v.objectAtIndex(0)!, withValue: v.objectAtIndex(1)!)
+			return self.associateKey(k1, withValue: v1)
 		} else {
 			var ret : IPersistentMap = self
 			for var es : ISeq? = Utils.seq(o); es != nil; es = es!.next() {
 				let e : IMapEntry = es?.first as! IMapEntry
-				ret = ret.associateKey(e.key()!, withValue: e.val()!) as! IPersistentMap
+				ret = ret.associateKey(e.key(), withValue: e.val()) as! IPersistentMap
 			}
 			return ret
 		}
@@ -50,8 +50,8 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		}
 		for var s = m1.seq(); s.count() != 0; s = s.next() {
 			if let e = s.first() as? IMapEntry {
-				let found: Bool = m!.containsKey(e.key()!)
-				if !found || !Utils.isEqual(e.val(), other: m!.objectForKey(e.key()!)) {
+				let found: Bool = m!.containsKey(e.key())
+				if !found || !Utils.isEqual(e.val(), other: m!.objectForKey(e.key())) {
 					return false
 				}
 			}
@@ -74,8 +74,8 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 
 		for var s : ISeq? = self.seq(); s != nil; s = s!.next() {
 			if let e = s!.first() as? IMapEntry {
-				let found = m!.containsKey(e.key()!)
-				if !found || Utils.equiv(e.val(), other: m!.objectForKey(e.key()!)) {
+				let found = m!.containsKey(e.key())
+				if !found || Utils.equiv(e.val(), other: m!.objectForKey(e.key())) {
 					return false
 				}
 			}
@@ -95,7 +95,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		var hash : UInt = 0
 		for var s : ISeq? = m.seq(); s != nil; s = s!.next() {
 			let e : IMapEntry = s!.first as! IMapEntry
-			hash += UInt(e.key()!.hash ^ e.val()!.hash)
+			hash += UInt(e.key().hash ^ e.val().hash)
 		}
 		return hash
 	}
