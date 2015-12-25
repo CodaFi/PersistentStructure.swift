@@ -65,16 +65,18 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return true
 	}
 
-	class func doEquiv(v: IPersistentVector?, object obj: AnyObject) -> Bool {
+	class func doEquiv(v: IPersistentVector, object obj: AnyObject) -> Bool {
 		if obj is IList || obj is IPersistentVector {
-			let ma: ICollection? = obj as? ICollection
-			if ma!.count() != v!.count() {
+			guard let ma = obj as? ICollection, objc = obj as? IList else {
 				return false
 			}
-			var objec: AnyObject?
-			for var i1 = (v as? IList)!.objectEnumerator(), i2 = ma!.objectEnumerator(); objec != nil; {
-				objec = i1.nextObject()
-				if !Utils.equiv(objec, other: i2.nextObject()) {
+
+			if ma.count() != v.count() {
+				return false
+			}
+
+			for (l, r) in zip(ma.generate(), objc.generate()) {
+				if !Utils.equiv(l, other: r) {
 					return false
 				}
 			}
@@ -84,8 +86,8 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 				return false
 			}
 			var ms: ISeq? = Utils.seq(obj)
-			for var i = 0; i < Int(v!.count()); i = i.successor(), ms = ms!.next() {
-				if ms == nil || !Utils.equiv((v!.objectAtIndex(i)), other: ms!.first()) {
+			for var i = 0; i < Int(v.count()); i = i.successor(), ms = ms!.next() {
+				if ms == nil || !Utils.equiv((v.objectAtIndex(i)), other: ms!.first()) {
 					return false
 				}
 			}
@@ -107,11 +109,8 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	var hash : Int {
 		if _hash == -1 {
 			var hsh: UInt = 1
-			let i: NSEnumerator = self.objectEnumerator()
-			var obj: AnyObject? = i.nextObject()
-			while obj != nil {
-				hsh = 31 * hsh + UInt(obj == nil ? 0 : obj!.hash!)
-				obj = i.nextObject()
+			for obj in self.generate() {
+				hsh = 31 * hsh + UInt(obj.hash!)
 			}
 			_hash = Int(hsh)
 		}
@@ -121,11 +120,8 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	func hasheq() -> Int {
 		if _hasheq == -1 {
 			var hash: Int = 1
-			let i: NSEnumerator = self.objectEnumerator()
-			var obj: AnyObject? = i.nextObject()
-			while obj != nil {
+			for obj in self.generate() {
 				hash = 31 * hash + Utils.hasheq(obj)
-				obj = i.nextObject()
 			}
 			_hasheq = hash
 		}
@@ -248,14 +244,17 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func compareTo(o: AnyObject) -> NSComparisonResult {
-		let v: IPersistentVector? = o as? IPersistentVector
-		if self.count() < v!.count() {
+		guard let v = o as? IPersistentVector else {
+			fatalError("Cannot compare to non-persistent vector type")
+		}
+
+		if self.count() < v.count() {
 			return .OrderedAscending
-		} else if self.count() > v!.count() {
+		} else if self.count() > v.count() {
 			return .OrderedDescending
 		}
 		for var i = 0; i < Int(self.count()); i = i.successor() {
-			let c: NSComparisonResult = Utils.compare(self.objectAtIndex(i), to: v!.objectAtIndex(i))
+			let c: NSComparisonResult = Utils.compare(self.objectAtIndex(i), to: v.objectAtIndex(i))
 			if c != .OrderedSame {
 				return c
 			}

@@ -17,12 +17,12 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		}
 	}
 
-	func asVector() -> IPersistentVector? {
-		return LazilyPersistentVector.createOwning([self.key(), self.val()]) as? IPersistentVector
+	func asVector() -> IPersistentVector {
+		return LazilyPersistentVector.createOwning([self.key(), self.val()]) 
 	}
 
 	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
-		return self.asVector()!.assocN(i, value: val)
+		return self.asVector().assocN(i, value: val)
 	}
 
 	override func count() -> UInt {
@@ -30,11 +30,11 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	}
 
 	override func seq() -> ISeq {
-		return self.asVector()!.seq()
+		return self.asVector().seq()
 	}
 
 	override func cons(o: AnyObject) -> IPersistentVector? {
-		return self.asVector()!.cons(o)
+		return self.asVector().cons(o)
 	}
 
 	override func empty() -> IPersistentCollection {
@@ -42,7 +42,7 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	}
 
 	override func pop() -> IPersistentStack {
-		return LazilyPersistentVector.createOwning([self.key()]) as! IPersistentStack
+		return LazilyPersistentVector.createOwning([self.key()])
 	}
 
 	func setValue(value: AnyObject) -> AnyObject? {

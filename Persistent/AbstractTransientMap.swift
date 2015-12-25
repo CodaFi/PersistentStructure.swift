@@ -34,10 +34,10 @@ class AbstractTransientMap : ITransientMap {
 		if let e = o as? MapEntry {
 			return self.associateKey(e.key(), value: e.val())
 		} else if let v: IPersistentVector = o as? IPersistentVector {
-			if v.count() != 2 {
+			guard let k1 = v.objectAtIndex(0), v1 = v.objectAtIndex(1) else {
 				fatalError("Vector arg to map conj: must be a pair")
 			}
-			return self.associateKey(v.objectAtIndex(0)!, value: v.objectAtIndex(1)!)
+			return self.associateKey(k1, value: v1)
 		}
 		var ret: ITransientMap = self
 		for var es : ISeq = Utils.seq(o); es.count() != 0; es = es.next() {

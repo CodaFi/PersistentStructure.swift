@@ -25,8 +25,8 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return self.associateKey(k1, withValue: v1)
 		} else {
 			var ret : IPersistentMap = self
-			for var es : ISeq? = Utils.seq(o); es != nil; es = es!.next() {
-				let e : IMapEntry = es?.first as! IMapEntry
+			for var es : ISeq = Utils.seq(o); es.count() != 0; es = es.next() {
+				let e : IMapEntry = es.first() as! IMapEntry
 				ret = ret.associateKey(e.key(), withValue: e.val()) as! IPersistentMap
 			}
 			return ret
@@ -44,14 +44,17 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		if !(obj is IMap) {
 			return false
 		}
-		let m: IMap? = obj as? IMap
-		if m!.count() != m1.count() {
+		guard let m : IMap = obj as? IMap else {
+			return false
+		}
+
+		if m.count() != m1.count() {
 			return false
 		}
 		for var s = m1.seq(); s.count() != 0; s = s.next() {
 			if let e = s.first() as? IMapEntry {
-				let found: Bool = m!.containsKey(e.key())
-				if !found || !Utils.isEqual(e.val(), other: m!.objectForKey(e.key())) {
+				let found: Bool = m.containsKey(e.key())
+				if !found || !Utils.isEqual(e.val(), other: m.objectForKey(e.key())) {
 					return false
 				}
 			}
