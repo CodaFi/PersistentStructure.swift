@@ -40,7 +40,7 @@ class ArrayChunk : IChunk {
 		return _end - _off
 	}
 
-	func tail() -> IChunk {
+	var tail : IChunk {
 		if _off == _end {
 			fatalError("Cannot request tail of empty chunk.")
 		}

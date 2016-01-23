@@ -7,5 +7,5 @@
 //
 
 protocol IDeref {
-	func deref() -> AnyObject
+	var deref : AnyObject { get }
 }

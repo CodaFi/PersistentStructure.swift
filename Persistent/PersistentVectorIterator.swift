@@ -19,7 +19,7 @@ class PersistentVectorIterator: NSEnumerator {
 		_window = (_start < _vec.count) ? _vec.arrayFor(_start) : []
 	}
 
-	override func nextObject() -> AnyObject {
+	override func nextObject() -> AnyObject? {
 		if _start - _start == 32 {
 			_window = _vec.arrayFor(_start)
 			_base += 32

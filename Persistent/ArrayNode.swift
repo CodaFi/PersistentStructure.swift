@@ -26,7 +26,7 @@ class ArrayNode : INode {
 	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject) -> INode? {
 		let idx: Int = Utils.mask(hash, shift: shift)
 		guard let node = _array[idx] as? INode else {
-			return ArrayNode(onThread: nil, count: _count + 1, array: Utils.cloneAndSetNode(_array, index: idx, node: BitmapIndexedNode.empty().assocWithShift(shift + 5, hash: hash, key: key, value: val)))
+			return ArrayNode(onThread: nil, count: _count + 1, array: Utils.cloneAndSetNode(_array, index: idx, node: BitmapIndexedNode.empty.assocWithShift(shift + 5, hash: hash, key: key, value: val)))
 		}
 		let n: INode? = node.assocWithShift(shift + 5, hash: hash, key: key, value: val)
 		if n === node {
@@ -71,7 +71,7 @@ class ArrayNode : INode {
 		return node.findWithShift(shift + 5, hash: hash, key: key, notFound: notFound)
 	}
 
-	func nodeSeq() -> ISeq {
+	var nodeSeq : ISeq {
 		return Seq(nodes: _array)
 	}
 
@@ -81,7 +81,7 @@ class ArrayNode : INode {
 			if let node = _array[i] as? INode {
 				initial = node.kvreduce(f, initial: initial)
 				if Utils.isReduced(initial) {
-					return (initial as! IDeref).deref()
+					return (initial as! IDeref).deref
 				}
 			}
 		}
@@ -126,7 +126,7 @@ class ArrayNode : INode {
 	func assocOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject, val : AnyObject) -> INode? {
 		let idx: Int = Utils.mask(hash, shift: shift)
 		guard let node = _array[idx] as? INode else {
-			let editable: ArrayNode = self.editAndSetOnThread(edit!, index: idx, node: BitmapIndexedNode.empty().assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val))
+			let editable: ArrayNode = self.editAndSetOnThread(edit!, index: idx, node: BitmapIndexedNode.empty.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val))
 			editable._count = _count.successor()
 			return editable
 		}

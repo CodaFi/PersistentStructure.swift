@@ -76,18 +76,18 @@ func Assoc(coll: IPersistentCollection, _ key: AnyObject, _ val: AnyObject) -> I
 
 //func Last(coll: AnyObject) -> AnyObject {
 //
-//	if let nn = coll.next() {
+//	if let nn = coll.next {
 //		return Last(nn)
 //	}
-//	return coll.first()
+//	return coll.first
 //}
 //
 //func ButLast(var coll: AnyObject) -> ISeq {
 //	if var c = coll as? ISeq {
 //
-//		while let _ = c.next() {
-//			res = Utils.conj(c.first(), to: c)
-//			c = c.next()
+//		while let _ = c.next {
+//			res = Utils.conj(c.first, to: c)
+//			c = c.next
 //		}
 //		return res
 //	}
@@ -96,14 +96,14 @@ func Assoc(coll: IPersistentCollection, _ key: AnyObject, _ val: AnyObject) -> I
 //
 func CreateVector(coll: AnyObject) -> protocol<IPersistentVector, IEditableCollection> {
 	if let c = coll as? ICollection {
-		return LazilyPersistentVector.createOwning(c.toArray()) as! protocol<IPersistentVector, IEditableCollection>
+		return LazilyPersistentVector.createOwning(c.toArray) as! protocol<IPersistentVector, IEditableCollection>
 	}
 	return LazilyPersistentVector.create(coll as? ICollection) as! protocol<IPersistentVector, IEditableCollection>
 }
 
 func CreateHashMap(coll: AnyObject) -> protocol<IPersistentMap, IEditableCollection> {
 //	if coll.isEmpty {
-//		return PersistentHashMap.empty() as! protocol<IPersistentMap, IEditableCollection>
+//		return PersistentHashMap.empty as! protocol<IPersistentMap, IEditableCollection>
 //	}
 	return PersistentHashMap.create(coll as? IMap) as! protocol<IPersistentMap, IEditableCollection>
 }
@@ -117,7 +117,7 @@ func CreateSet(coll: AnyObject) -> ISet {
 }
 
 func CreateTransient(coll: IEditableCollection) -> ITransientCollection {
-	return coll.asTransient()
+	return coll.asTransient
 }
 
 //func Metadata(coll: AnyObject) -> IPersistentMap {

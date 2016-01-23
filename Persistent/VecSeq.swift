@@ -22,18 +22,18 @@ class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
 		super.init(meta: meta)
 	}
 
-	override func first() -> AnyObject {
+	override var first : AnyObject {
 		return _vector.objectAtIndex(_index)!
 	}
 
-	override func next() -> ISeq {
+	override var next : ISeq {
 		if (_index + 1) < _vector.count {
 			return VecSeq(vector: _vector, index: _index + 1)
 		}
 		return EmptySeq()
 	}
 
-	func index() -> Int {
+	var currentIndex : Int {
 		return _index
 	}
 

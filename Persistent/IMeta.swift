@@ -7,5 +7,5 @@
 //
 
 protocol IMeta {
-	func meta() -> IPersistentMap?
+	var meta : IPersistentMap? { get }
 }

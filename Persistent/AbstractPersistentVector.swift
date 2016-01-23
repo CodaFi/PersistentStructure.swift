@@ -15,14 +15,14 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		_hasheq = -1
 	}
 
-	func seq() -> ISeq {
+	var seq : ISeq {
 		if self.count > 0 {
 			return VecSeq(vector: self, index: 0)
 		}
 		return EmptySeq()
 	}
 
-	func reversedSeq() -> ISeq {
+	var reversedSeq : ISeq {
 		if self.count > 0 {
 			return RVecSeq(vector: self, index: Int(self.count) - 1)
 		}
@@ -122,7 +122,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return _hash
 	}
 
-	func hasheq() -> Int {
+	var hasheq : Int {
 		if _hasheq == -1 {
 			var hash: Int = 1
 			for obj in self.generate() {
@@ -170,7 +170,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func peek() -> AnyObject? {
+	var peek : AnyObject? {
 		if self.count > 0 {
 			return self.objectAtIndex(Int(self.count) - 1)
 		}
@@ -223,8 +223,8 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return nil
 	}
 
-	func toArray() -> Array<AnyObject> {
-		return Utils.seqToArray(self.seq())
+	var toArray : Array<AnyObject> {
+		return Utils.seqToArray(self.seq)
 	}
 
 	var isEmpty : Bool {
@@ -236,15 +236,15 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 	}
 
 	func containsObject(o: AnyObject) -> Bool {
-		for var s = self.seq(); s.count != 0; s = s.next() {
-			if Utils.equiv(s.first(), other: o) {
+		for var s = self.seq; s.count != 0; s = s.next {
+			if Utils.equiv(s.first, other: o) {
 				return true
 			}
 		}
 		return false
 	}
 
-	func length() -> Int {
+	var length : Int {
 		return Int(self.count)
 	}
 
@@ -279,7 +279,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func empty() -> IPersistentCollection {
+	var empty : IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 

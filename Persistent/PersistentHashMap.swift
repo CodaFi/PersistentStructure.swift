@@ -32,19 +32,19 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		_nullValue = nullValue
 	}
 
-	func root() -> INode? {
+	var root : INode? {
 		return _root
 	}
 
-	func hasNull() -> Bool {
+	var hasNull : Bool {
 		return _hasNull
 	}
 
-	func nullValue() -> AnyObject {
+	var nullValue : AnyObject {
 		return _nullValue!
 	}
 
-	func asTransient() -> ITransientCollection {
+	var asTransient : ITransientCollection {
 		return TransientHashMap(withMap: self)
 	}
 
@@ -53,32 +53,32 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 			return EMPTY
 		}
 		
-		var ret: ITransientMap = EMPTY.asTransient() as! ITransientMap
-		for o: AnyObject in other.allEntries().generate() {
+		var ret: ITransientMap = EMPTY.asTransient as! ITransientMap
+		for o: AnyObject in other.allEntries.generate() {
 			let e: IMapEntry = o as! IMapEntry
-			ret = ret.associateKey(e.key(), value: e.val())
+			ret = ret.associateKey(e.key, value: e.val)
 		}
 		return ret.persistent()
 	}
 
 	class func createWithSeq(var items: ISeq?) -> PersistentHashMap {
-		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
-		for ; items != nil; items = items!.next().next() {
-			if items!.next().count == 0 {
+		var ret: ITransientMap? = EMPTY.asTransient as? ITransientMap
+		for ; items != nil; items = items!.next.next {
+			if items!.next.count == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
-			ret = ret!.associateKey(items!.first()!, value: Utils.second(items!)!)
+			ret = ret!.associateKey(items!.first!, value: Utils.second(items!)!)
 		}
 		return ret!.persistent() as! PersistentHashMap
 	}
 
 	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashMap {
-		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
-		for var i = 0; items != nil; items = items!.next().next(), i = i.successor() {
-			if items!.next().count == 0 {
+		var ret: ITransientMap? = EMPTY.asTransient as? ITransientMap
+		for var i = 0; items != nil; items = items!.next.next, i = i.successor() {
+			if items!.next.count == 0 {
 				fatalError("No value supplied for key: \(items!.first)")
 			}
-			ret = ret!.associateKey(items!.first()!, value: Utils.second(items!)!)
+			ret = ret!.associateKey(items!.first!, value: Utils.second(items!)!)
 			if ret!.count != (i + 1) {
 				fatalError("Duplicate key: \(items!.first)")
 			}
@@ -110,14 +110,14 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 			if _hasNull && val === _nullValue {
 				return self
 			}
-			return PersistentHashMap(meta: self.meta(), count: _hasNull ? _count : _count + 1, root: _root, hasNull: true, nullValue: val)
+			return PersistentHashMap(meta: self.meta, count: _hasNull ? _count : _count + 1, root: _root, hasNull: true, nullValue: val)
 		}
 		let addedLeaf: AnyObject? = nil
-		let newroot: INode? = (_root ?? BitmapIndexedNode.empty()).assocWithShift(0, hash: Int(Utils.hash(key)), key: key!, value: val)
+		let newroot: INode? = (_root ?? BitmapIndexedNode.empty).assocWithShift(0, hash: Int(Utils.hash(key)), key: key!, value: val)
 		if newroot === _root {
 			return self
 		}
-		return PersistentHashMap(meta: self.meta(), count: (addedLeaf == nil) ? _count : _count + 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue!)
+		return PersistentHashMap(meta: self.meta, count: (addedLeaf == nil) ? _count : _count + 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue!)
 	}
 
 	override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
@@ -142,7 +142,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 
 	override func without(key: AnyObject?) -> IPersistentMap {
 		if key == nil {
-			return _hasNull ? PersistentHashMap(meta: self.meta(), count: _count - 1, root: _root, hasNull: false, nullValue: nil) : self
+			return _hasNull ? PersistentHashMap(meta: self.meta, count: _count - 1, root: _root, hasNull: false, nullValue: nil) : self
 		}
 		if _root == nil {
 			return self
@@ -151,14 +151,14 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		if newroot === _root {
 			return self
 		}
-		return PersistentHashMap(meta: self.meta(), count: _count - 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue)
+		return PersistentHashMap(meta: self.meta, count: _count - 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue)
 	}
 
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial ini: AnyObject) -> AnyObject {
 		let initial = _hasNull ? f(ini, nil, _nullValue) : ini
 		if Utils.isReduced(initial) {
-			return (initial as? IDeref)!.deref()
+			return (initial as! IDeref).deref
 		}
 		if let r = _root {
 			return r.kvreduce(f, initial: initial)
@@ -170,14 +170,14 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return _count
 	}
 
-	override func seq() -> ISeq {
+	override var seq : ISeq {
 		if let r = _root {
-			return r.nodeSeq()
+			return r.nodeSeq
 		}
 		return EmptySeq()
 	}
 
-	class func empty() -> IPersistentCollection {
+	class var empty : IPersistentCollection {
 		return EMPTY
 	}
 
@@ -185,7 +185,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return PersistentHashMap(meta: _meta, count: _count, root: _root, hasNull: _hasNull, nullValue: _nullValue)
 	}
 
-	func meta() -> IPersistentMap? {
+	var meta : IPersistentMap? {
 		return _meta
 	}
 }

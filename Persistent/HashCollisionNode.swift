@@ -71,7 +71,7 @@ class HashCollisionNode : INode {
 		return notFound
 	}
 
-	func nodeSeq() -> ISeq {
+	var nodeSeq : ISeq {
 		return NodeSeq(array: _array)
 	}
 

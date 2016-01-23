@@ -20,7 +20,7 @@ class BitmapIndexedNode : INode {
 		_edit = nil
 	}
 
-	class func empty() -> BitmapIndexedNode {
+	class var empty : BitmapIndexedNode {
 		return EMPTY
 	}
 
@@ -147,7 +147,7 @@ class BitmapIndexedNode : INode {
 		return notFound
 	}
 
-	func nodeSeq() -> ISeq {
+	var nodeSeq : ISeq {
 		return NodeSeq(array: _array)
 	}
 

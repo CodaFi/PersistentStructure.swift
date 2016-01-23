@@ -19,12 +19,12 @@ class KeySeq : AbstractSeq {
 		super.init(meta: meta)
 	}
 
-	override func first() -> AnyObject? {
-		return (_seq.first as! IMapEntry).key()
+	override var first : AnyObject? {
+		return (_seq.first as! IMapEntry).key
 	}
 
-	override func next() -> ISeq {
-		return KeySeq(seq: _seq.next())
+	override var next : ISeq {
+		return KeySeq(seq: _seq.next)
 	}
 
 	func withMeta(meta: IPersistentMap?) -> KeySeq {

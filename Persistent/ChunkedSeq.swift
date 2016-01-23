@@ -36,22 +36,22 @@ class ChunkedSeq: AbstractSeq, IChunkedSeq {
 		super.init()
 	}
 
-	func chunkedFirst() -> IChunk? {
+	var chunkedFirst : IChunk? {
 		return ArrayChunk(array: _node, offset: _offset)
 	}
 
-	func chunkedNext() -> ISeq {
+	var chunkedNext : ISeq {
 		if (_i + _node.count) < _vec.count {
 			return ChunkedSeq(vec: _vec, index: _node.count, offset: 0)
 		}
 		return EmptySeq()
 	}
 
-	func chunkedMore() -> ISeq {
-		if self.chunkedNext().count != 0 {
-			return self.chunkedNext()
+	var chunkedMore : ISeq {
+		if self.chunkedNext.count != 0 {
+			return self.chunkedNext
 		}
-		return PersistentList.empty()
+		return PersistentList.empty
 	}
 
 	func withMeta(meta: IPersistentMap?) -> AnyObject {
@@ -61,15 +61,15 @@ class ChunkedSeq: AbstractSeq, IChunkedSeq {
 		return ChunkedSeq(meta: meta, vec: _vec, node: _node, index: _i, offset: _offset)
 	}
 
-	override func first() -> AnyObject {
+	override var first : AnyObject {
 		return _node[_offset]
 	}
 
-	override func next() -> ISeq {
+	override var next : ISeq {
 		if _offset + 1 < _node.count {
 			return ChunkedSeq(vec: _vec, node: _node, index: _i, offset: _offset + 1)
 		}
-		return self.chunkedNext()
+		return self.chunkedNext
 	}
 
 	override var count : Int {

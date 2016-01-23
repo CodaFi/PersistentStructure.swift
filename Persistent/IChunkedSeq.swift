@@ -7,7 +7,7 @@
 //
 
 protocol IChunkedSeq : ISeq, ISequential {
-	func chunkedFirst() -> IChunk?
-	func chunkedNext() -> ISeq
-	func chunkedMore() -> ISeq
+	var chunkedFirst : IChunk? { get }
+	var chunkedNext : ISeq { get }
+	var chunkedMore : ISeq { get }
 }

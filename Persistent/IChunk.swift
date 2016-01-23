@@ -7,6 +7,6 @@
 //
 
 protocol IChunk : IIndexed {
-	func tail() -> IChunk
+	var tail : IChunk { get }
 	func reduce(f: (AnyObject, AnyObject) -> AnyObject, start: AnyObject) -> AnyObject
 }

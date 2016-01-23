@@ -33,8 +33,8 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		_tail = tail
 	}
 
-	override func empty() -> IPersistentCollection {
-		if let m = self.meta() {
+	override var empty : IPersistentCollection {
+		if let m = self.meta {
 			return EMPTY.withMeta(m) as! IPersistentCollection
 		}
 		return EMPTY
@@ -42,14 +42,14 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 
 	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		if i >= 0 && i < _count {
-			if i >= self.tailoff() {
+			if i >= self.tailoff {
 				var newTail: Array<AnyObject> = []
 				newTail.reserveCapacity(_tail.count)
 				ArrayCopy(_tail, 0, newTail, 0, UInt(_tail.count))
 				newTail[i & 0x01f] = val
-				return PersistentVector(meta: self.meta(), count: _count, shift: _shift, node: _root, tail: newTail)
+				return PersistentVector(meta: self.meta, count: _count, shift: _shift, node: _root, tail: newTail)
 			}
-			return PersistentVector(meta: self.meta(), count: _count, shift: _shift, node: PersistentVector.doAssocAtLevel(_shift, node: _root, index: i, value: val), tail: _tail)
+			return PersistentVector(meta: self.meta, count: _count, shift: _shift, node: PersistentVector.doAssocAtLevel(_shift, node: _root, index: i, value: val), tail: _tail)
 		}
 		if i == _count {
 			return self.cons(val)
@@ -59,7 +59,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 
 	func arrayFor(i: Int) -> Array<AnyObject> {
 		if i >= 0 && i < _count {
-			if i >= self.tailoff() {
+			if i >= self.tailoff {
 				return _tail
 			}
 			var node: Node = _root
@@ -71,20 +71,20 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		fatalError("Range or index out of bounds")
 	}
 
-	func shift() -> Int {
+	var shift : Int {
 		return _shift
 	}
 
-	func root() -> Node {
+	var root : Node {
 		return _root
 	}
 
-	func tail() -> Array<AnyObject> {
+	var tail : Array<AnyObject> {
 		return _tail
 	}
 
 	class func createWithSeq(items: ISeq) -> PersistentVector {
-		var ret: ITransientVector = EMPTY.asTransient() as! ITransientVector
+		var ret: ITransientVector = EMPTY.asTransient as! ITransientVector
 		for entry in items.generate() {
 			ret = ret.conj(entry) as! ITransientVector
 		}
@@ -96,7 +96,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			return EMPTY
 		}
 		
-		var ret: TransientVector = EMPTY.asTransient() as! TransientVector
+		var ret: TransientVector = EMPTY.asTransient as! TransientVector
 		for item: AnyObject in list.generate() {
 			ret = ret.conj(item) as! TransientVector
 		}
@@ -104,26 +104,26 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	}
 
 	class func createWithItems(items: Array<AnyObject>) -> PersistentVector {
-		var ret: TransientVector = EMPTY.asTransient() as! TransientVector
+		var ret: TransientVector = EMPTY.asTransient as! TransientVector
 		for i in (0..<items.count) {
 			ret = ret.conj(items[i]) as! TransientVector
 		}
 		return ret.persistent() as! PersistentVector
 	}
 
-	class func empty() -> PersistentVector {
+	class var empty : PersistentVector {
 		return EMPTY
 	}
 
-	class func emptyNode() -> Node {
+	class var emptyNode : Node {
 		return EMPTYNODE
 	}
 
-	func asTransient() -> ITransientCollection {
+	var asTransient : ITransientCollection {
 		return TransientVector(v: self)
 	}
 
-	func tailoff() -> Int {
+	var tailoff : Int {
 		if _count < 32 {
 			return 0
 		}
@@ -161,17 +161,17 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return PersistentVector(meta: meta, count: _count, shift: _shift, node: _root, tail: _tail)
 	}
 
-	func meta() -> IPersistentMap? {
+	var meta : IPersistentMap? {
 		return _meta
 	}
 
 	override func cons(val: AnyObject) -> IPersistentVector {
-		if _count - self.tailoff() < 32 {
+		if _count - self.tailoff < 32 {
 			var newTail: Array<AnyObject> = []
 			newTail.reserveCapacity(_tail.count + 1)
 			ArrayCopy(_tail, 0, newTail, 0, UInt(_tail.count))
 			newTail[_tail.count] = val
-			return PersistentVector(meta: self.meta(), count: _count + 1, shift: _shift, node: _root, tail: newTail)
+			return PersistentVector(meta: self.meta, count: _count + 1, shift: _shift, node: _root, tail: newTail)
 		}
 		var newroot: Node
 		let tailnode: Node = Node(edit: _root.edit, array: _tail)
@@ -184,7 +184,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		} else {
 			newroot = self.pushTailAtLevel(_shift, parent: _root, tail: tailnode)
 		}
-		return PersistentVector(meta: self.meta(), count: _count + 1, shift: newshift, node: newroot, tail: [ val ])
+		return PersistentVector(meta: self.meta, count: _count + 1, shift: newshift, node: newroot, tail: [ val ])
 	}
 
 	func pushTailAtLevel(level: Int, parent: Node, tail tailnode: Node) -> Node {
@@ -213,15 +213,15 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return ret
 	}
 
-	func chunkedSeq() -> IChunkedSeq {
+	var chunkedSeq : IChunkedSeq {
 		if self.count == 0 {
 			return EmptySeq()
 		}
 		return ChunkedSeq(vec: self, index: 0, offset: 0)
 	}
 
-	override func seq() -> ISeq {
-		return self.chunkedSeq()
+	override var seq : ISeq {
+		return self.chunkedSeq
 	}
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial ini: AnyObject) -> AnyObject {
@@ -232,7 +232,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			for var j = 0; j < array.count; j = j.successor() {
 				initial = f(initial, (j + i), array[j])
 				if Utils.isReduced(initial) {
-					return (initial as! IDeref).deref()
+					return (initial as! IDeref).deref
 				}
 			}
 			step = array.count
@@ -245,16 +245,16 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			fatalError("Can't pop from an empty vector")
 		}
 		if _count == 1 {
-			if let m = self.meta() {
+			if let m = self.meta {
 				EMPTY.withMeta(m) as? IPersistentStack
 			}
 			return EMPTY
 		}
-		if _count - self.tailoff() > 1 {
+		if _count - self.tailoff > 1 {
 			var newTail: Array<AnyObject> = []
 			newTail.reserveCapacity(_tail.count - 1)
 			ArrayCopy(_tail, 0, newTail, 0, UInt(newTail.count))
-			return PersistentVector(meta: self.meta(), count: _count - 1, shift: _shift, node: _root, tail: newTail)
+			return PersistentVector(meta: self.meta, count: _count - 1, shift: _shift, node: _root, tail: newTail)
 		}
 		let newtail: Array = self.arrayFor(_count - 2)
 		var newroot: Node = self.popTailAtLevel(_shift, node: _root) ?? EMPTYNODE
@@ -264,7 +264,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			newroot = newroot.array[0] as! Node
 			newshift -= 5
 		}
-		return PersistentVector(meta: self.meta(), count: _count - 1, shift: newshift, node: newroot, tail: newtail)
+		return PersistentVector(meta: self.meta, count: _count - 1, shift: newshift, node: newroot, tail: newtail)
 	}
 
 	func popTailAtLevel(level: Int, node: Node) -> Node? {

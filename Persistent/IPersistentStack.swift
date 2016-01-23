@@ -7,6 +7,6 @@
 //
 
 protocol IPersistentStack : IPersistentCollection {
-	func peek() -> AnyObject?
+	var peek : AnyObject? { get }
 	func pop() -> IPersistentStack
 }

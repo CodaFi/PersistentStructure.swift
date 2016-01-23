@@ -40,7 +40,7 @@ class TransientArrayMap: AbstractTransientMap {
 			}
 		} else {
 			if _length >= _array.count {
-				let ll = PersistentHashMap.createWithMeta(nil, array: _array).asTransient()
+				let ll = PersistentHashMap.createWithMeta(nil, array: _array).asTransient
 				return (ll as! IAssociative).associateKey(key, withValue: val) as! ITransientMap
 			}
 			_array[_length.successor()] = key

@@ -35,7 +35,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 
 	override func disjoin(key: AnyObject) -> IPersistentSet {
 		if self.containsObject(key) {
-			return PersistentTreeSet(meta: self.meta(), implementation: _impl.without(key))
+			return PersistentTreeSet(meta: self.meta, implementation: _impl.without(key))
 		}
 		return self
 	}
@@ -44,23 +44,23 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		if self.containsObject(other) {
 			return self
 		}
-		return PersistentTreeSet(meta: self.meta(), implementation: _impl.associateKey(other, withValue: other) as! IPersistentMap)
+		return PersistentTreeSet(meta: self.meta, implementation: _impl.associateKey(other, withValue: other) as! IPersistentMap)
 	}
 
-	override func empty() -> IPersistentCollection {
-		return PersistentTreeSet(meta: self.meta(), implementation: PersistentTreeMap.empty())
+	override var empty : IPersistentCollection {
+		return PersistentTreeSet(meta: self.meta, implementation: PersistentTreeMap.empty())
 	}
 
-	func reversedSeq() -> ISeq {
-		return KeySeq(seq: (_impl as! IReversible).reversedSeq())
+	var reversedSeq : ISeq {
+		return KeySeq(seq: (_impl as! IReversible).reversedSeq)
 	}
 
 	func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentTreeSet(meta: meta, implementation: _impl)
 	}
 
-	func comparator() -> (AnyObject?, AnyObject?) -> NSComparisonResult {
-		return (_impl as! ISorted).comparator()
+	var comparator : (AnyObject?, AnyObject?) -> NSComparisonResult {
+		return (_impl as! ISorted).comparator
 	}
 
 	func entryKey(entry: AnyObject) -> AnyObject? {
@@ -77,7 +77,7 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		return Utils.keys(m.seqFrom(key, ascending: ascending)!)
 	}
 
-	func meta() -> IPersistentMap? {
+	var meta : IPersistentMap? {
 		return _meta
 	}
 }

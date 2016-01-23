@@ -32,7 +32,7 @@ class NodeSeq: AbstractSeq {
 //			}
 
 			if let node = array[j + 1] as? INode {
-				let nodeSeq: ISeq = node.nodeSeq()
+				let nodeSeq: ISeq = node.nodeSeq
 				self.init(meta: nil, array: array, index: j + 2, sequence: nodeSeq)
 				return
 			}
@@ -69,14 +69,14 @@ class NodeSeq: AbstractSeq {
 		return initial
 	}
 
-	override func first() -> AnyObject? {
-		if let v = _backingSeq.first() {
+	override var first : AnyObject? {
+		if let v = _backingSeq.first {
 			return v
 		}
 		return MapEntry(key: _array[_startingIndex], val: _array[_startingIndex + 1])
 	}
 
-	override func next() -> ISeq {
-		return NodeSeq(array: _array, index: _startingIndex, sequence: _backingSeq.next())
+	override var next : ISeq {
+		return NodeSeq(array: _array, index: _startingIndex, sequence: _backingSeq.next)
 	}
 }

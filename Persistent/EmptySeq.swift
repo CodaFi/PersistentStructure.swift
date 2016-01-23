@@ -7,23 +7,23 @@
 //
 
 class EmptySeq: AbstractSeq, IChunkedSeq {
-	override func first() -> AnyObject? {
+	override var first : AnyObject? {
 		return nil
 	}
 
-	override func next() -> ISeq {
+	override var next : ISeq {
 		return self
 	}
 
-	func chunkedFirst() -> IChunk? {
+	var chunkedFirst : IChunk? {
 		return nil
 	}
 
-	func chunkedNext() -> ISeq {
+	var chunkedNext : ISeq {
 		return self
 	}
 
-	func chunkedMore() -> ISeq {
+	var chunkedMore : ISeq {
 		return self
 	}
 }

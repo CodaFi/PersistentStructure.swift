@@ -13,7 +13,7 @@ protocol INode : class {
 	func withoutWithShift(shift : Int, hash : Int, key : AnyObject) -> INode?
 	func findWithShift(shift : Int, hash : Int, key : AnyObject) -> IMapEntry?
 	func findWithShift(shift : Int, hash : Int, key : AnyObject, notFound : AnyObject) -> AnyObject?
-	func nodeSeq() -> ISeq
+	var nodeSeq : ISeq { get }
 	func assocOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject, val : AnyObject) -> INode?
 	func withoutOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject) -> INode?
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial: AnyObject) -> AnyObject

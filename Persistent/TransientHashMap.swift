@@ -15,7 +15,7 @@ class TransientHashMap: AbstractTransientMap {
 	private var _leafFlag: AnyObject? = nil
 
 	convenience init(withMap m: PersistentHashMap) {
-		self.init(onThread: NSThread.currentThread(), root: m.root(), count: Int(m.count), hasNull: m.hasNull(), nullValue: m.nullValue())
+		self.init(onThread: NSThread.currentThread(), root: m.root, count: Int(m.count), hasNull: m.hasNull, nullValue: m.nullValue)
 	}
 
 	override init() { }
@@ -31,7 +31,7 @@ class TransientHashMap: AbstractTransientMap {
 
 	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
 		_leafFlag = nil
-		let n: INode? = (_root ?? BitmapIndexedNode.empty()).assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, val: val)
+		let n: INode? = (_root ?? BitmapIndexedNode.empty).assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, val: val)
 		if n !== _root {
 			_root = n
 		}

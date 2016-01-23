@@ -17,7 +17,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 
 	func cons(o : AnyObject) -> IPersistentCollection {
 		if let e = o as? IMapEntry {
-			return self.associateKey(e.key(), withValue: e.val())
+			return self.associateKey(e.key, withValue: e.val)
 		} else if let v = o as? IPersistentVector {
 			guard let k1 = v.objectAtIndex(0), v1 = v.objectAtIndex(1) else {
 				fatalError("Vector arg to map conj must be a pair")
@@ -25,9 +25,9 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return self.associateKey(k1, withValue: v1)
 		} else {
 			var ret : IPersistentMap = self
-			for var es : ISeq = Utils.seq(o); es.count != 0; es = es.next() {
-				let e : IMapEntry = es.first() as! IMapEntry
-				ret = ret.associateKey(e.key(), withValue: e.val()) as! IPersistentMap
+			for var es : ISeq = Utils.seq(o); es.count != 0; es = es.next {
+				let e : IMapEntry = es.first as! IMapEntry
+				ret = ret.associateKey(e.key, withValue: e.val) as! IPersistentMap
 			}
 			return ret
 		}
@@ -51,10 +51,10 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		if m.count != m1.count {
 			return false
 		}
-		for var s = m1.seq(); s.count != 0; s = s.next() {
-			if let e = s.first() as? IMapEntry {
-				let found: Bool = m.containsKey(e.key())
-				if !found || !Utils.isEqual(e.val(), other: m.objectForKey(e.key())) {
+		for var s = m1.seq; s.count != 0; s = s.next {
+			if let e = s.first as? IMapEntry {
+				let found: Bool = m.containsKey(e.key)
+				if !found || !Utils.isEqual(e.val, other: m.objectForKey(e.key)) {
 					return false
 				}
 			}
@@ -78,10 +78,10 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return false
 		}
 
-		for entry in self.seq().generate() {
+		for entry in self.seq.generate() {
 			if let e = entry as? IMapEntry {
-				let found = m.containsKey(e.key())
-				if !found || Utils.equiv(e.val(), other: m.objectForKey(e.key())) {
+				let found = m.containsKey(e.key)
+				if !found || Utils.equiv(e.val, other: m.objectForKey(e.key)) {
 					return false
 				}
 			}
@@ -99,14 +99,14 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 
 	static func mapHash(m : IPersistentMap) -> UInt {
 		var hash : UInt = 0
-		for entry in m.seq().generate() {
+		for entry in m.seq.generate() {
 			let e : IMapEntry = entry as! IMapEntry
-			hash += UInt(e.key().hash ^ e.val().hash)
+			hash += UInt(e.key.hash ^ e.val.hash)
 		}
 		return hash
 	}
 
-	func hasheq() -> Int {
+	var hasheq : Int {
 		if _hasheq == -1 {
 			_hasheq = AbstractPersistentMap.mapHasheq(self)
 		}
@@ -115,18 +115,18 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 
 	static func mapHasheq(m : IPersistentMap) -> Int {
 		var hash : Int = 0
-		for entry in m.seq().generate() {
+		for entry in m.seq.generate() {
 			let e : IMapEntry = entry as! IMapEntry
-			hash += Int(Utils.hasheq(e.key()) ^ Utils.hasheq(e.val()))
+			hash += Int(Utils.hasheq(e.key) ^ Utils.hasheq(e.val))
 		}
 		return hash
 	}
 
-	func empty() -> IPersistentCollection {
+	var empty : IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func seq() -> ISeq {
+	var seq : ISeq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
@@ -170,7 +170,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func allEntries() -> ISet {
+	var allEntries : ISet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
@@ -178,11 +178,11 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func allKeys() -> ISet {
+	var allKeys : ISet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func values() -> ICollection {
+	var values : ICollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

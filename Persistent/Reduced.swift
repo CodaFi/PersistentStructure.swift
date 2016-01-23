@@ -13,7 +13,7 @@ class Reduced : IDeref {
 		_val = val
 	}
 
-	func deref() -> AnyObject {
+	var deref : AnyObject {
 		return _val
 	}
 }

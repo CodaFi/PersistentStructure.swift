@@ -7,7 +7,7 @@
 //
 
 protocol ISorted {
-	func comparator() -> (AnyObject?, AnyObject?) -> NSComparisonResult
+	var comparator : (AnyObject?, AnyObject?) -> NSComparisonResult { get }
 	func entryKey(entry : AnyObject) -> AnyObject?
 	func seq(ascending : Bool) -> ISeq?
 	func seqFrom(key : AnyObject, ascending : Bool) -> ISeq?

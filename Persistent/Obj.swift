@@ -13,7 +13,7 @@ class Obj: IObj, IMeta {
 		_meta = meta
 	}
 
-	func meta() -> IPersistentMap? {
+	var meta : IPersistentMap? {
 		return _meta
 	}
 

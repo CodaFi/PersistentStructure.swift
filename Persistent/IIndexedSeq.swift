@@ -7,5 +7,5 @@
 //
 
 protocol IIndexedSeq : ISeq, ISequential, ICounted {
-	func index() -> Int
+	var currentIndex : Int { get }
 }

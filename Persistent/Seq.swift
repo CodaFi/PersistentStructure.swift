@@ -26,11 +26,11 @@ class Seq : AbstractSeq {
 		return Seq(meta: meta, nodes: _nodes, index: _i, seq: _s)
 	}
 
-	override func first() -> AnyObject? {
-		return _s.first()
+	override var first : AnyObject? {
+		return _s.first
 	}
 
-	override func next() -> ISeq {
-		return Seq(meta: nil, nodes: _nodes, index: _i, seq: _s.next())
+	override var next : ISeq {
+		return Seq(meta: nil, nodes: _nodes, index: _i, seq: _s.next)
 	}
 }

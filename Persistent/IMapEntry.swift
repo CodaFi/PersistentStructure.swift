@@ -7,8 +7,8 @@
 //
 
 protocol IMapEntry : class {
-	func key() -> AnyObject
-	func val() -> AnyObject
+	var key : AnyObject { get }
+	var val : AnyObject { get }
 
 	func isEqual(o : AnyObject) -> Bool
 	func setValue(value : AnyObject) -> AnyObject?

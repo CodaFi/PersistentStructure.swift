@@ -28,8 +28,8 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return _impl.count
 	}
 
-	func seq() -> ISeq {
-		return KeySeq(seq: self.seq())
+	var seq : ISeq {
+		return KeySeq(seq: self.seq)
 	}
 
 	func isEqual(o: AnyObject) -> Bool {
@@ -60,11 +60,11 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return AbstractPersistentSet.setisEqual(self, other: o)
 	}
 
-	func hash() -> UInt {
+	var hash : UInt {
 		if _hash == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s.count != 0; s = s.next() {
-				let e: AnyObject = s.first()!
+			for var s = self.seq; s.count != 0; s = s.next {
+				let e: AnyObject = s.first!
 				hash += Int32(Utils.hash(e))
 			}
 			_hash = hash
@@ -72,19 +72,19 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return UInt(_hash)
 	}
 
-	func hasheq() -> Int {
+	var hasheq : Int {
 		if _hasheq == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s.count != 0; s = s.next() {
-				hash += Utils.hasheq(s.first())
+			for var s = self.seq; s.count != 0; s = s.next {
+				hash += Utils.hasheq(s.first)
 			}
 			_hasheq = hash
 		}
 		return Int(_hasheq)
 	}
 
-	func toArray() -> Array<AnyObject> {
-		return Utils.seqToArray(self.seq())
+	var toArray : Array<AnyObject> {
+		return Utils.seqToArray(self.seq)
 	}
 
 	var isEmpty : Bool {
@@ -99,7 +99,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func empty() -> IPersistentCollection {
+	var empty : IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

@@ -23,15 +23,15 @@ final class AbstractCons : AbstractSeq {
 	}
 
 
-	override func first() -> AnyObject? {
+	override var first : AnyObject? {
 		return _first
 	}
 
-	override func next() -> ISeq {
-		return _more.seq()
+	override var next : ISeq {
+		return _more.seq
 	}
 
-	override func more() -> ISeq {
+	override var more : ISeq {
 		return _more
 	}
 

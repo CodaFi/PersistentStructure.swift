@@ -28,9 +28,9 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 //		var ret: ITransientMap = EMPTY.asTransient() as! ITransientMap
 //		for o: AnyObject in other.allEntries().generate() {
 //			var e: MapEntry = o as! MapEntry
-//			ret = ret.associateKey(e.key(), value: e.val())
+//			ret = ret.associateKey(e.key, value: e.val)
 //		}
-//		self = (ret!.persistent() as! PersistentArrayMap)
+//		self = (ret!.persistent as! PersistentArrayMap)
 //	}
 
 	func withMeta(meta: IPersistentMap?) -> IObj {
@@ -44,7 +44,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	}
 
 	func createHT(initial: Array<AnyObject>) -> IPersistentMap {
-		return PersistentHashMap.createWithMeta(self.meta(), array: initial)
+		return PersistentHashMap.createWithMeta(self.meta, array: initial)
 	}
 
 	class func createWithCheck(initial: Array<AnyObject>) -> PersistentArrayMap {
@@ -122,7 +122,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		if i >= 0 {
 			let newlen: Int = _array.count - 2
 			if newlen == 0 {
-				return self.empty() as! IPersistentMap
+				return self.empty as! IPersistentMap
 			}
 			var newArray: Array<AnyObject> = []
 			newArray.reserveCapacity(newlen)
@@ -138,8 +138,8 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return self
 	}
 
-	override func empty() -> IPersistentCollection {
-		if let m = self.meta() {
+	override var empty : IPersistentCollection {
+		if let m = self.meta {
 			return EMPTY.withMeta(m) as! IPersistentCollection
 		}
 		return EMPTY
@@ -161,7 +161,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return nil
 	}
 
-	func capacity() -> UInt {
+	var capacity : UInt {
 		return UInt(self.count)
 	}
 
@@ -182,14 +182,14 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return Utils.equiv(k1, other: k2)
 	}
 
-	override func seq() -> ISeq {
+	override var seq : ISeq {
 		if _array.count > 0 {
 			return Seq(nodes: _array)
 		}
 		return EmptySeq()
 	}
 
-	func meta() -> IPersistentMap? {
+	var meta : IPersistentMap? {
 		return _meta
 	}
 
@@ -198,13 +198,13 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		for i in 0.stride(to: _array.count, by: 2) {
 			initial = f(initial, _array[i], _array[i + 1])
 			if Utils.isReduced(initial) {
-				return (initial as? IDeref)!.deref()
+				return (initial as! IDeref).deref
 			}
 		}
 		return initial
 	}
 
-	func asTransient() -> ITransientCollection {
+	var asTransient : ITransientCollection {
 		return TransientArrayMap(array: _array)
 	}
 }

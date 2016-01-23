@@ -22,18 +22,18 @@ class RVecSeq: AbstractSeq, IIndexedSeq {
 		super.init(meta: meta)
 	}
 
-	override func first() -> AnyObject {
+	override var first : AnyObject {
 		return _backingVector.objectAtIndex(_startingIndex)!
 	}
 
-	override func next() -> ISeq {
+	override var next : ISeq {
 		if _startingIndex > 0 {
 			return RVecSeq(vector: _backingVector, index: _startingIndex - 1)
 		}
 		return EmptySeq()
 	}
 
-	func index() -> Int {
+	var currentIndex : Int {
 		return _startingIndex
 	}
 

@@ -39,18 +39,18 @@ class SortedTreeSeq: AbstractSeq, IObj {
 	class func pushNode(var t: TreeNode?, var stack: ISeq, ascending asc: Bool) -> ISeq {
 		while t != nil {
 			stack = Utils.cons(t!, to: stack)
-			t = asc ? t!.left() : t!.right()
+			t = asc ? t!.left : t!.right
 		}
 		return stack
 	}
 
-	override func first() -> AnyObject? {
-		return _stack.first()
+	override var first : AnyObject? {
+		return _stack.first
 	}
 
-	override func next() -> ISeq {
-		let t = _stack.first() as! TreeNode
-		let nextstack = SortedTreeSeq.pushNode(_asc ? t.right() : t.left(), stack: _stack.next(), ascending: _asc)
+	override var next : ISeq {
+		let t = _stack.first as! TreeNode
+		let nextstack = SortedTreeSeq.pushNode(_asc ? t.right : t.left, stack: _stack.next, ascending: _asc)
 		return SortedTreeSeq(stack: nextstack, ascending: _asc, count: _cnt - 1)
 	}
 

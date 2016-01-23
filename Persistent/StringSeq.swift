@@ -27,18 +27,18 @@ class StringSeq: AbstractSeq, IIndexedSeq {
 		return StringSeq(meta: meta, string: _string, index: _index)
 	}
 
-	override func first() -> AnyObject {
+	override var first : AnyObject {
 		return NSNumber(unsignedShort: _string.characterAtIndex(_index))
 	}
 
-	override func next() -> ISeq {
+	override var next : ISeq {
 		if _index + 1 < _string.length {
 			return StringSeq(meta: _meta, string: _string, index: _index + 1)
 		}
 		return EmptySeq()
 	}
 
-	func index() -> Int {
+	var currentIndex : Int {
 		return _index
 	}
 

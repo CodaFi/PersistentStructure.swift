@@ -7,5 +7,5 @@
 //
 
 protocol IReversible {
-	func reversedSeq() -> ISeq
+	var reversedSeq : ISeq { get }
 }

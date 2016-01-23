@@ -7,9 +7,9 @@
 //
 
 protocol ISeq : class, IPersistentCollection {
-	func first() -> AnyObject?
-	func next() -> ISeq
-	func more() -> ISeq
+	var first : AnyObject? { get }
+	var next : ISeq { get } 
+	var more : ISeq { get }
 	func cons(other: AnyObject) -> ISeq
 }
 

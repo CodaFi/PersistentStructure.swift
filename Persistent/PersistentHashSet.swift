@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private let EMPTY = PersistentHashSet(meta: nil, impl: PersistentHashMap.empty() as! IPersistentMap)
+private let EMPTY = PersistentHashSet(meta: nil, impl: PersistentHashMap.empty as! IPersistentMap)
 
 class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 	private var _meta: IPersistentMap?
@@ -85,7 +85,7 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 
 	override func disjoin(key: AnyObject) -> IPersistentSet {
 		if self.containsObject(key) {
-			return PersistentHashSet(meta: self.meta(), impl: _impl.without(key))
+			return PersistentHashSet(meta: self.meta, impl: _impl.without(key))
 		}
 		return self
 	}
@@ -94,11 +94,11 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		if self.containsObject(other) {
 			return self
 		}
-		return PersistentHashSet(meta: self.meta(), impl: _impl.associateKey(0, withValue: other) as! IPersistentMap)
+		return PersistentHashSet(meta: self.meta, impl: _impl.associateKey(0, withValue: other) as! IPersistentMap)
 	}
 
-	override func empty() -> IPersistentCollection {
-		if let m = self.meta() {
+	override var empty : IPersistentCollection {
+		if let m = self.meta {
 			return EMPTY.withMeta(m) as! IPersistentCollection
 		}
 		return EMPTY
@@ -108,11 +108,11 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return PersistentHashSet(meta: meta, impl: _impl)
 	}
 
-	func asTransient() -> ITransientCollection {
-		return TransientHashSet(impl: (_impl as! PersistentHashMap).asTransient() as! ITransientMap)
+	var asTransient : ITransientCollection {
+		return TransientHashSet(impl: (_impl as! PersistentHashMap).asTransient as! ITransientMap)
 	}
 
-	func meta() -> IPersistentMap? {
+	var meta : IPersistentMap? {
 		return _meta
 	}
 }

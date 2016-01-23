@@ -20,11 +20,11 @@ class MapEntry : AbstractMapEntry {
 		_val = val
 	}
 
-	override func key() -> AnyObject {
+	override var key : AnyObject {
 		return _key!
 	}
 
-	override func val() -> AnyObject {
+	override var val : AnyObject {
 		return _val!
 	}
 }

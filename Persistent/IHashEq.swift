@@ -7,5 +7,5 @@
 //
 
 protocol IHashEq {
-	func hasheq() -> Int
+	var hasheq : Int { get }
 }

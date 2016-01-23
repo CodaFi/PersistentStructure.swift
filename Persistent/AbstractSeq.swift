@@ -27,12 +27,12 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		if !(obj is ISequential || obj is IList) {
 			return false
 		}
-		for (e1, e2) in zip(self.seq().generate(), Utils.seq(obj).generate()) {
+		for (e1, e2) in zip(self.seq.generate(), Utils.seq(obj).generate()) {
 			if !Utils.equiv(e1, other: e2) {
 				return false
 			}
 		}
-		return self.seq().count == Utils.seq(obj).count
+		return self.seq.count == Utils.seq(obj).count
 	}
 
 	func isEqual(obj: AnyObject) -> Bool {
@@ -42,17 +42,17 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		if !(obj is ISequential || obj is IList) {
 			return false
 		}
-		for (e1, e2) in zip(self.seq().generate(), Utils.seq(obj).generate()) {
+		for (e1, e2) in zip(self.seq.generate(), Utils.seq(obj).generate()) {
 			if !Utils.equiv(e1, other: e2) {
 				return false
 			}
 		}
-		return self.seq().count == Utils.seq(obj).count
+		return self.seq.count == Utils.seq(obj).count
 	}
 
 	var count : Int {
 		var i : Int = 1;
-		for var s : ISeq? = self.next(); s != nil; s = s!.next(), i = i.successor() {
+		for var s : ISeq? = self.next; s != nil; s = s!.next, i = i.successor() {
 			if let ss = s as? ICounted {
 				return i + ss.count;
 			}
@@ -60,7 +60,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return i;
 	}
 
-	func hasheq() -> Int {
+	var hasheq : Int {
 		return 0
 	}
 
@@ -76,7 +76,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return false
 	}
 
-	func toArray() -> Array<AnyObject> {
+	var toArray : Array<AnyObject> {
 		return []
 	}
 
@@ -84,27 +84,27 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return true
 	}
 
-	func seq() -> ISeq {
+	var seq : ISeq {
 		return self
 	}
 
-	func first() -> AnyObject? {
+	var first : AnyObject? {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func next() -> ISeq {
+	var next : ISeq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func empty() -> IPersistentCollection {
-		return PersistentList.empty()
+	var empty : IPersistentCollection {
+		return PersistentList.empty
 	}
 
-	func more() -> ISeq {
-		if let s : ISeq = self.next() {
+	var more : ISeq {
+		if let s : ISeq = self.next {
 			return s
 		}
-		return PersistentList.empty()
+		return PersistentList.empty
 	}
 
 	func cons(other : AnyObject) -> IPersistentCollection {

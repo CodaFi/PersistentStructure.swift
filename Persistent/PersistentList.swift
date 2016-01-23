@@ -20,7 +20,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		super.init()
 	}
 
-	class func empty() -> ISeq {
+	class var empty : ISeq {
 		return EMPTY
 	}
 
@@ -39,19 +39,19 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return ret
 	}
 
-	override func first() -> AnyObject {
+	override var first : AnyObject {
 		return _first
 	}
 
-	override func next() -> ISeq {
+	override var next : ISeq {
 		if _count == 1 {
 			return EmptySeq()
 		}
 		return _rest as! ISeq
 	}
 
-	func peek() -> AnyObject? {
-		return self.first()
+	var peek : AnyObject? {
+		return self.first
 	}
 
 	func pop() -> IPersistentStack {
@@ -61,7 +61,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return EMPTY.withMeta(_meta)
 	}
 
-	func pop() -> IPersistentList? {
+	func pop() -> IPersistentList {
 		if _rest.count != 0 {
 			return _rest
 		}
@@ -84,22 +84,22 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	}
 
 	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
-		var ret: AnyObject = self.first()
-		for var s = self.next(); s.count != 0; s = s.next() {
-			ret = combine(ret, s.first()!)
+		var ret: AnyObject = self.first
+		for var s = self.next; s.count != 0; s = s.next {
+			ret = combine(ret, s.first!)
 		}
 		return ret
 	}
 
 	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
-		var ret: AnyObject = combine(initial, self.first())
-		for var s = self.next(); s.count != 0; s = s.next() {
-			ret = combine(ret, s.first()!)
+		var ret: AnyObject = combine(initial, self.first)
+		for var s = self.next; s.count != 0; s = s.next {
+			ret = combine(ret, s.first!)
 		}
 		return ret
 	}
 
-	override func empty() -> IPersistentCollection {
+	override var empty : IPersistentCollection {
 		return EMPTY.withMeta(_meta)
 	}
 }
@@ -118,7 +118,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return self
 	}
 
-	func hash() -> UInt {
+	var hash : UInt {
 		return 1
 	}
 
@@ -131,15 +131,15 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return self.isEqual(o)
 	}
 
-	func first() -> AnyObject? {
+	var first : AnyObject? {
 		return nil
 	}
 
-	func next() -> ISeq {
+	var next : ISeq {
 		return self
 	}
 
-	func more() -> ISeq {
+	var more : ISeq {
 		return self
 	}
 
@@ -155,15 +155,15 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return PersistentList(meta: _meta, first: other, rest: EMPTY, count: 1)
 	}
 
-	func empty() -> IPersistentCollection {
+	var empty : IPersistentCollection {
 		return self
 	}
 
-	func peek() -> AnyObject? {
+	var peek : AnyObject? {
 		return nil
 	}
 
-	func pop() -> IPersistentList? {
+	func pop() -> IPersistentList {
 		fatalError("Can't pop empty list")
 	}
 
@@ -175,7 +175,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return 0
 	}
 
-	func seq() -> ISeq {
+	var seq : ISeq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
@@ -188,16 +188,16 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 
-	func toArray() -> Array<AnyObject> {
-		return Utils._emptyArray()
+	var toArray : Array<AnyObject> {
+		return Utils._emptyArray
 	}
 
-	func reify() -> IList? {
+	var reify : IList? {
 		return nil
 	}
 
 	func subListFromIndex(fromIndex: Int, toIndex: Int) -> IList? {
-		return self.reify()!.subListFromIndex(fromIndex, toIndex: toIndex)
+		return self.reify!.subListFromIndex(fromIndex, toIndex: toIndex)
 	}
 
 	func set(index: Int, element: AnyObject) -> AnyObject? {
@@ -206,7 +206,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 	func indexOf(o: AnyObject) -> Int {
-		let s: ISeq = self.seq()
+		let s: ISeq = self.seq
 		for (entry, i) in zip(s.generate(), 0..<s.count) {
 			if Utils.equiv(entry, other: o) {
 				return i
@@ -216,7 +216,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 	func lastIndexOf(o: AnyObject) -> Int {
-		return self.reify()!.lastIndexOf(o)
+		return self.reify!.lastIndexOf(o)
 	}
 
 	func get(index: Int) -> AnyObject {

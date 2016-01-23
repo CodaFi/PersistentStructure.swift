@@ -8,7 +8,7 @@
 
 protocol ICollection : class, ICounted {
 	func containsObject(object : AnyObject) -> Bool
-	func toArray() -> Array<AnyObject>
+	var toArray : Array<AnyObject> { get }
 	var isEmpty : Bool { get }
 }
 
@@ -16,6 +16,6 @@ extension ICollection {
 	typealias Generator = IndexingGenerator<Array<AnyObject>>
 
 	func generate() -> IndexingGenerator<Array<AnyObject>> {
-		return self.toArray().generate()
+		return self.toArray.generate()
 	}
 }

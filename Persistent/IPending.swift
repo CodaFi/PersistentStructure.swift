@@ -7,5 +7,5 @@
 //
 
 protocol IPending {
-	func isRealized() -> Bool
+	var isRealized : Bool { get }
 }

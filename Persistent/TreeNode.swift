@@ -30,19 +30,19 @@ class TreeNode: MapEntry {
 		return nil
 	}
 
-	func blacken() -> TreeNode? {
+	var blacken : TreeNode? {
 		return nil
 	}
 
-	func redden() -> TreeNode? {
+	var redden : TreeNode? {
 		return nil
 	}
 
-	func left() -> TreeNode? {
+	var left : TreeNode? {
 		return nil
 	}
 
-	func right() -> TreeNode? {
+	var right : TreeNode? {
 		return nil
 	}
 
@@ -50,20 +50,20 @@ class TreeNode: MapEntry {
 		return nil
 	}
 
-	override func key() -> AnyObject {
+	override var key : AnyObject {
 		return _key
 	}
 
-	override func val() -> AnyObject {
+	override var val : AnyObject {
 		fatalError("Subclass doesn't implement val!")
 	}
 
 	func balanceLeft(parent: TreeNode) -> TreeNode {
-		return PersistentTreeMap.black(parent.key(), val: parent.val(), left: self, right: parent.right())
+		return PersistentTreeMap.black(parent.key, val: parent.val, left: self, right: parent.right)
 	}
 
 	func balanceRight(parent: TreeNode) -> TreeNode {
-		return PersistentTreeMap.black(parent.key(), val: parent.val(), left: parent.left(), right: self)
+		return PersistentTreeMap.black(parent.key, val: parent.val, left: parent.left, right: self)
 	}
 }
 
@@ -77,18 +77,18 @@ class BlackTreeNode: TreeNode {
 	}
 
 	override func removeLeft(del: TreeNode) -> TreeNode? {
-		return PersistentTreeMap.balanceLeftDel(_key, val: self.val(), del: del, right: self.right()!)
+		return PersistentTreeMap.balanceLeftDel(_key, val: self.val, del: del, right: self.right!)
 	}
 
 	override func removeRight(del: TreeNode) -> TreeNode? {
-		return PersistentTreeMap.balanceRightDel(_key, val: self.val(), del: del, left: self.left()!)
+		return PersistentTreeMap.balanceRightDel(_key, val: self.val, del: del, left: self.left!)
 	}
 
-	override func blacken() -> TreeNode {
+	override var blacken : TreeNode {
 		return self
 	}
 
-	override func redden() -> TreeNode {
+	override var redden : TreeNode {
 		return RedTreeNode(k: _key)
 	}
 
@@ -105,11 +105,11 @@ class BlackTreeValue: BlackTreeNode {
 		super.init(k: key)
 	}
 
-	override func val() -> AnyObject {
+	override var val : AnyObject {
 		return _val
 	}
 
-	override func redden() -> TreeNode {
+	override var redden : TreeNode {
 		return RedTreeValue(key: _key, val: _val)
 	}
 }
@@ -124,15 +124,15 @@ class BlackTreeBranch: BlackTreeNode {
 		super.init(k: k)
 	}
 
-	override func left() -> TreeNode {
+	override var left : TreeNode {
 		return _left
 	}
 
-	override func right() -> TreeNode {
+	override var right : TreeNode {
 		return _right
 	}
 
-	override func redden() -> TreeNode {
+	override var redden : TreeNode {
 		return RedTreeBranch(k: _key, left: _left, right: _right)
 	}
 }
@@ -145,11 +145,11 @@ class BlackTreeBranchValue: BlackTreeBranch {
 		super.init(k: key, left: left, right: right)
 	}
 
-	override func val() -> AnyObject {
+	override var val : AnyObject {
 		return _val
 	}
 
-	override func redden() -> TreeNode {
+	override var redden : TreeNode {
 		return RedTreeBranchValue(key: _key, val: _val, left: _left, right: _right)
 	}
 }
@@ -166,11 +166,11 @@ class RedTreeValue: RedTreeNode {
 		super.init(k: key)
 	}
 
-	override func val() -> AnyObject {
+	override var val : AnyObject {
 		return _val
 	}
 
-	override func blacken() -> TreeNode {
+	override var blacken : TreeNode {
 		return BlackTreeValue(key: _key, val: _val)
 	}
 }
@@ -185,19 +185,19 @@ class RedTreeBranch: RedTreeNode {
 		super.init(k: k)
 	}
 
-	override func left() -> TreeNode {
+	override var left : TreeNode {
 		return _left
 	}
 
-	override func right() -> TreeNode {
+	override var right : TreeNode {
 		return _right
 	}
 
 	override func balanceLeft(parent: TreeNode) -> TreeNode {
 		if let ll = _left as? RedTreeNode {
-			return PersistentTreeMap.red(_key, val: self.val(), left: ll.blacken(), right: PersistentTreeMap.black(parent.key(), val: parent.val(), left: _right, right: parent.right()))
+			return PersistentTreeMap.red(_key, val: self.val, left: ll.blacken, right: PersistentTreeMap.black(parent.key, val: parent.val, left: _right, right: parent.right))
 		} else if let rr = _right as? RedTreeNode {
-			return PersistentTreeMap.red(rr.key(), val: rr.val(), left: rr.left()!, right: PersistentTreeMap.black(parent.key(), val: parent.val(), left: rr.right(), right: parent.right()))
+			return PersistentTreeMap.red(rr.key, val: rr.val, left: rr.left!, right: PersistentTreeMap.black(parent.key, val: parent.val, left: rr.right, right: parent.right))
 		} else {
 			return super.balanceLeft(parent)
 		}
@@ -205,15 +205,15 @@ class RedTreeBranch: RedTreeNode {
 
 	override func balanceRight(parent: TreeNode) -> TreeNode {
 		if let rr = _right as? RedTreeNode {
-			return PersistentTreeMap.red(_key, val: self.val(), left: PersistentTreeMap.black(parent.key(), val: parent.val(), left: parent.left(), right: _left), right: rr.blacken())
+			return PersistentTreeMap.red(_key, val: self.val, left: PersistentTreeMap.black(parent.key, val: parent.val, left: parent.left, right: _left), right: rr.blacken)
 		} else if let ll = _left as? RedTreeNode {
-			return PersistentTreeMap.red(ll.key(), val: ll.val(), left: PersistentTreeMap.black(parent.key(), val: parent.val(), left: parent.left(), right: ll.left()), right: PersistentTreeMap.black(_key, val: self.val(), left: ll.right(), right: _right))
+			return PersistentTreeMap.red(ll.key, val: ll.val, left: PersistentTreeMap.black(parent.key, val: parent.val, left: parent.left, right: ll.left), right: PersistentTreeMap.black(_key, val: self.val, left: ll.right, right: _right))
 		} else {
 			return super.balanceRight(parent)
 		}
 	}
 
-	override func blacken() -> TreeNode {
+	override var blacken : TreeNode {
 		return BlackTreeBranch(k: _key, left: _left, right: _right)
 	}
 }
@@ -226,11 +226,11 @@ class RedTreeBranchValue: RedTreeBranch {
 		super.init(k: key, left: left, right: right)
 	}
 
-	override func val() -> AnyObject {
+	override var val : AnyObject {
 		return _val
 	}
 
-	override func blacken() -> TreeNode {
+	override var blacken : TreeNode {
 		return BlackTreeBranchValue(key: _key, val: _val, left: _left, right: _right)
 	}
 }

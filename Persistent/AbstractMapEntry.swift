@@ -9,51 +9,51 @@
 class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	override func objectAtIndex(i: Int) -> AnyObject? {
 		if i == 0 {
-			return self.key()
+			return self.key
 		} else if i == 1 {
-			return self.val()
+			return self.val
 		} else {
 			fatalError("Range or index out of bounds")
 		}
 	}
 
-	func asVector() -> IPersistentVector {
-		return LazilyPersistentVector.createOwning([self.key(), self.val()]) 
+	var asVector : IPersistentVector {
+		return LazilyPersistentVector.createOwning([self.key, self.val]) 
 	}
 
 	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
-		return self.asVector().assocN(i, value: val)
+		return self.asVector.assocN(i, value: val)
 	}
 
 	override var count : Int {
 		return 2
 	}
 
-	override func seq() -> ISeq {
-		return self.asVector().seq()
+	override var seq : ISeq {
+		return self.asVector.seq
 	}
 
 	override func cons(o: AnyObject) -> IPersistentVector {
-		return self.asVector().cons(o)
+		return self.asVector.cons(o)
 	}
 
-	override func empty() -> IPersistentCollection {
+	override var empty : IPersistentCollection {
 		fatalError("Collection does not admit an empty representation")
 	}
 
 	override func pop() -> IPersistentStack {
-		return LazilyPersistentVector.createOwning([self.key()])
+		return LazilyPersistentVector.createOwning([self.key])
 	}
 
 	func setValue(value: AnyObject) -> AnyObject? {
 		fatalError("setValue unimplemented")
 	}
 
-	func key() -> AnyObject {
+	var key : AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func val() -> AnyObject {
+	var val : AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

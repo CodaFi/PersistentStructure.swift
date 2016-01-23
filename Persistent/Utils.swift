@@ -24,7 +24,7 @@ class Utils: NSObject {
 		if let cc = coll as? AbstractSeq {
 			return cc
 		} else if let cc = coll as? LazySeq {
-			return cc.seq()
+			return cc.seq
 		} else {
 			return Utils.seqFrom(coll)
 		}
@@ -32,7 +32,7 @@ class Utils: NSObject {
 
 	class func seqFrom(coll: AnyObject) -> ISeq {
 		if let cc = coll as? (ISeqable) {
-			return cc.seq()
+			return cc.seq
 		} else if let cc = coll as? NSString {
 			return StringSeq(s: cc)
 		} else {
@@ -52,7 +52,7 @@ class Utils: NSObject {
 	}
 
 	class func dohasheq(o: IHashEq?) -> Int {
-		return o?.hasheq() ?? 0
+		return o?.hasheq ?? 0
 	}
 
 	class func seqToArray(seq: ISeq) -> Array<AnyObject> {
@@ -89,7 +89,7 @@ class Utils: NSObject {
 			var s: ISeq? = Utils.seq(o)
 			obj = nil
 			var i: Int = 0
-			for ; s != nil; s = s!.next() {
+			for ; s != nil; s = s!.next {
 				if let cc = s as? (ICounted) {
 					return i + Int(cc.count)
 				}
@@ -149,9 +149,9 @@ class Utils: NSObject {
 			return coll.performSelector("objectAtIndexedSubscript:", withObject: n).takeRetainedValue()
 		} else if let e = coll as? (MapEntry) {
 			if n == 0 {
-				return e.key()
+				return e.key
 			} else if n == 1 {
-				return e.val()
+				return e.val
 			}
 			fatalError("Range or index out of bounds")
 		} else if let _ = coll as? (ISequential) {
@@ -174,16 +174,16 @@ class Utils: NSObject {
 			return notFound
 		} else if let e = coll as? (IMapEntry) {
 			if n == 0 {
-				return e.key()
+				return e.key
 			} else if n == 1 {
-				return e.val()
+				return e.val
 			}
 			return notFound
 		} else if let _ = coll as? (ISequential) {
 			var seq: ISeq = Utils.seq(coll!)
-			for var i = 0; i <= n && seq.count != 0; i = i.successor(), seq = seq.next() {
+			for var i = 0; i <= n && seq.count != 0; i = i.successor(), seq = seq.next {
 				if i == n {
-					return seq.first()!
+					return seq.first!
 				}
 			}
 			return notFound
@@ -214,7 +214,7 @@ class Utils: NSObject {
 			fatalError("Range or index out of bounds")
 		}
 		if start == end {
-			return PersistentVector.empty()
+			return PersistentVector.empty
 		}
 		return SubVector(meta: nil, vector: v, start: start, end: end)
 	}
@@ -228,9 +228,9 @@ class Utils: NSObject {
 
 	class func first(x: AnyObject) -> AnyObject? {
 		if let ss = x as? ISeq {
-			return ss.first()
+			return ss.first
 		}
-		return Utils.seq(x).first()
+		return Utils.seq(x).first
 	}
 
 	class func second(x: AnyObject) -> AnyObject? {
@@ -247,16 +247,16 @@ class Utils: NSObject {
 
 	class func next(x: AnyObject) -> ISeq? {
 		if let ss = x as? (ISeq) {
-			return ss.next()
+			return ss.next
 		}
-		return Utils.seq(x).next()
+		return Utils.seq(x).next
 	}
 
 	class func more(x: AnyObject) -> ISeq {
 		if let ss = x as? (ISeq) {
-			return ss.more()
+			return ss.more
 		}
-		return Utils.seq(x).more()
+		return Utils.seq(x).more
 	}
 
 	class func ret1o(ret: AnyObject, null: AnyObject?) -> AnyObject {
@@ -295,7 +295,7 @@ class Utils: NSObject {
 		return o.hash
 	}
 
-	class func _emptyArray() -> Array<AnyObject> {
+	class var _emptyArray : Array<AnyObject> {
 		return []
 	}
 
@@ -349,7 +349,7 @@ class Utils: NSObject {
 		}
 		let edit: NSThread = NSThread.currentThread()
 		return BitmapIndexedNode
-			.empty()
+			.empty
 			.assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1)!
 			.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2)
 	}
@@ -359,7 +359,7 @@ class Utils: NSObject {
 		if key1hash == key2hash {
 			return HashCollisionNode(edit: nil, hash: key1hash, count: 2, array: [key1, val1, key2, val2])
 		}
-		return BitmapIndexedNode.empty().assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1)?.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2)
+		return BitmapIndexedNode.empty.assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1)?.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2)
 	}
 
 	class func compare(k1: AnyObject?, to k2: AnyObject?) -> NSComparisonResult {

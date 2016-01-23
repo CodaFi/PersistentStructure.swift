@@ -14,9 +14,9 @@ class TransientVector : ITransientVector, ICounted {
 
 	init(v: PersistentVector) {
 		_count = Int(v.count)
-		_shift = v.shift()
-		_root = TransientVector.editableRoot(v.root())
-		_tail = TransientVector.editableTail(v.tail())
+		_shift = v.shift
+		_root = TransientVector.editableRoot(v.root)
+		_tail = TransientVector.editableTail(v.tail)
 	}
 
 	init(cnt: Int, shift: Int, node root: Node, tail: Array<AnyObject>) {
@@ -59,7 +59,7 @@ class TransientVector : ITransientVector, ICounted {
 			fatalError("Mutation release by non-owner thread")
 		}
 		var trimmedTail: Array<AnyObject> = []
-		trimmedTail.reserveCapacity(_count - self.tailoff())
+		trimmedTail.reserveCapacity(_count - self.tailoff)
 		ArrayCopy(_tail, 0, trimmedTail, 0, UInt(trimmedTail.count))
 		return PersistentVector(cnt: _count, shift: _shift, root: _root as! INode, tail: trimmedTail)
 	}
@@ -74,7 +74,7 @@ class TransientVector : ITransientVector, ICounted {
 	func conj(val: AnyObject) -> ITransientCollection {
 		self.ensureEditable()
 		let i: Int = _count
-		if i - self.tailoff() < 32 {
+		if i - self.tailoff < 32 {
 			_tail[i & 0x01f] = val
 			_count = _count.successor()
 			return self
@@ -126,7 +126,7 @@ class TransientVector : ITransientVector, ICounted {
 		return ret
 	}
 
-	func tailoff() -> Int {
+	var tailoff : Int {
 		if _count < 32 {
 			return 0
 		}
@@ -135,7 +135,7 @@ class TransientVector : ITransientVector, ICounted {
 
 	func arrayFor(i: Int) -> Array<AnyObject> {
 		if i >= 0 && i < _count {
-			if i >= self.tailoff() {
+			if i >= self.tailoff {
 				return _tail
 			}
 			var node: Node = _root
@@ -149,7 +149,7 @@ class TransientVector : ITransientVector, ICounted {
 
 	func editableArrayFor(i: Int) -> Array<AnyObject> {
 		if i >= 0 && i < _count {
-			if i >= self.tailoff() {
+			if i >= self.tailoff {
 				return _tail
 			}
 			var node: Node = _root
@@ -199,7 +199,7 @@ class TransientVector : ITransientVector, ICounted {
 	func assocN(i: Int, value val: AnyObject) -> ITransientVector {
 		self.ensureEditable()
 		if i >= 0 && i < _count {
-			if i >= self.tailoff() {
+			if i >= self.tailoff {
 				_tail[i & 0x01f] = val
 				return self
 			}
@@ -232,7 +232,7 @@ class TransientVector : ITransientVector, ICounted {
 		return ret
 	}
 
-	func pop() -> ITransientVector {
+	var pop : ITransientVector {
 		self.ensureEditable()
 		if _count == 0 {
 			fatalError("Can't pop from an empty vector")

@@ -9,7 +9,7 @@
 class LazilyPersistentVector {
 	class func createOwning(items: Array<AnyObject>) -> IPersistentVector {
 		if items.count == 0 {
-			return PersistentVector.empty()
+			return PersistentVector.empty
 		} else if items.count <= 32 {
 			return PersistentVector(cnt: items.count, shift: 5, root: (PersistentVector.emptyNode as? INode)!, tail: items)
 		}
@@ -18,11 +18,11 @@ class LazilyPersistentVector {
 
 	class func create(collec: ICollection?) -> IPersistentVector {
 		guard let coll = collec as? ISeq else {
-			return LazilyPersistentVector.createOwning(collec?.toArray() ?? [])
+			return LazilyPersistentVector.createOwning(collec?.toArray ?? [])
 		}
 		
 		if coll.count <= 32 {
-			return LazilyPersistentVector.createOwning(collec?.toArray() ?? [])
+			return LazilyPersistentVector.createOwning(collec?.toArray ?? [])
 		}
 		return PersistentVector.createWithSeq(Utils.seq(coll))
 	}

@@ -13,8 +13,8 @@ class SeqIterator: NSEnumerator {
 		_seq = seq
 	}
 
-	override func nextObject() -> AnyObject {
-		let ret: AnyObject = Utils.first(_seq)!
+	override func nextObject() -> AnyObject? {
+		let ret = Utils.first(_seq)
 		_seq = Utils.next(_seq)!
 		return ret
 	}
