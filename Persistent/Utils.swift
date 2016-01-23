@@ -345,7 +345,7 @@ class Utils: NSObject {
 		if key1hash == key2hash {
 			return HashCollisionNode(edit: nil, hash: key1hash, count: 2, array: [ key1, val1, key2, val2 ])
 		}
-		let addedLeaf: Box = Box(withVal: nil)
+		let addedLeaf: AnyObject? = nil
 		let edit: NSThread = NSThread.currentThread()
 		return BitmapIndexedNode
 			.empty()
@@ -358,7 +358,7 @@ class Utils: NSObject {
 		if key1hash == key2hash {
 			return HashCollisionNode(edit: nil, hash: key1hash, count: 2, array: [key1, val1, key2, val2])
 		}
-		let addedLeaf: Box = Box(withVal: nil)
+		let addedLeaf: AnyObject? = nil
 		return BitmapIndexedNode.empty().assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1, addedLeaf: addedLeaf)!.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2, addedLeaf: addedLeaf)
 	}
 

@@ -12,7 +12,7 @@ class TransientHashMap: AbstractTransientMap {
 	private var _count: Int = 0
 	private var _hasNull: Bool = false
 	private var _nullValue: AnyObject?
-	private var _leafFlag: Box = Box()
+	private var _leafFlag: AnyObject? = nil
 
 	convenience init(withMap m: PersistentHashMap) {
 		self.init(onThread: NSThread.currentThread(), root: m.root(), count: Int(m.count), hasNull: m.hasNull(), nullValue: m.nullValue())
@@ -26,16 +26,16 @@ class TransientHashMap: AbstractTransientMap {
 		_count = count
 		_hasNull = hasNull
 		_nullValue = nullValue
-		_leafFlag = Box()
+		_leafFlag = nil
 	}
 
 	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
-		_leafFlag.val = nil
+		_leafFlag = nil
 		let n: INode? = (_root == nil ? BitmapIndexedNode.empty() : _root)!.assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, val: val, addedLeaf: _leafFlag)
 		if n !== _root {
 			_root = n
 		}
-		if _leafFlag.val != nil {
+		if _leafFlag != nil {
 			_count = _count.successor()
 		}
 		return self
@@ -45,12 +45,12 @@ class TransientHashMap: AbstractTransientMap {
 		if _root == nil {
 			return self
 		}
-		_leafFlag.val = nil
+		_leafFlag = nil
 		let n: INode? = _root!.withoutOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, addedLeaf: _leafFlag)
 		if n !== _root {
 			_root = n
 		}
-		if _leafFlag.val != nil {
+		if _leafFlag != nil {
 			_count--
 		}
 		return self

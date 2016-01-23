@@ -105,12 +105,12 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 			}
 			return PersistentHashMap(meta: self.meta(), count: _hasNull ? _count : _count + 1, root: _root, hasNull: true, nullValue: val)
 		}
-		let addedLeaf: Box = Box(withVal: nil)
+		let addedLeaf: AnyObject? = nil
 		let newroot: INode? = (_root == nil ? BitmapIndexedNode.empty() : _root)!.assocWithShift(0, hash: Int(Utils.hash(key)), key: key!, value: val, addedLeaf: addedLeaf)
 		if newroot === _root {
 			return self
 		}
-		return PersistentHashMap(meta: self.meta(), count: addedLeaf.val == nil ? _count : _count + 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue!)
+		return PersistentHashMap(meta: self.meta(), count: (addedLeaf == nil) ? _count : _count + 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue!)
 	}
 
 	override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {

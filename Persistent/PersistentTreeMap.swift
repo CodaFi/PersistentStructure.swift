@@ -90,8 +90,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	}
 
 	func assocEx(key: AnyObject, value val: AnyObject) -> IPersistentMap {
-		let found: Box = Box(withVal: nil)
-		let t: TreeNode? = self.add(_tree, key: key, val: val, found: found)
+		let (t, _) = self.add(_tree, key: key, val: val)
 		if t == nil {
 			fatalError("Key already present")
 		}
@@ -99,11 +98,9 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	}
 
 	func associateKey(key: AnyObject, value val: AnyObject) -> IPersistentMap {
-		let found: Box = Box(withVal: nil)
-		let t: TreeNode? = self.add(_tree, key: key, val: val, found: found)
+		let (t, foundNode) = self.add(_tree, key: key, val: val)
 		if t == nil {
-			let foundNode: TreeNode = found.val as! TreeNode
-			if foundNode.val() === val {
+			if foundNode?.val() === val {
 				return self
 			}
 			return PersistentTreeMap(meta: self.meta(), comparator: _comp, tree: self.replace(_tree!, key: key, val: val), count: _count + 1)
@@ -112,15 +109,14 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	}
 
 	override func without(key: AnyObject) -> IPersistentMap {
-		let found: Box = Box(withVal: nil)
-		let t: TreeNode? = self.remove(_tree, key: key, found: found)
-		if t == nil {
-			if found.val == nil {
-				return self
-			}
+		let (t, found) = self.remove(_tree, key: key)
+		if let tn = t {
+			return PersistentTreeMap(meta: self.meta(), comparator: _comp, tree: tn.blacken(), count: _count - 1)
+		} else if found == nil {
+			return self
+		} else {
 			return PersistentTreeMap(meta: self.meta(), comparator: _comp)
 		}
-		return PersistentTreeMap(meta: self.meta(), comparator: _comp, tree: t?.blacken(), count: _count - 1)
 	}
 
 	override func seq() -> ISeq {
@@ -264,53 +260,55 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return _comp(k1, k2)
 	}
 
-	func add(t: TreeNode?, key: AnyObject, val: AnyObject?, found: Box) -> TreeNode? {
-		if t == nil {
+	func add(treen: TreeNode?, key: AnyObject, val: AnyObject?) -> (TreeNode?, oldValue: TreeNode?) {
+		guard let t = treen else {
 			if val == nil {
-				return RedTreeNode(k: key)
+				return (RedTreeNode(k: key), nil)
 			}
-			return RedTreeValue(key: key, val: val!)
+			return (RedTreeValue(key: key, val: val!), nil)
 		}
-		let c: NSComparisonResult = self.doCompare(key, k2: t!.key())
+		let c: NSComparisonResult = self.doCompare(key, k2: t.key())
 		if c == .OrderedSame {
-			found.val = t
-			return nil
+			return (nil, t)
 		}
-		let ins: TreeNode? = c == .OrderedDescending ? self.add(t!.left(), key: key, val: val, found: found) : self.add(t!.right(), key: key, val: val, found: found)
-		if ins == nil {
-			return nil
+		let (inse, found) = (c == .OrderedDescending) ? self.add(t.left(), key: key, val: val) : self.add(t.right(), key: key, val: val)
+		guard let ins = inse else {
+			return (nil, found)
 		}
+		
 		if c == .OrderedDescending {
-			return t!.addLeft(ins!)
+			return (t.addLeft(ins), found)
 		}
-		return t!.addRight(ins!)
+		return (t.addRight(ins), found)
 	}
 
-	func remove(t: TreeNode?, key: AnyObject, found: Box) -> TreeNode? {
-		if t == nil {
-			return nil
+	func remove(treen: TreeNode?, key: AnyObject) -> (TreeNode?, oldValue: TreeNode?) {
+		guard let t = treen else {
+			return (nil, nil)
 		}
-		let c: NSComparisonResult = self.doCompare(key, k2: t!.key())
+		
+		let c: NSComparisonResult = self.doCompare(key, k2: t.key())
 		if c == .OrderedSame {
-			found.val = t
-			return PersistentTreeMap.append(t!.left()!, right: t!.right()!)
+			return (PersistentTreeMap.append(t.left()!, right: t.right()!), t)
 		}
-		let del: TreeNode? = c == .OrderedDescending ? self.remove(t!.left(), key: key, found: found) : self.remove(t!.right(), key: key, found: found)
-		if del == nil && found.val == nil {
-			return nil
+		
+		let (dele, found) = (c == .OrderedDescending) ? self.remove(t.left(), key: key) : self.remove(t.right(), key: key)
+		guard let del = dele else {
+			return (nil, nil)
 		}
+		
 		if c == .OrderedDescending {
-			if let _ = t!.left() as? BlackTreeNode {
-				return PersistentTreeMap.balanceLeftDel(t!.key(), val: t!.val(), del: del!, right: t!.right()!)
+			if let _ = t.left() as? BlackTreeNode {
+				return (PersistentTreeMap.balanceLeftDel(t.key(), val: t.val(), del: del, right: t.right()!), found)
 			} else {
-				return PersistentTreeMap.red(t!.key(), val: t!.val(), left: del!, right: t!.right()!)
+				return (PersistentTreeMap.red(t.key(), val: t.val(), left: del, right: t.right()!), found)
 			}
 		}
 
-		if let _ = t!.right() as? BlackTreeNode {
-			return PersistentTreeMap.balanceRightDel(t!.key(), val: t!.val(), del: del!, left: t!.left()!)
+		if let _ = t.right() as? BlackTreeNode {
+			return (PersistentTreeMap.balanceRightDel(t.key(), val: t.val(), del: del, left: t.left()!), found)
 		}
-		return PersistentTreeMap.red(t!.key(), val: t!.val(), left: t!.left()!, right: del!)
+		return (PersistentTreeMap.red(t.key(), val: t.val(), left: t.left()!, right: del), found)
 	}
 
 	class func append(left: TreeNode?,  right: TreeNode?) -> TreeNode? {

@@ -73,7 +73,6 @@
 		82BACD6F1C2A304B006BA8F5 /* TransientArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */; };
 		82BACD711C2A3159006BA8F5 /* PersistentArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */; };
 		82BACD731C2A3396006BA8F5 /* TransientHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */; };
-		82BACD751C2A33F0006BA8F5 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD741C2A33F0006BA8F5 /* Box.swift */; };
 		82BACD771C2A3469006BA8F5 /* PersistentHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */; };
 		82CF9AD71C29375900D4677B /* KeySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD61C29375900D4677B /* KeySeq.swift */; };
 		82CF9AD91C29387E00D4677B /* MapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD81C29387E00D4677B /* MapEntry.swift */; };
@@ -182,7 +181,6 @@
 		82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientArrayMap.swift; sourceTree = "<group>"; };
 		82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentArrayMap.swift; sourceTree = "<group>"; };
 		82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientHashMap.swift; sourceTree = "<group>"; };
-		82BACD741C2A33F0006BA8F5 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentHashMap.swift; sourceTree = "<group>"; };
 		82CF9AD61C29375900D4677B /* KeySeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeySeq.swift; sourceTree = "<group>"; };
 		82CF9AD81C29387E00D4677B /* MapEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapEntry.swift; sourceTree = "<group>"; };
@@ -284,7 +282,6 @@
 				8230B0061C2D6CD40068D04B /* Clojure.swift */,
 				82DD94DD1C2B452700064CB7 /* ArrayChunk.swift */,
 				829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */,
-				82BACD741C2A33F0006BA8F5 /* Box.swift */,
 				82CF9ADA1C2938A700D4677B /* Node.swift */,
 				82CF9ADC1C2938E000D4677B /* Obj.swift */,
 				82A6679C1BF9281A00EBCDFA /* Utils.swift */,
@@ -514,7 +511,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82A667741BF9220200EBCDFA /* IPersistentMap.swift in Sources */,
-				82BACD751C2A33F0006BA8F5 /* Box.swift in Sources */,
 				82A6677E1BF922F800EBCDFA /* IReducible.swift in Sources */,
 				822F358A1C2D233A00E1D42E /* ValSeq.swift in Sources */,
 				822B2A9E1BFEB03800146A7F /* AbstractPersistentMap.swift in Sources */,
