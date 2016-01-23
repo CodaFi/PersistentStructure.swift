@@ -210,12 +210,13 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return self.depth(_tree)
 	}
 
-	func depth(t: TreeNode?) -> Int32 {
-		if t == nil {
+	func depth(tn: TreeNode?) -> Int32 {
+		guard let t = tn else {
 			return 0
 		}
-		let ll = self.depth(t!.left())
-		let rr = self.depth(t!.right())
+		
+		let ll = self.depth(t.left())
+		let rr = self.depth(t.right())
 		return 1 + ((ll > rr) ? ll : rr)
 	}
 
@@ -311,54 +312,54 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return (PersistentTreeMap.red(t.key(), val: t.val(), left: t.left()!, right: del), found)
 	}
 
-	class func append(left: TreeNode?,  right: TreeNode?) -> TreeNode? {
-		if left == nil {
-			return right
-		} else if right == nil {
-			return left
-		} else if let _ = left as? RedTreeNode {
-			if let _ = right as? RedTreeNode {
-				let app: TreeNode? = PersistentTreeMap.append(left!.right(), right: right!.left())
+	class func append(le: TreeNode?, right ri: TreeNode?) -> TreeNode? {
+		if le == nil {
+			return ri
+		} else if ri == nil {
+			return le
+		} else if let left = le as? RedTreeNode {
+			if let right = ri as? RedTreeNode {
+				let app: TreeNode? = PersistentTreeMap.append(left.right(), right: right.left())
 				if let _ = app as? RedTreeNode {
-					return PersistentTreeMap.red(app!.key(), val: app!.val(), left: PersistentTreeMap.red(left!.key(), val: left!.val(), left: left!.left()!, right: app!.left()!), right: PersistentTreeMap.red(right!.key(), val: right!.val(), left: app!.right(), right: right!.right()!))
+					return PersistentTreeMap.red(app!.key(), val: app!.val(), left: PersistentTreeMap.red(left.key(), val: left.val(), left: left.left()!, right: app!.left()!), right: PersistentTreeMap.red(right.key(), val: right.val(), left: app!.right(), right: right.right()!))
 				} else {
-					return PersistentTreeMap.red(left!.key(), val: left!.val(), left: left!.left()!, right: PersistentTreeMap.red(right!.key(), val: right!.val(), left: app, right: right!.right()!))
+					return PersistentTreeMap.red(left.key(), val: left.val(), left: left.left()!, right: PersistentTreeMap.red(right.key(), val: right.val(), left: app, right: right.right()!))
 				}
 			} else {
-				return PersistentTreeMap.red(left!.key(), val: left!.val(), left: left!.left()!, right: PersistentTreeMap.append(left!.right()!, right: right))
+				return PersistentTreeMap.red(left.key(), val: left.val(), left: left.left()!, right: PersistentTreeMap.append(left.right()!, right: ri))
 			}
-		} else if let _ = right as? RedTreeNode {
-			return PersistentTreeMap.red(right!.key(), val: right!.val(), left: PersistentTreeMap.append(left, right: right!.left()!), right: right!.right()!)
+		} else if let right = ri as? RedTreeNode {
+			return PersistentTreeMap.red(right.key(), val: right.val(), left: PersistentTreeMap.append(le, right: right.left()!), right: right.right()!)
 		} else {
-			let app: TreeNode? = PersistentTreeMap.append(left!.right()!, right: right!.left()!)
-			if let _ = app as? RedTreeNode {
-				return PersistentTreeMap.red(app!.key(), val: app!.val(), left: PersistentTreeMap.black(left!.key(), val: left!.val(), left: left!.left()!, right: app!.left()!), right: PersistentTreeMap.black(right!.key(), val: right!.val(), left: app!.right(), right: right!.right()!))
+			let appe: TreeNode? = PersistentTreeMap.append(le!.right()!, right: ri!.left()!)
+			if let app = appe as? RedTreeNode {
+				return PersistentTreeMap.red(app.key(), val: app.val(), left: PersistentTreeMap.black(le!.key(), val: le!.val(), left: le!.left()!, right: app.left()!), right: PersistentTreeMap.black(ri!.key(), val: ri!.val(), left: app.right(), right: ri!.right()!))
 			} else {
-				return PersistentTreeMap.balanceLeftDel(left!.key(), val: left!.val(), del: left!.left()!, right: PersistentTreeMap.black(right!.key(), val: right!.val(), left: app, right: right!.right()!))
+				return PersistentTreeMap.balanceLeftDel(le!.key(), val: le!.val(), del: le!.left()!, right: PersistentTreeMap.black(ri!.key(), val: ri!.val(), left: appe, right: ri!.right()!))
 			}
 		}
 	}
 
-	class func balanceLeftDel(key: AnyObject, val: AnyObject, del: TreeNode, right: TreeNode) -> TreeNode? {
+	class func balanceLeftDel(key: AnyObject, val: AnyObject, del: TreeNode, right ri: TreeNode) -> TreeNode? {
 		if let _ = del as? RedTreeNode {
-			return PersistentTreeMap.red(key, val: val, left: del.blacken(), right: right)
-		} else if let _ = right as? BlackTreeNode {
-			return PersistentTreeMap.rightBalance(key, val: val, left: del, ins: right.redden()!)
-		} else if let _ = right as? RedTreeNode, let _ = right.left() as? BlackTreeNode {
-			return PersistentTreeMap.red(right.left()!.key(), val: right.left()!.val(), left: PersistentTreeMap.black(key, val: val, left: del, right: right.left()!.left()!), right: PersistentTreeMap.rightBalance(right.key(), val: right.val(), left: right.left()!.right()!, ins: right.right()!.redden()!))
+			return PersistentTreeMap.red(key, val: val, left: del.blacken(), right: ri)
+		} else if let right = ri as? BlackTreeNode {
+			return PersistentTreeMap.rightBalance(key, val: val, left: del, ins: right.redden())
+		} else if let right = ri as? RedTreeNode, let rileft = right.left() as? BlackTreeNode {
+			return PersistentTreeMap.red(rileft.key(), val: rileft.val(), left: PersistentTreeMap.black(key, val: val, left: del, right: rileft.left()!), right: PersistentTreeMap.rightBalance(right.key(), val: right.val(), left: rileft.right()!, ins: right.right()!.redden()!))
 		} else {
 			fatalError("Invariant violation")
 		}
 		return nil
 	}
 
-	class func balanceRightDel(key: AnyObject, val: AnyObject, del: TreeNode, left: TreeNode) -> TreeNode? {
+	class func balanceRightDel(key: AnyObject, val: AnyObject, del: TreeNode, left le: TreeNode) -> TreeNode? {
 		if let _ = del as? RedTreeNode {
-			return PersistentTreeMap.red(key, val: val, left: left, right: del.blacken())
-		} else if let _ = left as? BlackTreeNode {
-			return PersistentTreeMap.leftBalance(key, val: val, ins: left.redden()!, right: del)
-		} else if let _ = left as? RedTreeNode, let _ = left.right() as? BlackTreeNode {
-			return PersistentTreeMap.red(left.right()!.key(), val: left.right()!.val(), left: PersistentTreeMap.leftBalance(left.key(), val: left.val(), ins: left.left()!.redden()!, right: left.right()!.left()!), right: PersistentTreeMap.black(key, val: val, left: left.right()!.right(), right: del))
+			return PersistentTreeMap.red(key, val: val, left: le, right: del.blacken())
+		} else if let left = le as? BlackTreeNode {
+			return PersistentTreeMap.leftBalance(key, val: val, ins: left.redden(), right: del)
+		} else if let left = le as? RedTreeNode, let leright = left.right() as? BlackTreeNode {
+			return PersistentTreeMap.red(leright.key(), val: leright.val(), left: PersistentTreeMap.leftBalance(left.key(), val: left.val(), ins: left.left()!.redden()!, right: leright.left()!), right: PersistentTreeMap.black(key, val: val, left: leright.right(), right: del))
 		} else {
 			fatalError("Invariant violation")
 		}
@@ -366,10 +367,10 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	}
 
 	class func leftBalance(key: AnyObject, val: AnyObject, ins: TreeNode, right: TreeNode) -> TreeNode? {
-		if let _ = ins as? RedTreeNode, let _ = ins.left() as? RedTreeNode {
-			return PersistentTreeMap.red(ins.key(), val: ins.val(), left: ins.left()!.blacken()!, right: PersistentTreeMap.black(key, val: val, left: ins.right(), right: right))
-		} else if let _ = ins as? RedTreeNode, let _ = ins.right() as? RedTreeNode {
-			return PersistentTreeMap.red(ins.right()!.key(), val: ins.right()!.val(), left: PersistentTreeMap.black(ins.key(), val: ins.val(), left: ins.left(), right: ins.right()!.left()!), right: PersistentTreeMap.black(key, val: val, left: ins.right()!.right()!, right: right))
+		if let _ = ins as? RedTreeNode, let le = ins.left() as? RedTreeNode {
+			return PersistentTreeMap.red(ins.key(), val: ins.val(), left: le.blacken()!, right: PersistentTreeMap.black(key, val: val, left: ins.right(), right: right))
+		} else if let _ = ins as? RedTreeNode, let ri = ins.right() as? RedTreeNode {
+			return PersistentTreeMap.red(ri.key(), val: ri.val(), left: PersistentTreeMap.black(ins.key(), val: ins.val(), left: ins.left(), right: ri.left()!), right: PersistentTreeMap.black(key, val: val, left: ri.right()!, right: right))
 		} else {
 			return PersistentTreeMap.black(key, val: val, left: ins, right: right)
 		}

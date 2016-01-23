@@ -31,7 +31,7 @@ class TransientHashMap: AbstractTransientMap {
 
 	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
 		_leafFlag = nil
-		let n: INode? = (_root == nil ? BitmapIndexedNode.empty() : _root)!.assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, val: val, addedLeaf: _leafFlag)
+		let n: INode? = (_root ?? BitmapIndexedNode.empty()).assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, val: val)
 		if n !== _root {
 			_root = n
 		}
@@ -42,11 +42,12 @@ class TransientHashMap: AbstractTransientMap {
 	}
 
 	override func doWithout(key: AnyObject) -> ITransientMap {
-		if _root == nil {
+		guard let r = _root else {
 			return self
 		}
+		
 		_leafFlag = nil
-		let n: INode? = _root!.withoutOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, addedLeaf: _leafFlag)
+		let n: INode? = r.withoutOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key)
 		if n !== _root {
 			_root = n
 		}
@@ -60,18 +61,20 @@ class TransientHashMap: AbstractTransientMap {
 		return PersistentHashMap(count: _count, root: _root, hasNull: _hasNull, nullValue: _nullValue)
 	}
 
-	override func doobjectForKey(key: AnyObject?,  notFound: AnyObject) -> AnyObject? {
-		if key == nil {
+	override func doobjectForKey(keye: AnyObject?,  notFound: AnyObject) -> AnyObject? {
+		guard let key = keye else {
 			if _hasNull {
 				return _nullValue
 			} else {
 				return notFound
 			}
 		}
-		if _root == nil {
+		
+		guard let r = _root else {
 			return notFound
 		}
-		return _root!.findWithShift(0, hash: Int(Utils.hash(key)), key: key!, notFound: notFound)
+		
+		return r.findWithShift(0, hash: Int(Utils.hash(key)), key: key, notFound: notFound)
 	}
 
 

@@ -36,19 +36,20 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return AbstractPersistentSet.setisEqual(self, other: o)
 	}
 
-	class func setisEqual(s1: IPersistentSet?, other obj: AnyObject) -> Bool {
-		if s1 === obj {
+	class func setisEqual(seq1: IPersistentSet?, other obj: AnyObject) -> Bool {
+		if seq1 === obj {
 			return true
 		}
-		if !(obj is ISet) {
+		
+		guard let m = obj as? ISet, s1 = seq1 else {
 			return false
 		}
-		let m: ISet? = obj as? ISet
-		if m?.count != s1?.count {
+		
+		if m.count != s1.count {
 			return false
 		}
-		for aM: AnyObject in m!.generate() {
-			if !s1!.containsObject(aM) {
+		for aM in m.generate() {
+			if !s1.containsObject(aM) {
 				return false
 			}
 		}

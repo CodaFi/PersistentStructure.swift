@@ -32,9 +32,9 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	}
 
 	class func create(initial: IList) -> IPersistentList? {
-		var ret: IPersistentList? = EMPTY
+		var ret: IPersistentList = EMPTY
 		for obj in initial.generate() {
-			ret = ret!.cons(obj) as? IPersistentList
+			ret = ret.cons(obj) as! IPersistentList
 		}
 		return ret
 	}
@@ -206,9 +206,9 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 	func indexOf(o: AnyObject) -> Int {
-		var s: ISeq? = self.seq()
-		for var i = 0; s != nil; s = s!.next(), i = i.successor() {
-			if Utils.equiv(s!.first(), other: o) {
+		let s: ISeq = self.seq()
+		for (entry, i) in zip(s.generate(), 0..<s.count) {
+			if Utils.equiv(entry, other: o) {
 				return i
 			}
 		}

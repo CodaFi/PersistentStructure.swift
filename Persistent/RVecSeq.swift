@@ -7,23 +7,23 @@
 //
 
 class RVecSeq: AbstractSeq, IIndexedSeq {
-	private var _backingVector: IPersistentVector?
+	private var _backingVector: IPersistentVector
 	private var _startingIndex: Int
 
-	init(vector: IPersistentVector?, index: Int) {
+	init(vector: IPersistentVector, index: Int) {
 		_backingVector = vector
 		_startingIndex = index
 		super.init()
 	}
 
-	init(meta: IPersistentMap?, vector: IPersistentVector?, index: Int) {
+	init(meta: IPersistentMap?, vector: IPersistentVector, index: Int) {
 		_backingVector = vector
 		_startingIndex = index
 		super.init(meta: meta)
 	}
 
 	override func first() -> AnyObject {
-		return _backingVector!.objectAtIndex(_startingIndex)!
+		return _backingVector.objectAtIndex(_startingIndex)!
 	}
 
 	override func next() -> ISeq {

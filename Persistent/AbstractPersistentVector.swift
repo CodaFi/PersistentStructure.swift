@@ -29,11 +29,16 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return EmptySeq()
 	}
 
-	class func doisEqual(v: IPersistentVector?, object obj: AnyObject) -> Bool {
-		if v === obj {
+	class func doisEqual(vec: IPersistentVector?, object obj: AnyObject) -> Bool {
+		if vec === obj {
 			return true
 		}
-		if obj is (IList) || obj is (IPersistentVector) {
+		
+		guard let v = vec else {
+			return false
+		}
+		
+		if obj is IList || obj is IPersistentVector {
 			guard let ma = obj as? ICollection, va = v as? IList else {
 				return false
 			}
@@ -52,15 +57,15 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 			if !(obj is ISequential) {
 				return false
 			}
-			var ms: ISeq? = Utils.seq(obj)
-			for var i = 0; i < Int(v!.count); i = i.successor(), ms = ms!.next() {
-				if ms == nil || !Utils.isEqual(v!.objectAtIndex(i), other: ms!.first()) {
+			let ms: ISeq = Utils.seq(obj)
+			for (entry, i) in zip(ms.generate(), (0..<ms.count)) {
+				if !Utils.isEqual(v.objectAtIndex(i), other: entry) {
 					return false
 				}
 			}
-			if ms != nil {
-				return false
-			}
+			//			if ms != nil {
+			//				return false
+			//			}
 		}
 		return true
 	}
@@ -85,15 +90,15 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 			if !(obj is ISequential) {
 				return false
 			}
-			var ms: ISeq? = Utils.seq(obj)
-			for var i = 0; i < Int(v.count); i = i.successor(), ms = ms!.next() {
-				if ms == nil || !Utils.equiv((v.objectAtIndex(i)), other: ms!.first()) {
+			let ms: ISeq = Utils.seq(obj)
+			for (entry, i) in zip(ms.generate(), (0..<ms.count)) {
+				if !Utils.equiv((v.objectAtIndex(i)), other: entry) {
 					return false
 				}
 			}
-			if ms != nil {
-				return false
-			}
+//			if ms != nil {
+//				return false
+//			}
 		}
 		return true
 	}

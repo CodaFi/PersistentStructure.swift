@@ -28,26 +28,24 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		if !(obj is ISequential) {
 			return false
 		}
-		var ms: ISeq? = Utils.seq(obj)
-		for var s : ISeq? = self.seq(); s != nil; s = s!.next(), ms = ms!.next() {
-			if ms == nil || !Utils.equiv((s!.first()), other: (ms!.first())) {
+		for (e1, e2) in zip(self.seq().generate(), Utils.seq(obj).generate()) {
+			if !Utils.equiv(e1, other: e2) {
 				return false
 			}
 		}
-		return ms == nil
+		return self.seq().count == Utils.seq(obj).count
 	}
 
 	func isEqual(obj: AnyObject) -> Bool {
 		if !(obj is ISequential) {
 			return false
 		}
-		var ms: ISeq? = Utils.seq(obj)
-		for var s = self.seq(); s.count != 0; s = s.next(), ms = ms!.next() {
-			if ms == nil || !Utils.isEqual(s.first(), other: ms!.first()) {
+		for (e1, e2) in zip(self.seq().generate(), Utils.seq(obj).generate()) {
+			if !Utils.equiv(e1, other: e2) {
 				return false
 			}
 		}
-		return ms == nil
+		return self.seq().count == Utils.seq(obj).count
 	}
 
 	func hash() -> UInt {

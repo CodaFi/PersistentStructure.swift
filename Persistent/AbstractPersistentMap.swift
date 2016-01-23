@@ -78,8 +78,8 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 			return false
 		}
 
-		for var s : ISeq? = self.seq(); s != nil; s = s!.next() {
-			if let e = s!.first() as? IMapEntry {
+		for entry in self.seq().generate() {
+			if let e = entry as? IMapEntry {
 				let found = m.containsKey(e.key())
 				if !found || Utils.equiv(e.val(), other: m.objectForKey(e.key())) {
 					return false
@@ -99,8 +99,8 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 
 	static func mapHash(m : IPersistentMap) -> UInt {
 		var hash : UInt = 0
-		for var s : ISeq? = m.seq(); s != nil; s = s!.next() {
-			let e : IMapEntry = s!.first as! IMapEntry
+		for entry in m.seq().generate() {
+			let e : IMapEntry = entry as! IMapEntry
 			hash += UInt(e.key().hash ^ e.val().hash)
 		}
 		return hash
@@ -115,8 +115,8 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 
 	static func mapHasheq(m : IPersistentMap) -> Int {
 		var hash : Int = 0
-		for var s : ISeq? = m.seq(); s != nil; s = s!.next() {
-			let e : IMapEntry = s!.first as! IMapEntry
+		for entry in m.seq().generate() {
+			let e : IMapEntry = entry as! IMapEntry
 			hash += Int(Utils.hasheq(e.key()) ^ Utils.hasheq(e.val()))
 		}
 		return hash

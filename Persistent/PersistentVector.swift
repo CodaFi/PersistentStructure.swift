@@ -13,7 +13,7 @@ private var EMPTY: PersistentVector = PersistentVector(cnt: 0, shift: 5, root: (
 class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	private var _count: Int
 	private var _shift: Int
-	private var _root: Node?
+	private var _root: Node
 	private var _tail: Array<AnyObject>
 	private var _meta: IPersistentMap?
 
@@ -21,7 +21,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		_meta = nil
 		_count = cnt
 		_shift = shift
-		_root = root as? Node
+		_root = root as! Node
 		_tail = tail
 	}
 
@@ -47,9 +47,9 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 				newTail.reserveCapacity(_tail.count)
 				ArrayCopy(_tail, 0, newTail, 0, UInt(_tail.count))
 				newTail[i & 0x01f] = val
-				return PersistentVector(meta: self.meta(), count: _count, shift: _shift, node: _root!, tail: newTail)
+				return PersistentVector(meta: self.meta(), count: _count, shift: _shift, node: _root, tail: newTail)
 			}
-			return PersistentVector(meta: self.meta(), count: _count, shift: _shift, node: PersistentVector.doAssocAtLevel(_shift, node: _root!, index: i, value: val), tail: _tail)
+			return PersistentVector(meta: self.meta(), count: _count, shift: _shift, node: PersistentVector.doAssocAtLevel(_shift, node: _root, index: i, value: val), tail: _tail)
 		}
 		if i == _count {
 			return self.cons(val)
@@ -62,7 +62,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			if i >= self.tailoff() {
 				return _tail
 			}
-			var node: Node = _root!
+			var node: Node = _root
 			for var level = _shift; level > 0; level -= 5 {
 				node = node.array[(i >> level) & 0x01f] as! Node
 			}
@@ -76,24 +76,28 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	}
 
 	func root() -> Node {
-		return _root!
+		return _root
 	}
 
 	func tail() -> Array<AnyObject> {
 		return _tail
 	}
 
-	class func createWithSeq(var items: ISeq?) -> PersistentVector {
-		var ret: ITransientVector? = EMPTY.asTransient() as? ITransientVector
-		for ; items != nil; items = items!.next() {
-			ret = ret!.conj(items!.first()!) as? ITransientVector
+	class func createWithSeq(items: ISeq) -> PersistentVector {
+		var ret: ITransientVector = EMPTY.asTransient() as! ITransientVector
+		for entry in items.generate() {
+			ret = ret.conj(entry) as! ITransientVector
 		}
-		return ret!.persistent() as! PersistentVector
+		return ret.persistent() as! PersistentVector
 	}
 
-	class func createWithList(list: IList?) -> PersistentVector {
+	class func createWithList(liste: IList?) -> PersistentVector {
+		guard let list = liste else {
+			return EMPTY
+		}
+		
 		var ret: TransientVector = EMPTY.asTransient() as! TransientVector
-		for item: AnyObject in list!.generate() {
+		for item: AnyObject in list.generate() {
 			ret = ret.conj(item) as! TransientVector
 		}
 		return ret.persistent() as! PersistentVector
@@ -154,7 +158,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	}
 
 	func withMeta(meta: IPersistentMap?) -> IObj {
-		return PersistentVector(meta: meta, count: _count, shift: _shift, node: _root!, tail: _tail)
+		return PersistentVector(meta: meta, count: _count, shift: _shift, node: _root, tail: _tail)
 	}
 
 	func meta() -> IPersistentMap? {
@@ -167,18 +171,18 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			newTail.reserveCapacity(_tail.count + 1)
 			ArrayCopy(_tail, 0, newTail, 0, UInt(_tail.count))
 			newTail[_tail.count] = val
-			return PersistentVector(meta: self.meta(), count: _count + 1, shift: _shift, node: _root!, tail: newTail)
+			return PersistentVector(meta: self.meta(), count: _count + 1, shift: _shift, node: _root, tail: newTail)
 		}
 		var newroot: Node
-		let tailnode: Node = Node(edit: _root!.edit, array: _tail)
+		let tailnode: Node = Node(edit: _root.edit, array: _tail)
 		var newshift: Int = _shift
 		if (_count >> 5) > (1 << _shift) {
-			newroot = Node(edit: _root!.edit)
-			newroot.array[0] = _root!
-			newroot.array[1] = PersistentVector.newPath(_root!.edit!, level: _shift, node: tailnode)
+			newroot = Node(edit: _root.edit)
+			newroot.array[0] = _root
+			newroot.array[1] = PersistentVector.newPath(_root.edit!, level: _shift, node: tailnode)
 			newshift += 5
 		} else {
-			newroot = self.pushTailAtLevel(_shift, parent: _root!, tail: tailnode)
+			newroot = self.pushTailAtLevel(_shift, parent: _root, tail: tailnode)
 		}
 		return PersistentVector(meta: self.meta(), count: _count + 1, shift: newshift, node: newroot, tail: [ val ])
 	}
@@ -186,13 +190,16 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	func pushTailAtLevel(level: Int, parent: Node, tail tailnode: Node) -> Node {
 		let subidx: Int = ((_count - 1) >> level) & 0x01f
 		let ret: Node = Node(edit: parent.edit, array: parent.array)
+		
 		var nodeToInsert: Node
 		if level == 5 {
 			nodeToInsert = tailnode
+		} else if let child = parent.array[subidx] as? Node {
+			nodeToInsert = self.pushTailAtLevel(level - 5, parent: child, tail: tailnode)
 		} else {
-			let child: Node? = parent.array[subidx] as? Node
-			nodeToInsert = (child != nil) ? self.pushTailAtLevel(level - 5, parent: child!, tail: tailnode) : PersistentVector.newPath(_root!.edit!, level: level - 5, node: tailnode)
+			nodeToInsert = PersistentVector.newPath(_root.edit!, level: level - 5, node: tailnode)
 		}
+		
 		ret.array[subidx] = nodeToInsert
 		return ret
 	}
@@ -224,7 +231,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			for var j = 0; j < array.count; j = j.successor() {
 				initial = f(initial, (j + i), array[j])
 				if Utils.isReduced(initial) {
-					return (initial as? IDeref)!.deref()
+					return (initial as! IDeref).deref()
 				}
 			}
 			step = array.count
@@ -246,19 +253,17 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			var newTail: Array<AnyObject> = []
 			newTail.reserveCapacity(_tail.count - 1)
 			ArrayCopy(_tail, 0, newTail, 0, UInt(newTail.count))
-			return PersistentVector(meta: self.meta(), count: _count - 1, shift: _shift, node: _root!, tail: newTail)
+			return PersistentVector(meta: self.meta(), count: _count - 1, shift: _shift, node: _root, tail: newTail)
 		}
 		let newtail: Array = self.arrayFor(_count - 2)
-		var newroot: Node? = self.popTailAtLevel(_shift, node: _root!)
+		var newroot: Node = self.popTailAtLevel(_shift, node: _root) ?? EmptyNode
 		var newshift: Int = _shift
-		if newroot == nil {
-			newroot = EmptyNode
-		}
+
 		if _shift > 5 /*&& newroot!.array[1] == nil*/ {
-			newroot = newroot!.array[0] as? Node
+			newroot = newroot.array[0] as! Node
 			newshift -= 5
 		}
-		return PersistentVector(meta: self.meta(), count: _count - 1, shift: newshift, node: newroot!, tail: newtail)
+		return PersistentVector(meta: self.meta(), count: _count - 1, shift: newshift, node: newroot, tail: newtail)
 	}
 
 	func popTailAtLevel(level: Int, node: Node) -> Node? {
@@ -268,14 +273,14 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			if newchild == nil && subidx == 0 {
 				return nil
 			} else {
-				let ret: Node = Node(edit: _root!.edit, array: (node.array))
+				let ret: Node = Node(edit: _root.edit, array: node.array)
 				ret.array[subidx] = newchild!
 				return ret
 			}
 		} else if subidx == 0 {
 			return nil
 		} else {
-			let ret: Node = Node(edit: _root!.edit, array: (node.array))
+			let ret: Node = Node(edit: _root.edit, array: node.array)
 			ret.array.removeAtIndex(subidx)
 			return ret
 		}

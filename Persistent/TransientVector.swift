@@ -103,13 +103,16 @@ class TransientVector : ITransientVector, ICounted {
 		parent = self.ensureEditableNode(parent)
 		let subidx: Int = ((_count - 1) >> level) & 0x01f
 		let ret: Node = parent
+		
 		var nodeToInsert: Node
 		if level == 5 {
 			nodeToInsert = tailnode
+		} else if let child = parent.array[subidx] as? Node {
+			nodeToInsert = self.pushTailAtLevel(level - 5, parent: child, tail: tailnode)
 		} else {
-			let child: Node? = parent.array[subidx] as? Node
-			nodeToInsert = (child != nil) ? self.pushTailAtLevel(level - 5, parent: child!, tail: tailnode) : TransientVector.newPath(_root.edit!, level: level - 5, node: tailnode)
+			nodeToInsert = TransientVector.newPath(_root.edit!, level: level - 5, node: tailnode)
 		}
+		
 		ret.array[subidx] = nodeToInsert
 		return ret
 	}
@@ -161,7 +164,7 @@ class TransientVector : ITransientVector, ICounted {
 	func objectForKey(key: AnyObject) -> AnyObject? {
 		self.ensureEditable()
 		if Utils.isInteger(key) {
-			let i: Int = (key as? NSNumber)!.integerValue
+			let i: Int = (key as! NSNumber).integerValue
 			if i >= 0 && i < _count {
 				return self.objectAtIndex(i)!
 			}
@@ -172,7 +175,7 @@ class TransientVector : ITransientVector, ICounted {
 	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		self.ensureEditable()
 		if Utils.isInteger(key) {
-			let i: Int = (key as? NSNumber)!.integerValue
+			let i: Int = (key as! NSNumber).integerValue
 			if i >= 0 && i < _count {
 				return self.objectAtIndex(i)!
 			}
@@ -211,7 +214,7 @@ class TransientVector : ITransientVector, ICounted {
 
 	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
 		if Utils.isInteger(key) {
-			let i: Int = (key as? NSNumber)!.integerValue
+			let i: Int = (key as! NSNumber).integerValue
 			return self.assocN(i, value: val) as! ITransientMap
 		}
 		fatalError("Key must be an integer")
@@ -244,16 +247,13 @@ class TransientVector : ITransientVector, ICounted {
 			return self
 		}
 		let newtail: Array = self.editableArrayFor(_count - 2)
-		var newroot: Node? = self.popTailAtLevel(_shift, node: _root)
+		var newroot: Node = self.popTailAtLevel(_shift, node: _root) ?? Node(edit: _root.edit)
 		var newshift: Int = _shift
-		if newroot == nil {
-			newroot = Node(edit: _root.edit)
-		}
 		if _shift > 5 /*&& newroot!.array[1] == nil*/ {
-			newroot = self.ensureEditableNode(newroot!.array[0] as! Node)
+			newroot = self.ensureEditableNode(newroot.array[0] as! Node)
 			newshift -= 5
 		}
-		_root = newroot!
+		_root = newroot
 		_shift = newshift
 		_count--
 		_tail = newtail

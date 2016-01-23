@@ -44,7 +44,7 @@ class Utils: NSObject {
 		if k1 === k2 {
 			return true
 		}
-		return k1 != nil && k1!.isEqual(k2)
+		return k1?.isEqual(k2) ?? false
 	}
 
 	class func equiv(k1: AnyObject?, other k2: AnyObject?) -> Bool {
@@ -52,22 +52,22 @@ class Utils: NSObject {
 	}
 
 	class func dohasheq(o: IHashEq?) -> Int {
-		return o!.hasheq()
+		return o?.hasheq() ?? 0
 	}
 
-	class func seqToArray(var seq: ISeq?) -> Array<AnyObject> {
+	class func seqToArray(seq: ISeq) -> Array<AnyObject> {
 		let len: Int = Utils.length(seq)
 		var ret: Array<AnyObject> = []
 		ret.reserveCapacity(len)
-		for var i = 0; seq != nil; i = i.successor(), seq = seq!.next() {
-			ret[i] = seq!.first()!
+		for (entry, i) in zip(seq.generate(), 0..<len) {
+			ret[i] = entry
 		}
 		return ret
 	}
 
-	class func length(list: ISeq?) -> Int {
+	class func length(list: ISeq) -> Int {
 		var i: Int = 0
-		for var c = list; c != nil; c = c!.next() {
+		for _ in list.generate() {
 			i = i.successor()
 		}
 		return i
@@ -80,12 +80,14 @@ class Utils: NSObject {
 		return Utils.countFrom(Utils.ret1o(o, null: nil))
 	}
 
-	class func countFrom(var o: AnyObject?) -> Int {
-		if o == nil {
+	class func countFrom(var obj: AnyObject?) -> Int {
+		guard let o = obj else {
 			return 0
-		} else if let _ = o! as? (IPersistentCollection) {
-			var s: ISeq? = Utils.seq(o!)
-			o = nil
+		}
+		
+		if let _ = o as? (IPersistentCollection) {
+			var s: ISeq? = Utils.seq(o)
+			obj = nil
 			var i: Int = 0
 			for ; s != nil; s = s!.next() {
 				if let cc = s as? (ICounted) {
@@ -94,10 +96,10 @@ class Utils: NSObject {
 				i = i.successor()
 			}
 			return i
-		} else if o!.respondsToSelector("length") {
-			return o!.length
-		} else if o!.respondsToSelector("count") {
-			return o!.count
+		} else if o.respondsToSelector("length") {
+			return o.length
+		} else if o.respondsToSelector("count") {
+			return o.count
 		}
 //		RequestConcreteImplementation(o, "count", o.class())
 		return -1
@@ -134,13 +136,15 @@ class Utils: NSObject {
 		return Utils.nthFrom(coll, index: n, notFound: notFound)
 	}
 
-	class func nthFrom(coll: AnyObject?, index n: Int) -> AnyObject? {
-		if coll == nil {
+	class func nthFrom(colle: AnyObject?, index n: Int) -> AnyObject? {
+		guard let coll = colle else {
 			return nil
-		} else if let c = coll as? (NSString) {
+		}
+		
+		if let c = coll as? (NSString) {
 			return NSNumber(unsignedShort: c.characterAtIndex(n))
-		} else if coll!.respondsToSelector("objectAtIndexedSubscript:") {
-			return coll!.performSelector("objectAtIndexedSubscript:", withObject: n).takeRetainedValue()
+		} else if coll.respondsToSelector("objectAtIndexedSubscript:") {
+			return coll.performSelector("objectAtIndexedSubscript:", withObject: n).takeRetainedValue()
 		} else if let e = coll as? (MapEntry) {
 			if n == 0 {
 				return e.key()
@@ -149,10 +153,10 @@ class Utils: NSObject {
 			}
 			fatalError("Range or index out of bounds")
 		} else if let _ = coll as? (ISequential) {
-			var seq: ISeq? = Utils.seq(coll!)
-			for var i = 0; i <= n && seq != nil; i = i.successor(), seq = seq!.next() {
+			let seq: ISeq = Utils.seq(coll)
+			for (entry, i) in zip(seq.generate(), 0..<seq.count) {
 				if i == n {
-					return seq!.first()!
+					return entry
 				}
 			}
 			fatalError("Range or index out of bounds")
@@ -196,15 +200,15 @@ class Utils: NSObject {
 		}
 	}
 
-	class func conj(x: AnyObject, to coll: IPersistentCollection?) -> IPersistentCollection? {
-		if coll == nil {
+	class func conj(x: AnyObject, to colle: IPersistentCollection?) -> IPersistentCollection? {
+		guard let coll = colle else {
 			return PersistentList(first: x)
 		}
-		return coll!.cons(x)
+		return coll.cons(x)
 	}
 
-	class func subvecOf(v: IPersistentVector?, start: Int, end: Int) -> IPersistentVector? {
-		if end < start || start < 0 || end > Int(v!.count) {
+	class func subvecOf(v: IPersistentVector, start: Int, end: Int) -> IPersistentVector? {
+		if end < start || start < 0 || end > Int(v.count) {
 			fatalError("Range or index out of bounds")
 		}
 		if start == end {
@@ -217,18 +221,14 @@ class Utils: NSObject {
 		if coll == nil {
 			return PersistentArrayMap(initial: [])
 		}
-		return (coll as? IAssociative)!.associateKey(key, withValue: val)
+		return (coll as! IAssociative).associateKey(key, withValue: val)
 	}
 
 	class func first(x: AnyObject) -> AnyObject? {
-		if let ss = x as? (ISeq) {
+		if let ss = x as? ISeq {
 			return ss.first()
 		}
-		let seq: ISeq? = Utils.seq(x)
-		if seq == nil {
-			return nil
-		}
-		return seq!.first()
+		return Utils.seq(x).first()
 	}
 
 	class func second(x: AnyObject) -> AnyObject? {
@@ -247,11 +247,7 @@ class Utils: NSObject {
 		if let ss = x as? (ISeq) {
 			return ss.next()
 		}
-		let seq: ISeq? = Utils.seq(x)
-		if seq == nil {
-			return nil
-		}
-		return seq!.next()
+		return Utils.seq(x).next()
 	}
 
 	class func more(x: AnyObject) -> ISeq {
@@ -280,17 +276,21 @@ class Utils: NSObject {
 	}
 
 	class func hash(obj: AnyObject?) -> UInt {
-		return obj != nil ? UInt(obj!.hash!) : 0
+		if let o = obj {
+			return UInt(o.hash!)
+		}
+		return 0
 	}
 
-	class func hasheq(o: AnyObject?) -> Int {
-		if o == nil {
+	class func hasheq(obj: AnyObject?) -> Int {
+		guard let o = obj else {
 			return 0
 		}
+		
 		if let ih = o as? (IHashEq) {
 			return Utils.dohasheq(ih)
 		}
-		return o!.hash
+		return o.hash
 	}
 
 	class func _emptyArray() -> Array<AnyObject> {
@@ -345,12 +345,11 @@ class Utils: NSObject {
 		if key1hash == key2hash {
 			return HashCollisionNode(edit: nil, hash: key1hash, count: 2, array: [ key1, val1, key2, val2 ])
 		}
-		let addedLeaf: AnyObject? = nil
 		let edit: NSThread = NSThread.currentThread()
 		return BitmapIndexedNode
 			.empty()
-			.assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1, addedLeaf: addedLeaf)!
-			.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2, addedLeaf: addedLeaf)
+			.assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1)!
+			.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2)
 	}
 
 	class func createNodeOnThread(edit: NSThread, shift: Int, key key1: AnyObject, value val1: AnyObject, hash key2hash: Int, key key2: AnyObject, value val2: AnyObject) -> INode? {
@@ -358,8 +357,7 @@ class Utils: NSObject {
 		if key1hash == key2hash {
 			return HashCollisionNode(edit: nil, hash: key1hash, count: 2, array: [key1, val1, key2, val2])
 		}
-		let addedLeaf: AnyObject? = nil
-		return BitmapIndexedNode.empty().assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1, addedLeaf: addedLeaf)!.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2, addedLeaf: addedLeaf)
+		return BitmapIndexedNode.empty().assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1)?.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2)
 	}
 
 	class func compare(k1: AnyObject?, to k2: AnyObject?) -> NSComparisonResult {

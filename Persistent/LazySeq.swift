@@ -28,14 +28,11 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	}
 
 	func sval() -> AnyObject {
-		if _generatorFunction != nil {
-			_secondValue = _generatorFunction!()!
+		if let gf = _generatorFunction {
+			_secondValue = gf()
 			_generatorFunction = nil
 		}
-		if _secondValue != nil {
-			return _secondValue!
-		}
-		return _backingSeq!
+		return _secondValue ?? _backingSeq!
 	}
 
 	func seq() -> ISeq {
@@ -157,9 +154,9 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	}
 
 	func indexOf(o: AnyObject) -> Int {
-		var s: ISeq? = self.seq()
-		for var i = 0; s != nil; s = s!.next(), i = i.successor() {
-			if Utils.equiv(s!.first(), other: o) {
+		let s = self.seq()
+		for (entry, i) in zip(s.generate(), 0..<s.count) {
+			if Utils.equiv(entry, other: o) {
 				return i
 			}
 		}

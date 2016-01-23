@@ -24,18 +24,22 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return ret
 	}
 
-	class func createWithList(initial: IList?) -> PersistentHashSet {
+	class func createWithList(initiale: IList?) -> PersistentHashSet {
+		guard let initial = initiale else {
+			return EMPTY
+		}
+		
 		var ret: PersistentHashSet = EMPTY
-		for key: AnyObject in initial!.generate() {
+		for key: AnyObject in initial.generate() {
 			ret = ret.cons(key) as! PersistentHashSet
 		}
 		return ret
 	}
 
-	class func createWithSeq(var items: ISeq?) -> PersistentHashSet {
+	class func createWithSeq(items: ISeq) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
-		for ; items != nil; items = items!.next() {
-			ret = ret.cons(items!.first()!) as! PersistentHashSet
+		for entry in items.generate() {
+			ret = ret.cons(entry) as! PersistentHashSet
 		}
 		return ret
 	}
@@ -51,10 +55,14 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return ret
 	}
 
-	class func createWithCheckList(initial: IList?) -> PersistentHashSet {
+	class func createWithCheckList(initiale: IList?) -> PersistentHashSet {
+		guard let initial = initiale else {
+			return EMPTY
+		}
+		
 		var i: Int = 0
 		var ret: PersistentHashSet = EMPTY
-		for key: AnyObject in initial!.generate() {
+		for key in initial.generate() {
 			ret = ret.cons(key) as! PersistentHashSet
 			if ret.count != (i + 1) {
 				fatalError("Duplicate key at index \(i)")
@@ -64,10 +72,10 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return ret
 	}
 
-	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashSet {
+	class func createWithCheckSeq(items: ISeq) -> PersistentHashSet {
 		var ret: PersistentHashSet = EMPTY
-		for var i = 0; items != nil; items = items!.next(), i = i.successor() {
-			ret = ret.cons(items!.first()!) as! PersistentHashSet
+		for (entry, i) in zip(items.generate(), 0..<items.count) {
+			ret = ret.cons(entry) as! PersistentHashSet
 			if ret.count != (i + 1) {
 				fatalError("Duplicate key at index \(i)")
 			}

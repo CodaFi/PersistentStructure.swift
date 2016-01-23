@@ -34,26 +34,25 @@ class BitmapIndexedNode : INode {
 		_edit = edit
 	}
 
-	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject, addedLeaf: AnyObject?) -> INode? {
+	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject) -> INode? {
 		let bit: Int = Utils.bitPos(hash, shift: shift)
 		let idx: Int = self.index(bit)
 		if (_bitmap & bit) != 0 {
 			let keyOrNull: AnyObject? = _array[2 * idx]
 			let valOrNode: AnyObject? = _array[2 * idx + 1]
 			if keyOrNull == nil {
-				let n: INode? = (valOrNode as? INode)!.assocWithShift(shift + 5, hash: hash, key: key, value: val, addedLeaf: addedLeaf)
+				let n: INode? = (valOrNode as! INode).assocWithShift(shift + 5, hash: hash, key: key, value: val)
 				if n === valOrNode {
 					return self
 				}
 				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSetObject(_array, index: 2 * idx + 1, node: n!))
 			}
-			if Utils.equiv(key, other: (keyOrNull)) {
+			if Utils.equiv(key, other: keyOrNull) {
 				if val === valOrNode {
 					return self
 				}
 				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSetObject(_array, index: 2 * idx + 1, node: val))
 			}
-//			addedLeaf.val = addedLeaf
 			return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSet(_array, index: 2 * idx, withObject: NSNull(), index: 2 * idx + 1, withObject: Utils.createNodeWithShift(shift + 5, key: keyOrNull!, value: valOrNode!, hash: hash, key: key, value: val)!))
 		} else {
 			let n: Int = Utils.bitCount(UInt(_bitmap))
@@ -61,14 +60,14 @@ class BitmapIndexedNode : INode {
 				var nodes: Array<AnyObject> = []
 				nodes.reserveCapacity(32)
 				let jdx: Int = Utils.mask(hash, shift: shift)
-				nodes[jdx] = EMPTY.assocWithShift(shift + 5, hash: hash, key: key, value: val, addedLeaf: addedLeaf)!
+				nodes[jdx] = EMPTY.assocWithShift(shift + 5, hash: hash, key: key, value: val)!
 				var j: Int = 0
 				for i in (0..<32) {
 					if ((_bitmap >> i) & 1) != 0 {
 						if _array.count <= j {
 							nodes[i] = _array[j + 1] as! INode
 						} else {
-							nodes[i] = EMPTY.assocWithShift(shift + 5, hash: Int(Utils.hash(_array[j])), key: _array[j], value: _array[j + 1], addedLeaf: addedLeaf)!
+							nodes[i] = EMPTY.assocWithShift(shift + 5, hash: Int(Utils.hash(_array[j])), key: _array[j], value: _array[j + 1])!
 						}
 						j += 2
 					}
@@ -79,7 +78,6 @@ class BitmapIndexedNode : INode {
 				newArray.reserveCapacity(2 * (n + 1))
 				ArrayCopy(_array, 0, newArray, 0, UInt(2 * idx))
 				newArray[2 * idx] = key
-//				addedLeaf.val = addedLeaf
 				newArray[2 * idx + 1] = val
 				ArrayCopy(_array, UInt(2 * idx), newArray, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
 				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap | bit, array: newArray)
@@ -100,6 +98,7 @@ class BitmapIndexedNode : INode {
 			if n === valOrNode {
 				return self
 			}
+			
 			if n != nil {
 				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap, array: Utils.cloneAndSetNode(_array, index: 2 * idx + 1, node: n))
 			}
@@ -192,14 +191,14 @@ class BitmapIndexedNode : INode {
 		return editable
 	}
 
-	func assocOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject, val: AnyObject, addedLeaf: AnyObject?) -> INode? {
+	func assocOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject, val: AnyObject) -> INode? {
 		let bit: Int = Utils.bitPos(hash, shift: shift)
 		let idx: Int = self.index(bit)
 		if (_bitmap & bit) != 0 {
 			let keyOrNull: AnyObject? = _array[2 * idx]
 			let valOrNode: AnyObject? = _array[2 * idx + 1]
 			if keyOrNull == nil {
-				let n: INode? = (valOrNode as? INode)!.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val, addedLeaf: addedLeaf)
+				let n: INode? = (valOrNode as! INode).assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val)
 				if n === valOrNode {
 					return self
 				}
@@ -211,12 +210,10 @@ class BitmapIndexedNode : INode {
 				}
 				return self.editAndSet(edit!, index: 2 * idx + 1, object: val)
 			}
-//			addedLeaf.val = addedLeaf
 			return self.editAndSet(edit!, index: 2 * idx, withObject: nil, index: 2 * idx + 1, withObject: Utils.createNodeOnThread(edit!, shift: shift + 5, key: keyOrNull!, value: valOrNode!, hash: hash, key: key, value: val)!)
 		} else {
 			let n: Int = Utils.bitCount(UInt(_bitmap))
 			if n * 2 < _array.count {
-//				addedLeaf.val = addedLeaf
 				let editable: BitmapIndexedNode = self.ensureEditable(edit!) as! BitmapIndexedNode
 				ArrayCopy(editable._array, UInt(2 * idx), editable._array, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
 				editable._array[2 * idx] = key
@@ -227,14 +224,14 @@ class BitmapIndexedNode : INode {
 			if n >= 16 {
 				var nodes: Array<AnyObject> = []
 				let jdx: Int = Utils.mask(hash, shift: shift)
-				nodes[jdx] = EMPTY.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val, addedLeaf: addedLeaf)!
+				nodes[jdx] = EMPTY.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val)!
 				var j: Int = 0
 				for i in (0..<32) {
 					if ((_bitmap >> i) & 1) != 0 {
 						if _array.count <= j {
 							nodes[i] = _array[j + 1] as! INode
 						} else {
-							nodes[i] = EMPTY.assocOnThread(edit, shift: shift + 5, hash: Int(Utils.hash(_array[j])), key: _array[j], val: _array[j + 1], addedLeaf: addedLeaf)!
+							nodes[i] = EMPTY.assocOnThread(edit, shift: shift + 5, hash: Int(Utils.hash(_array[j])), key: _array[j], val: _array[j + 1])!
 						}
 						j += 2
 					}
@@ -245,7 +242,6 @@ class BitmapIndexedNode : INode {
 				newArray.reserveCapacity(2 * (n + 4))
 				ArrayCopy(_array, 0, newArray, 0, UInt(2 * idx))
 				newArray[2 * idx] = key
-//				addedLeaf.val = addedLeaf
 				newArray[2 * idx + 1] = val
 				ArrayCopy(_array, UInt(2 * idx), newArray, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
 				let editable: BitmapIndexedNode = self.ensureEditable(edit!) as! BitmapIndexedNode
@@ -256,7 +252,7 @@ class BitmapIndexedNode : INode {
 		}
 	}
 
-	func withoutOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject, addedLeaf removedLeaf: AnyObject?) -> INode? {
+	func withoutOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject) -> INode? {
 		let bit: Int = Utils.bitPos(hash, shift: shift)
 		if (_bitmap & bit) == 0 {
 			return self
@@ -265,7 +261,7 @@ class BitmapIndexedNode : INode {
 		let keyOrNull: AnyObject? = _array[2 * idx]
 		let valOrNode: AnyObject? = _array[2 * idx + 1]
 		if keyOrNull == nil {
-			let n: INode? = (valOrNode as? INode)!.withoutOnThread(edit, shift: shift + 5, hash: hash, key: key, addedLeaf: removedLeaf)
+			let n: INode? = (valOrNode as! INode).withoutOnThread(edit, shift: shift + 5, hash: hash, key: key)
 			if n === valOrNode {
 				return self
 			}
@@ -278,7 +274,6 @@ class BitmapIndexedNode : INode {
 			return self.editAndRemovePair(edit!, bit: bit, index: idx)
 		}
 		if Utils.equiv(key, other: keyOrNull!) {
-//			removedLeaf.val = removedLeaf
 			return self.editAndRemovePair(edit!, bit: bit, index: idx)
 		}
 		return self

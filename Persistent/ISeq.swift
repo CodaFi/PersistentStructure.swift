@@ -12,3 +12,11 @@ protocol ISeq : class, IPersistentCollection {
 	func more() -> ISeq
 	func cons(other: AnyObject) -> ISeq
 }
+
+extension ISeq {
+	typealias Generator = IndexingGenerator<Array<AnyObject>>
+	
+	func generate() -> IndexingGenerator<Array<AnyObject>> {
+		return Utils.seqToArray(self).generate()
+	}
+}

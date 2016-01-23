@@ -23,13 +23,12 @@ class ArrayNode : INode {
 		_array = array
 	}
 
-	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject, addedLeaf: AnyObject?) -> INode? {
+	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject) -> INode? {
 		let idx: Int = Utils.mask(hash, shift: shift)
-		let node: INode? = _array[idx] as? INode
-		if node == nil {
-			return ArrayNode(onThread: nil, count: _count + 1, array: Utils.cloneAndSetNode(_array, index: idx, node: BitmapIndexedNode.empty().assocWithShift(shift + 5, hash: hash, key: key, value: val, addedLeaf: addedLeaf)))
+		guard let node = _array[idx] as? INode else {
+			return ArrayNode(onThread: nil, count: _count + 1, array: Utils.cloneAndSetNode(_array, index: idx, node: BitmapIndexedNode.empty().assocWithShift(shift + 5, hash: hash, key: key, value: val)))
 		}
-		let n: INode? = node!.assocWithShift(shift + 5, hash: hash, key: key, value: val, addedLeaf: addedLeaf)
+		let n: INode? = node.assocWithShift(shift + 5, hash: hash, key: key, value: val)
 		if n === node {
 			return self
 		}
@@ -38,11 +37,11 @@ class ArrayNode : INode {
 
 	func withoutWithShift(shift: Int, hash: Int, key: AnyObject) -> INode? {
 		let idx: Int = Utils.mask(hash, shift: shift)
-		let node: INode? = _array[idx] as? INode
-		if node == nil {
+		guard let node = _array[idx] as? INode else {
 			return self
 		}
-		let n: INode? = node!.withoutWithShift(shift + 5, hash: hash, key: key)
+		
+		let n: INode? = node.withoutWithShift(shift + 5, hash: hash, key: key)
 		if n === node {
 			return self
 		}
@@ -58,20 +57,18 @@ class ArrayNode : INode {
 
 	func findWithShift(shift: Int, hash: Int, key: AnyObject) -> IMapEntry? {
 		let idx: Int = Utils.mask(hash, shift: shift)
-		let node: INode? = _array[idx] as? INode
-		if node == nil {
+		guard let node = _array[idx] as? INode else {
 			return nil
 		}
-		return node!.findWithShift(shift + 5, hash: hash, key: key)
+		return node.findWithShift(shift + 5, hash: hash, key: key)
 	}
 
 	func findWithShift(shift: Int, hash: Int, key: AnyObject, notFound: AnyObject) -> AnyObject? {
 		let idx: Int = Utils.mask(hash, shift: shift)
-		let node: INode? = _array[idx] as? INode
-		if node == nil {
+		guard let node = _array[idx] as? INode else {
 			return nil
 		}
-		return node!.findWithShift(shift + 5, hash: hash, key: key, notFound: notFound)
+		return node.findWithShift(shift + 5, hash: hash, key: key, notFound: notFound)
 	}
 
 	func nodeSeq() -> ISeq {
@@ -80,11 +77,10 @@ class ArrayNode : INode {
 
 	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
 		for i in (0..<_array.count) {
-			let node: INode? = _array[i] as? INode
-			if node != nil {
-				initial = node!.kvreduce(f, initial: initial)
+			if let node = _array[i] as? INode {
+				initial = node.kvreduce(f, initial: initial)
 				if Utils.isReduced(initial) {
-					return (initial as? IDeref)!.deref()
+					return (initial as! IDeref).deref()
 				}
 			}
 		}
@@ -126,28 +122,26 @@ class ArrayNode : INode {
 		return BitmapIndexedNode(onThread: edit, bitmap: bitmap, array: newArray)
 	}
 
-	func assocOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject, val : AnyObject, addedLeaf : AnyObject?) -> INode? {
+	func assocOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject, val : AnyObject) -> INode? {
 		let idx: Int = Utils.mask(hash, shift: shift)
-		let node: INode? = _array[idx] as? INode
-		if node == nil {
-			let editable: ArrayNode = self.editAndSetOnThread(edit!, index: idx, node: BitmapIndexedNode.empty().assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val, addedLeaf: addedLeaf))
+		guard let node = _array[idx] as? INode else {
+			let editable: ArrayNode = self.editAndSetOnThread(edit!, index: idx, node: BitmapIndexedNode.empty().assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val))
 			editable._count = _count.successor()
 			return editable
 		}
-		let n: INode? = node!.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val, addedLeaf: addedLeaf)
+		let n: INode? = node.assocOnThread(edit, shift: shift + 5, hash: hash, key: key, val: val)
 		if n === node {
 			return self
 		}
 		return self.editAndSetOnThread(edit!, index: idx, node: n)
 	}
 
-	func withoutOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject, addedLeaf removedLeaf : AnyObject?) -> INode? {
+	func withoutOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject) -> INode? {
 		let idx: Int = Utils.mask(hash, shift: shift)
-		let node: INode? = _array[idx] as? INode
-		if node == nil {
+		guard let node = _array[idx] as? INode else {
 			return self
 		}
-		let n: INode? = node!.withoutOnThread(edit, shift: shift + 5, hash: hash, key: key, addedLeaf: removedLeaf)
+		let n: INode? = node.withoutOnThread(edit, shift: shift + 5, hash: hash, key: key)
 		if n === node {
 			return self
 		}

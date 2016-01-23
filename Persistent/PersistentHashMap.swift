@@ -48,13 +48,17 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return TransientHashMap(withMap: self)
 	}
 
-	class func create(other: IMap?) -> IPersistentMap {
-		var ret: ITransientMap? = EMPTY.asTransient() as? ITransientMap
-		for o: AnyObject in other!.allEntries().generate() {
-			let e: IMapEntry = o as! IMapEntry
-			ret = ret!.associateKey(e.key(), value: e.val())
+	class func create(othere: IMap?) -> IPersistentMap {
+		guard let other = othere else {
+			return EMPTY
 		}
-		return ret!.persistent()
+		
+		var ret: ITransientMap = EMPTY.asTransient() as! ITransientMap
+		for o: AnyObject in other.allEntries().generate() {
+			let e: IMapEntry = o as! IMapEntry
+			ret = ret.associateKey(e.key(), value: e.val())
+		}
+		return ret.persistent()
 	}
 
 	class func createWithSeq(var items: ISeq?) -> PersistentHashMap {
@@ -91,11 +95,14 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	}
 
 	override func containsKey(key: AnyObject) -> Bool {
-		return (_root != nil) ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key), key: key, notFound: _NOT_FOUND) !== _NOT_FOUND : false
+		guard let r = _root else {
+			return false
+		}
+		return r.findWithShift(0, hash: PersistentHashMap.hash(key), key: key, notFound: _NOT_FOUND) !== _NOT_FOUND
 	}
 
 	override func entryForKey(key: AnyObject) -> IMapEntry? {
-		return (_root != nil) ? _root!.findWithShift(0, hash: PersistentHashMap.hash(key), key: key) : nil
+		return _root?.findWithShift(0, hash: PersistentHashMap.hash(key), key: key)
 	}
 
 	func associateKey(key: AnyObject?, value val: AnyObject) -> IPersistentMap {
@@ -106,7 +113,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 			return PersistentHashMap(meta: self.meta(), count: _hasNull ? _count : _count + 1, root: _root, hasNull: true, nullValue: val)
 		}
 		let addedLeaf: AnyObject? = nil
-		let newroot: INode? = (_root == nil ? BitmapIndexedNode.empty() : _root)!.assocWithShift(0, hash: Int(Utils.hash(key)), key: key!, value: val, addedLeaf: addedLeaf)
+		let newroot: INode? = (_root ?? BitmapIndexedNode.empty()).assocWithShift(0, hash: Int(Utils.hash(key)), key: key!, value: val)
 		if newroot === _root {
 			return self
 		}

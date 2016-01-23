@@ -11,19 +11,19 @@ private var EMPTY : PersistentTreeSet = PersistentTreeSet(meta: nil, implementat
 class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 	private var _meta: IPersistentMap?
 
-	class func create(var items: ISeq?) -> PersistentTreeSet {
+	class func create(items: ISeq) -> PersistentTreeSet {
 		var ret: PersistentTreeSet = EMPTY
-		for ; items != nil; items = items!.next() {
-			ret = ret.cons(items!.first()!) as! PersistentTreeSet
+		for entry in items.generate() {
+			ret = ret.cons(entry) as! PersistentTreeSet
 		}
 		return ret
 	}
 
-	class func create(comparator: (AnyObject?, AnyObject?) -> NSComparisonResult, var items: ISeq?) -> PersistentTreeSet {
+	class func create(comparator: (AnyObject?, AnyObject?) -> NSComparisonResult, items: ISeq) -> PersistentTreeSet {
 		let impl: PersistentTreeMap = PersistentTreeMap(meta: nil, comparator: comparator)
 		var ret: PersistentTreeSet = PersistentTreeSet(meta: nil, implementation: impl)
-		for ; items != nil; items = items!.next() {
-			ret = ret.cons(items!.first()!) as! PersistentTreeSet
+		for entry in items.generate() {
+			ret = ret.cons(entry) as! PersistentTreeSet
 		}
 		return ret
 	}
