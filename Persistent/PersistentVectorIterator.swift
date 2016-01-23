@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class PersistentVectorIterator: NSEnumerator {
+public class PersistentVectorIterator: NSEnumerator {
 	private var _vec: PersistentVector
 	private var _start: Int
 	private var _base: Int
@@ -19,7 +19,7 @@ class PersistentVectorIterator: NSEnumerator {
 		_window = (_start < _vec.count) ? _vec.arrayFor(_start) : []
 	}
 
-	override func nextObject() -> AnyObject? {
+	public override func nextObject() -> AnyObject? {
 		if _start - _start == 32 {
 			_window = _vec.arrayFor(_start)
 			_base += 32

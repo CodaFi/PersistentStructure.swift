@@ -8,7 +8,7 @@
 
 private let EMPTY : PersistentTreeSet = PersistentTreeSet(meta: nil, implementation: PersistentTreeMap.empty())
 
-class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
+public class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 	private var _meta: IPersistentMap?
 
 	class func create(items: ISeq) -> PersistentTreeSet {
@@ -33,46 +33,46 @@ class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 		_meta = meta
 	}
 
-	override func disjoin(key: AnyObject) -> IPersistentSet {
+	public override func disjoin(key: AnyObject) -> IPersistentSet {
 		if self.containsObject(key) {
 			return PersistentTreeSet(meta: self.meta, implementation: _impl.without(key))
 		}
 		return self
 	}
 
-	override func cons(other : AnyObject) -> IPersistentCollection {
+	public override func cons(other : AnyObject) -> IPersistentCollection {
 		if self.containsObject(other) {
 			return self
 		}
 		return PersistentTreeSet(meta: self.meta, implementation: _impl.associateKey(other, withValue: other) as! IPersistentMap)
 	}
 
-	override var empty : IPersistentCollection {
+	public override var empty : IPersistentCollection {
 		return PersistentTreeSet(meta: self.meta, implementation: PersistentTreeMap.empty())
 	}
 
-	var reversedSeq : ISeq {
+	public var reversedSeq : ISeq {
 		return KeySeq(seq: (_impl as! IReversible).reversedSeq)
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj {
+	public func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentTreeSet(meta: meta, implementation: _impl)
 	}
 
-	var comparator : (AnyObject?, AnyObject?) -> NSComparisonResult {
+	public var comparator : (AnyObject?, AnyObject?) -> NSComparisonResult {
 		return (_impl as! ISorted).comparator
 	}
 
-	func entryKey(entry: AnyObject) -> AnyObject? {
+	public func entryKey(entry: AnyObject) -> AnyObject? {
 		return entry
 	}
 
-	func seq(ascending: Bool) -> ISeq? {
+	public func seq(ascending: Bool) -> ISeq? {
 		let m: PersistentTreeMap = _impl as! PersistentTreeMap
 		return Utils.keys(m.seq(ascending)!)
 	}
 
-	func seqFrom(key: AnyObject, ascending: Bool) -> ISeq? {
+	public func seqFrom(key: AnyObject, ascending: Bool) -> ISeq? {
 		let m: PersistentTreeMap = _impl as! PersistentTreeMap
 		return Utils.keys(m.seqFrom(key, ascending: ascending)!)
 	}

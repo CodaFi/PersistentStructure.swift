@@ -10,7 +10,7 @@ private var NOEDIT: NSThread? = nil
 private let EMPTYNODE: Node = Node(edit: NOEDIT)
 private let EMPTY: PersistentVector = PersistentVector(meta: nil, count: 0, shift: 5, node: EMPTYNODE, tail: [])
 
-class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
+public class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	private var _count: Int
 	private var _shift: Int
 	private var _root: Node
@@ -33,14 +33,14 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		_tail = tail
 	}
 
-	override var empty : IPersistentCollection {
+	public override var empty : IPersistentCollection {
 		if let m = self.meta {
 			return EMPTY.withMeta(m) as! IPersistentCollection
 		}
 		return EMPTY
 	}
 
-	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
+	public override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		if i >= 0 && i < _count {
 			if i >= self.tailoff {
 				var newTail: Array<AnyObject> = []
@@ -119,7 +119,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return EMPTYNODE
 	}
 
-	var asTransient : ITransientCollection {
+	public var asTransient : ITransientCollection {
 		return TransientVector(v: self)
 	}
 
@@ -130,7 +130,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return ((_count - 1) >> 5) << 5
 	}
 
-	override func objectAtIndex(i: Int) -> AnyObject {
+	public override func objectAtIndex(i: Int) -> AnyObject {
 		var node: Array<AnyObject> = self.arrayFor(i)
 		return node[i & 0x01f]
 	}
@@ -153,11 +153,11 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return ret
 	}
 
-	override var count : Int {
+	public override var count : Int {
 		return _count
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj {
+	public func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentVector(meta: meta, count: _count, shift: _shift, node: _root, tail: _tail)
 	}
 
@@ -165,7 +165,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return _meta
 	}
 
-	override func cons(val: AnyObject) -> IPersistentVector {
+	public override func cons(val: AnyObject) -> IPersistentVector {
 		if _count - self.tailoff < 32 {
 			var newTail: Array<AnyObject> = []
 			newTail.reserveCapacity(_tail.count + 1)
@@ -220,7 +220,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return ChunkedSeq(vec: self, index: 0, offset: 0)
 	}
 
-	override var seq : ISeq {
+	public override var seq : ISeq {
 		return self.chunkedSeq
 	}
 
@@ -240,7 +240,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return initial
 	}
 
-	override func pop() -> IPersistentStack {
+	public override func pop() -> IPersistentStack {
 		if _count == 0 {
 			fatalError("Can't pop from an empty vector")
 		}

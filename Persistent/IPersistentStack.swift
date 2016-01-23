@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IPersistentStack : IPersistentCollection {
+public protocol IPersistentStack : IPersistentCollection {
 	var peek : AnyObject? { get }
 	func pop() -> IPersistentStack
 }

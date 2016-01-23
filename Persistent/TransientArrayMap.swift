@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class TransientArrayMap: AbstractTransientMap {
+public class TransientArrayMap: AbstractTransientMap {
 	private var _length: Int
 	private var _array: Array<AnyObject>
 	private var _owner: NSThread?

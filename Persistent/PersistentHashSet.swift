@@ -8,7 +8,7 @@
 
 private let EMPTY = PersistentHashSet(meta: nil, impl: PersistentHashMap.empty as! IPersistentMap)
 
-class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
+public class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 	private var _meta: IPersistentMap?
 
 	init(meta: IPersistentMap?, impl: IPersistentMap) {
@@ -83,32 +83,32 @@ class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 		return ret
 	}
 
-	override func disjoin(key: AnyObject) -> IPersistentSet {
+	public override func disjoin(key: AnyObject) -> IPersistentSet {
 		if self.containsObject(key) {
 			return PersistentHashSet(meta: self.meta, impl: _impl.without(key))
 		}
 		return self
 	}
 
-	override func cons(other : AnyObject) -> IPersistentCollection {
+	public override func cons(other : AnyObject) -> IPersistentCollection {
 		if self.containsObject(other) {
 			return self
 		}
 		return PersistentHashSet(meta: self.meta, impl: _impl.associateKey(0, withValue: other) as! IPersistentMap)
 	}
 
-	override var empty : IPersistentCollection {
+	public override var empty : IPersistentCollection {
 		if let m = self.meta {
 			return EMPTY.withMeta(m) as! IPersistentCollection
 		}
 		return EMPTY
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj {
+	public func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentHashSet(meta: meta, impl: _impl)
 	}
 
-	var asTransient : ITransientCollection {
+	public var asTransient : ITransientCollection {
 		return TransientHashSet(impl: (_impl as! PersistentHashMap).asTransient as! ITransientMap)
 	}
 

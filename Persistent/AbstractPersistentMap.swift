@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
+public class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 	var _hash : Int
 	var _hasheq : Int
 
@@ -15,7 +15,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		_hasheq = -1
 	}
 
-	func cons(o : AnyObject) -> IPersistentCollection {
+	public func cons(o : AnyObject) -> IPersistentCollection {
 		if let e = o as? IMapEntry {
 			return self.associateKey(e.key, withValue: e.val)
 		} else if let v = o as? IPersistentVector {
@@ -62,7 +62,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		return true
 	}
 
-	func equiv(obj: AnyObject) -> Bool {
+	public func equiv(obj: AnyObject) -> Bool {
 		if !(obj is IMap) {
 			return false
 		}
@@ -106,7 +106,7 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		return hash
 	}
 
-	var hasheq : Int {
+	public var hasheq : Int {
 		if _hasheq == -1 {
 			_hasheq = AbstractPersistentMap.mapHasheq(self)
 		}
@@ -122,67 +122,67 @@ class AbstractPersistentMap : IPersistentMap, IMap, IMapEquivalence, IHashEq {
 		return hash
 	}
 
-	var empty : IPersistentCollection {
+	public var empty : IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var seq : ISeq {
+	public var seq : ISeq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative {
+	public func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func entryForKey(key : AnyObject) -> IMapEntry? {
+	public func entryForKey(key : AnyObject) -> IMapEntry? {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap {
+	public func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func without(key : AnyObject) -> IPersistentMap {
+	public func without(key : AnyObject) -> IPersistentMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var count : Int {
+	public var count : Int {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func objectForKey(key: AnyObject) -> AnyObject? {
+	public func objectForKey(key: AnyObject) -> AnyObject? {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func objectForKey(key : AnyObject, def : AnyObject) -> AnyObject {
+	public func objectForKey(key : AnyObject, def : AnyObject) -> AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func setObject(val: AnyObject, forKey key: AnyObject) -> AnyObject? {
+	public func setObject(val: AnyObject, forKey key: AnyObject) -> AnyObject? {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func containsKey(key: AnyObject) -> Bool {
+	public func containsKey(key: AnyObject) -> Bool {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func containsValue(value: AnyObject) -> Bool {
+	public func containsValue(value: AnyObject) -> Bool {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var allEntries : ISet {
+	public var allEntries : ISet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var isEmpty : Bool {
+	public var isEmpty : Bool {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var allKeys : ISet {
+	public var allKeys : ISet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var values : ICollection {
+	public var values : ICollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IChunkedSeq : ISeq, ISequential {
+public protocol IChunkedSeq : ISeq, ISequential {
 	var chunkedFirst : IChunk? { get }
 	var chunkedNext : ISeq { get }
 	var chunkedMore : ISeq { get }

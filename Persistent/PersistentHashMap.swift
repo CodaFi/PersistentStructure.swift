@@ -9,7 +9,7 @@
 private let EMPTY: PersistentHashMap = PersistentHashMap(count: 0, root: nil, hasNull: false, nullValue: nil)
 private var _NOT_FOUND: AnyObject = NSNull()
 
-class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
+public class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	private var _count: Int
 	private var _root: INode?
 	private var _hasNull: Bool
@@ -44,7 +44,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return _nullValue!
 	}
 
-	var asTransient : ITransientCollection {
+	public var asTransient : ITransientCollection {
 		return TransientHashMap(withMap: self)
 	}
 
@@ -94,14 +94,14 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return Utils.hasheq(k)
 	}
 
-	override func containsKey(key: AnyObject) -> Bool {
+	public override func containsKey(key: AnyObject) -> Bool {
 		guard let r = _root else {
 			return false
 		}
 		return r.findWithShift(0, hash: PersistentHashMap.hash(key), key: key, notFound: _NOT_FOUND) !== _NOT_FOUND
 	}
 
-	override func entryForKey(key: AnyObject) -> IMapEntry? {
+	public override func entryForKey(key: AnyObject) -> IMapEntry? {
 		return _root?.findWithShift(0, hash: PersistentHashMap.hash(key), key: key)
 	}
 
@@ -120,7 +120,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return PersistentHashMap(meta: self.meta, count: (addedLeaf == nil) ? _count : _count + 1, root: newroot, hasNull: _hasNull, nullValue: _nullValue!)
 	}
 
-	override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
+	public override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		if let r = _root {
 			if let res = r.findWithShift(0, hash: PersistentHashMap.hash(key), key: key, notFound: notFound) {
 				return res
@@ -129,7 +129,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return notFound
 	}
 
-	override func objectForKey(key: AnyObject) -> AnyObject? {
+	public override func objectForKey(key: AnyObject) -> AnyObject? {
 		return self.objectForKey(key, def: NSNull())
 	}
 
@@ -140,7 +140,7 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return self.associateKey(key, value: val)
 	}
 
-	override func without(key: AnyObject?) -> IPersistentMap {
+	public override func without(key: AnyObject?) -> IPersistentMap {
 		if key == nil {
 			return _hasNull ? PersistentHashMap(meta: self.meta, count: _count - 1, root: _root, hasNull: false, nullValue: nil) : self
 		}
@@ -166,11 +166,11 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return initial
 	}
 
-	override var count : Int {
+	public override var count : Int {
 		return _count
 	}
 
-	override var seq : ISeq {
+	public override var seq : ISeq {
 		if let r = _root {
 			return r.nodeSeq
 		}

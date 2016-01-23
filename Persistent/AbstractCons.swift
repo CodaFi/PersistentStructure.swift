@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-final class AbstractCons : AbstractSeq {
+public final class AbstractCons : AbstractSeq {
 	let _first : AnyObject
 	let _more : ISeq
 
@@ -23,19 +23,19 @@ final class AbstractCons : AbstractSeq {
 	}
 
 
-	override var first : AnyObject? {
+	public override var first : AnyObject? {
 		return _first
 	}
 
-	override var next : ISeq {
+	public override var next : ISeq {
 		return _more.seq
 	}
 
-	override var more : ISeq {
+	public override var more : ISeq {
 		return _more
 	}
 
-	override var count : Int {
+	public override var count : Int {
 		return 1 + Utils.count(_more)
 	}
 

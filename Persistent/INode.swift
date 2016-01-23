@@ -8,7 +8,7 @@
 
 import Darwin
 
-protocol INode : class {
+public protocol INode : class {
 	func assocWithShift(shift : Int, hash : Int, key : AnyObject, value : AnyObject) -> INode?
 	func withoutWithShift(shift : Int, hash : Int, key : AnyObject) -> INode?
 	func findWithShift(shift : Int, hash : Int, key : AnyObject) -> IMapEntry?

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class TransientVector : ITransientVector, ICounted {
+public class TransientVector : ITransientVector, ICounted {
 	private var _count: Int
 	private var _shift: Int
 	private var _root: Node
@@ -26,7 +26,7 @@ class TransientVector : ITransientVector, ICounted {
 		_tail = tail
 	}
 
-	var count : Int {
+	public var count : Int {
 		self.ensureEditable()
 		return _count
 	}
@@ -53,7 +53,7 @@ class TransientVector : ITransientVector, ICounted {
 		return Node(edit: NSThread.currentThread(), array: node.array)
 	}
 
-	func persistent() -> IPersistentCollection {
+	public func persistent() -> IPersistentCollection {
 		self.ensureEditable()
 		if _root.edit != nil && _root.edit != NSThread.currentThread() {
 			fatalError("Mutation release by non-owner thread")
@@ -71,7 +71,7 @@ class TransientVector : ITransientVector, ICounted {
 		return ret
 	}
 
-	func conj(val: AnyObject) -> ITransientCollection {
+	public func conj(val: AnyObject) -> ITransientCollection {
 		self.ensureEditable()
 		let i: Int = _count
 		if i - self.tailoff < 32 {
@@ -161,7 +161,7 @@ class TransientVector : ITransientVector, ICounted {
 		fatalError("Range or index out of bounds")
 	}
 
-	func objectForKey(key: AnyObject) -> AnyObject? {
+	public func objectForKey(key: AnyObject) -> AnyObject? {
 		self.ensureEditable()
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
@@ -172,7 +172,7 @@ class TransientVector : ITransientVector, ICounted {
 		return nil
 	}
 
-	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
+	public func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		self.ensureEditable()
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
@@ -183,20 +183,20 @@ class TransientVector : ITransientVector, ICounted {
 		return notFound
 	}
 
-	func objectAtIndex(i: Int) -> AnyObject? {
+	public func objectAtIndex(i: Int) -> AnyObject? {
 		self.ensureEditable()
 		var node: Array<AnyObject> = self.arrayFor(i)
 		return node[i & 0x01f]
 	}
 
-	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
+	public func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
 		if i >= 0 && i < Int(self.count) {
 			return self.objectAtIndex(i)!
 		}
 		return notFound
 	}
 
-	func assocN(i: Int, value val: AnyObject) -> ITransientVector {
+	public func assocN(i: Int, value val: AnyObject) -> ITransientVector {
 		self.ensureEditable()
 		if i >= 0 && i < _count {
 			if i >= self.tailoff {
@@ -212,7 +212,7 @@ class TransientVector : ITransientVector, ICounted {
 		fatalError("Range or index out of bounds")
 	}
 
-	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
+	public func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
 			return self.assocN(i, value: val) as! ITransientMap
@@ -232,7 +232,7 @@ class TransientVector : ITransientVector, ICounted {
 		return ret
 	}
 
-	var pop : ITransientVector {
+	public var pop : ITransientVector {
 		self.ensureEditable()
 		if _count == 0 {
 			fatalError("Can't pop from an empty vector")

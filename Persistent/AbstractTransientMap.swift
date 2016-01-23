@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractTransientMap : ITransientMap {
+public class AbstractTransientMap : ITransientMap {
 	func ensureEditable() { }
 
 	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
@@ -29,7 +29,7 @@ class AbstractTransientMap : ITransientMap {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func conj(o: AnyObject) -> ITransientCollection {
+	public func conj(o: AnyObject) -> ITransientCollection {
 		self.ensureEditable()
 		if let e = o as? MapEntry {
 			return self.associateKey(e.key, value: e.val)
@@ -47,37 +47,37 @@ class AbstractTransientMap : ITransientMap {
 		return ret
 	}
 
-	func objectForKey(key: AnyObject) -> AnyObject? {
+	public func objectForKey(key: AnyObject) -> AnyObject? {
 		self.ensureEditable()
 		return self.doobjectForKey(key, notFound: NSNull())
 	}
 
-	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
+	public func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
 		self.ensureEditable()
 		return self.doassociateKey(key, val: val)
 	}
 
-	func without(key: AnyObject) -> ITransientMap {
+	public func without(key: AnyObject) -> ITransientMap {
 		self.ensureEditable()
 		return self.doWithout(key)
 	}
 
-	func persistent() -> IPersistentCollection {
+	public func persistent() -> IPersistentCollection {
 		self.ensureEditable()
 		return self.doPersistent()
 	}
 
-	func persistent() -> IPersistentMap {
+	public func persistent() -> IPersistentMap {
 		self.ensureEditable()
 		return self.doPersistent()
 	}
 
-	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
+	public func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		self.ensureEditable()
 		return self.doobjectForKey(key, notFound: notFound)!
 	}
 
-	var count : Int {
+	public var count : Int {
 		self.ensureEditable()
 		return self.doCount()
 	}

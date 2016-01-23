@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IPersistentCollection : ISeqable {
+public protocol IPersistentCollection : ISeqable {
 	var count : Int { get }
 	func cons(other : AnyObject) -> IPersistentCollection
 	var empty : IPersistentCollection { get }

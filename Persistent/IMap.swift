@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IMap {
+public protocol IMap {
 	func objectForKey(key: AnyObject) -> AnyObject?
 	func setObject(val: AnyObject, forKey key: AnyObject) -> AnyObject?
 

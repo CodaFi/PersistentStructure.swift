@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
+public class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 	let _impl: IPersistentMap
 
 	private var _hash: Int32 = 0
@@ -16,23 +16,23 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		_impl = impl
 	}
 
-	func containsObject(o: AnyObject) -> Bool {
+	public func containsObject(o: AnyObject) -> Bool {
 		return _impl.containsKey(o)
 	}
 
-	func objectForKey(key: AnyObject) -> AnyObject {
+	public func objectForKey(key: AnyObject) -> AnyObject {
 		return _impl.objectForKey(key)!
 	}
 
-	var count : Int {
+	public var count : Int {
 		return _impl.count
 	}
 
-	var seq : ISeq {
+	public var seq : ISeq {
 		return KeySeq(seq: self.seq)
 	}
 
-	func isEqual(o: AnyObject) -> Bool {
+	public func isEqual(o: AnyObject) -> Bool {
 		return AbstractPersistentSet.setisEqual(self, other: o)
 	}
 
@@ -56,7 +56,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return true
 	}
 
-	func equiv(o: AnyObject) -> Bool {
+	public func equiv(o: AnyObject) -> Bool {
 		return AbstractPersistentSet.setisEqual(self, other: o)
 	}
 
@@ -72,7 +72,7 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return UInt(_hash)
 	}
 
-	var hasheq : Int {
+	public var hasheq : Int {
 		if _hasheq == -1 {
 			var hash: Int32 = 0
 			for var s = self.seq; s.count != 0; s = s.next {
@@ -83,23 +83,23 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return Int(_hasheq)
 	}
 
-	var toArray : Array<AnyObject> {
+	public var toArray : Array<AnyObject> {
 		return Utils.seqToArray(self.seq)
 	}
 
-	var isEmpty : Bool {
+	public var isEmpty : Bool {
 		return self.count == 0
 	}
 
-	func disjoin(key: AnyObject) -> IPersistentSet {
+	public func disjoin(key: AnyObject) -> IPersistentSet {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func cons(other : AnyObject) -> IPersistentCollection {
+	public func cons(other : AnyObject) -> IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var empty : IPersistentCollection {
+	public var empty : IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

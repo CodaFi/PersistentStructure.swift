@@ -6,8 +6,8 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
-	override func objectAtIndex(i: Int) -> AnyObject? {
+public class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
+	public override func objectAtIndex(i: Int) -> AnyObject? {
 		if i == 0 {
 			return self.key
 		} else if i == 1 {
@@ -21,39 +21,39 @@ class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 		return LazilyPersistentVector.createOwning([self.key, self.val]) 
 	}
 
-	override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
+	public override func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		return self.asVector.assocN(i, value: val)
 	}
 
-	override var count : Int {
+	public override var count : Int {
 		return 2
 	}
 
-	override var seq : ISeq {
+	public override var seq : ISeq {
 		return self.asVector.seq
 	}
 
-	override func cons(o: AnyObject) -> IPersistentVector {
+	public override func cons(o: AnyObject) -> IPersistentVector {
 		return self.asVector.cons(o)
 	}
 
-	override var empty : IPersistentCollection {
+	public override var empty : IPersistentCollection {
 		fatalError("Collection does not admit an empty representation")
 	}
 
-	override func pop() -> IPersistentStack {
+	public override func pop() -> IPersistentStack {
 		return LazilyPersistentVector.createOwning([self.key])
 	}
 
-	func setValue(value: AnyObject) -> AnyObject? {
+	public func setValue(value: AnyObject) -> AnyObject? {
 		fatalError("setValue unimplemented")
 	}
 
-	var key : AnyObject {
+	public var key : AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var val : AnyObject {
+	public var val : AnyObject {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

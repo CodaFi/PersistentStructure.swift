@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ITransientAssociative : ITransientCollection, ILookup {
+public protocol ITransientAssociative : ITransientCollection, ILookup {
 	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap
 }

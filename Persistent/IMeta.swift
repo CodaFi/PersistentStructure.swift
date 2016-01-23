@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IMeta {
+public protocol IMeta {
 	var meta : IPersistentMap? { get }
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ITransientVector : ITransientAssociative, IIndexed {
+public protocol ITransientVector : ITransientAssociative, IIndexed {
 	func assocN(i : Int, value : AnyObject) -> ITransientVector
 	var pop : ITransientVector { get }
 }

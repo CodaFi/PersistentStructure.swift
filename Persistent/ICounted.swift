@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ICounted {
+public protocol ICounted {
 	var count : Int { get }
 }

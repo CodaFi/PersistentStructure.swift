@@ -6,8 +6,8 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class TransientHashSet: AbstractTransientSet {
-	override func persistent() -> IPersistentCollection {
+public class TransientHashSet: AbstractTransientSet {
+	public override func persistent() -> IPersistentCollection {
 		return PersistentHashSet(meta: nil, impl: _impl.persistent())
 	}
 }

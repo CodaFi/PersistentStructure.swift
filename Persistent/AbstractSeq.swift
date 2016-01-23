@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractSeq : ISeq, ISequential, IList, IHashEq {
+public class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 	private let _hash : Int
 	private let _hasheq : Int
 	internal let _meta : IPersistentMap?
@@ -23,7 +23,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		_meta = meta
 	}
 	
-	func equiv(obj: AnyObject) -> Bool {
+	public func equiv(obj: AnyObject) -> Bool {
 		if !(obj is ISequential || obj is IList) {
 			return false
 		}
@@ -35,7 +35,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return self.seq.count == Utils.seq(obj).count
 	}
 
-	func isEqual(obj: AnyObject) -> Bool {
+	public func isEqual(obj: AnyObject) -> Bool {
 		if self === obj {
 			return true
 		}
@@ -50,7 +50,7 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return self.seq.count == Utils.seq(obj).count
 	}
 
-	var count : Int {
+	public var count : Int {
 		var i : Int = 1;
 		for var s : ISeq? = self.next; s != nil; s = s!.next, i = i.successor() {
 			if let ss = s as? ICounted {
@@ -60,58 +60,58 @@ class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 		return i;
 	}
 
-	var hasheq : Int {
+	public var hasheq : Int {
 		return 0
 	}
 
-	func lastIndexOf(other : AnyObject) -> Int {
+	public func lastIndexOf(other : AnyObject) -> Int {
 		return -1
 	}
 
-	func subListFromIndex(fromIndex : Int, toIndex: Int) -> IList? {
+	public func subListFromIndex(fromIndex : Int, toIndex: Int) -> IList? {
 		return nil
 	}
 
-	func containsObject(object: AnyObject) -> Bool {
+	public func containsObject(object: AnyObject) -> Bool {
 		return false
 	}
 
-	var toArray : Array<AnyObject> {
+	public var toArray : Array<AnyObject> {
 		return []
 	}
 
-	var isEmpty : Bool {
+	public var isEmpty : Bool {
 		return true
 	}
 
-	var seq : ISeq {
+	public var seq : ISeq {
 		return self
 	}
 
-	var first : AnyObject? {
+	public var first : AnyObject? {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var next : ISeq {
+	public var next : ISeq {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var empty : IPersistentCollection {
+	public var empty : IPersistentCollection {
 		return PersistentList.empty
 	}
 
-	var more : ISeq {
+	public var more : ISeq {
 		if let s : ISeq = self.next {
 			return s
 		}
 		return PersistentList.empty
 	}
 
-	func cons(other : AnyObject) -> IPersistentCollection {
+	public func cons(other : AnyObject) -> IPersistentCollection {
 		return AbstractCons(first: other, rest: self)
 	}
 
-	func cons(other: AnyObject) -> ISeq {
+	public func cons(other: AnyObject) -> ISeq {
 		return AbstractCons(first: other, rest: self)
 	}
 }

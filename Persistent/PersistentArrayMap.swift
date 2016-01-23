@@ -9,7 +9,7 @@
 private let HASHTABLE_THRESHOLD: Int = 16
 private let EMPTY: PersistentArrayMap = PersistentArrayMap()
 
-class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
+public class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	private var _array: Array<AnyObject>
 	private var _meta: IPersistentMap?
 
@@ -33,7 +33,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 //		self = (ret!.persistent as! PersistentArrayMap)
 //	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj {
+	public func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentArrayMap(meta: meta, array: _array)
 	}
 
@@ -58,15 +58,15 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return PersistentArrayMap(initial: initial)
 	}
 
-	override var count : Int {
+	public override var count : Int {
 		return _array.count / 2
 	}
 
-	override func containsKey(key: AnyObject) -> Bool {
+	public override func containsKey(key: AnyObject) -> Bool {
 		return self.indexOf(key) >= 0
 	}
 
-	override func entryForKey(key: AnyObject) -> IMapEntry? {
+	public override func entryForKey(key: AnyObject) -> IMapEntry? {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			return MapEntry(key: _array[i], val: _array[i + 1])
@@ -93,7 +93,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return PersistentArrayMap(initial: newArray)
 	}
 
-	override func associateKey(key: AnyObject, withValue val: AnyObject) -> IAssociative {
+	public override func associateKey(key: AnyObject, withValue val: AnyObject) -> IAssociative {
 		let i: Int = self.indexOf(key)
 		var newArray: Array<AnyObject>
 		if i >= 0 {
@@ -117,7 +117,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return PersistentArrayMap(initial: newArray)
 	}
 
-	override func without(key: AnyObject) -> IPersistentMap {
+	public override func without(key: AnyObject) -> IPersistentMap {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			let newlen: Int = _array.count - 2
@@ -138,14 +138,14 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return self
 	}
 
-	override var empty : IPersistentCollection {
+	public override var empty : IPersistentCollection {
 		if let m = self.meta {
 			return EMPTY.withMeta(m) as! IPersistentCollection
 		}
 		return EMPTY
 	}
 
-	override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
+	public override func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			return _array[i + 1]
@@ -153,7 +153,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return notFound
 	}
 
-	override func objectForKey(key: AnyObject) -> AnyObject? {
+	public override func objectForKey(key: AnyObject) -> AnyObject? {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			return _array[i + 1]
@@ -182,7 +182,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return Utils.equiv(k1, other: k2)
 	}
 
-	override var seq : ISeq {
+	public override var seq : ISeq {
 		if _array.count > 0 {
 			return Seq(nodes: _array)
 		}
@@ -204,7 +204,7 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return initial
 	}
 
-	var asTransient : ITransientCollection {
+	public var asTransient : ITransientCollection {
 		return TransientArrayMap(array: _array)
 	}
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ISeq : class, IPersistentCollection {
+public protocol ISeq : class, IPersistentCollection {
 	var first : AnyObject? { get }
 	var next : ISeq { get } 
 	var more : ISeq { get }

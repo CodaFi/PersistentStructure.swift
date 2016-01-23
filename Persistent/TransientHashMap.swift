@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class TransientHashMap: AbstractTransientMap {
+public class TransientHashMap: AbstractTransientMap {
 	private var _edit: NSThread?
 	private var _root: INode?
 	private var _count: Int = 0

@@ -8,7 +8,7 @@
 
 private let EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: EmptySeq(), rev: PersistentVector.empty)
 
-class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
+public class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	private var _count: Int
 	private var _front: ISeq
 	private var _rear: IPersistentVector
@@ -24,7 +24,7 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		super.init(meta: meta)
 	}
 
-	func equiv(obj: AnyObject) -> Bool {
+	public func equiv(obj: AnyObject) -> Bool {
 		if !(obj is ISequential) {
 			return false
 		}
@@ -59,18 +59,18 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		return UInt(_hash)
 	}
 
-	var hasheq : Int {
+	public var hasheq : Int {
 		if _hasheq == -1 {
 			_hasheq = Int(Murmur3.hashOrdered(self))
 		}
 		return _hasheq
 	}
 
-	var peek : AnyObject? {
+	public var peek : AnyObject? {
 		return Utils.first(_front)
 	}
 
-	func pop() -> IPersistentStack {
+	public func pop() -> IPersistentStack {
 		var f1: ISeq = _front.next
 		var r1: IPersistentVector = _rear
 		if f1.count == 0 {
@@ -80,18 +80,18 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		return PersistentQueue(meta: self.meta, count: _count - 1, seq: f1, rev: r1)
 	}
 
-	var count : Int {
+	public var count : Int {
 		return _count
 	}
 
-	var seq : ISeq {
+	public var seq : ISeq {
 		if _front.count == 0 {
 			return EmptySeq()
 		}
 		return QueueSeq(f: _front, rev: Utils.seq(_rear))
 	}
 
-	func cons(other : AnyObject) -> IPersistentCollection {
+	public func cons(other : AnyObject) -> IPersistentCollection {
 		if _front.count == 0 {
 			return PersistentQueue(meta: self.meta, count: _count + 1, seq: Utils.list(other), rev: PersistentVector.empty)
 		} else {
@@ -99,26 +99,26 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		}
 	}
 
-	var empty : IPersistentCollection {
+	public var empty : IPersistentCollection {
 		if let m = self.meta {
 			return EMPTY.withMeta(m) as! IPersistentCollection
 		}
 		return EMPTY
 	}
 
-	override func withMeta(meta: IPersistentMap?) -> IObj {
+	public override func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentQueue(meta: meta, count: _count, seq: _front, rev: _rear)
 	}
 
-	var toArray : Array<AnyObject> {
+	public var toArray : Array<AnyObject> {
 		return Utils.seqToArray(self.seq)
 	}
 
-	var isEmpty : Bool {
+	public var isEmpty : Bool {
 		return self.count == 0
 	}
 
-	func containsObject(anObject: AnyObject) -> Bool {
+	public func containsObject(anObject: AnyObject) -> Bool {
 		for var s = self.seq; s.count != 0; s = s.next {
 			if Utils.equiv(s.first, other: anObject) {
 				return true

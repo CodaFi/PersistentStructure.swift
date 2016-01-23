@@ -23,7 +23,6 @@
 		829C0AE71C2B1D4F00AA3331 /* Murmur3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */; };
 		82A667311BF9166400EBCDFA /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82A667301BF9166400EBCDFA /* Persistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82A667381BF9166400EBCDFA /* Persistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A6672D1BF9166400EBCDFA /* Persistent.framework */; };
-		82A6673D1BF9166400EBCDFA /* PersistentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6673C1BF9166400EBCDFA /* PersistentTests.swift */; };
 		82A6674A1BF91C0100EBCDFA /* IAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667491BF91C0100EBCDFA /* IAssociative.swift */; };
 		82A6674C1BF91C4E00EBCDFA /* IChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674B1BF91C4E00EBCDFA /* IChunk.swift */; };
 		82A6674E1BF91CD900EBCDFA /* IChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674D1BF91CD900EBCDFA /* IChunkedSeq.swift */; };
@@ -130,7 +129,6 @@
 		82A667301BF9166400EBCDFA /* Persistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Persistent.h; path = Persistent/Persistent.h; sourceTree = "<group>"; };
 		82A667321BF9166400EBCDFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82A667371BF9166400EBCDFA /* PersistentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersistentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		82A6673C1BF9166400EBCDFA /* PersistentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentTests.swift; sourceTree = "<group>"; };
 		82A6673E1BF9166400EBCDFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82A667491BF91C0100EBCDFA /* IAssociative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAssociative.swift; sourceTree = "<group>"; };
 		82A6674B1BF91C4E00EBCDFA /* IChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IChunk.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 		82A6673B1BF9166400EBCDFA /* PersistentTests */ = {
 			isa = PBXGroup;
 			children = (
-				82A6673C1BF9166400EBCDFA /* PersistentTests.swift */,
 				82A6673E1BF9166400EBCDFA /* Info.plist */,
 			);
 			path = PersistentTests;
@@ -605,7 +602,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82A6673D1BF9166400EBCDFA /* PersistentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

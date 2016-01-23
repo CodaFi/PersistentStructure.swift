@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IList : ICollection {
+public protocol IList : ICollection {
 	func isEqual(other : AnyObject) -> Bool
 	func lastIndexOf(other : AnyObject) -> Int
 	func subListFromIndex(fromIndex : Int, toIndex: Int) -> IList?

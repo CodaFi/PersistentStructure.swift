@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, Comparable */ {
+public class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, Comparable */ {
 	private var _hash: Int
 	private var _hasheq: Int
 
@@ -15,14 +15,14 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		_hasheq = -1
 	}
 
-	var seq : ISeq {
+	public var seq : ISeq {
 		if self.count > 0 {
 			return VecSeq(vector: self, index: 0)
 		}
 		return EmptySeq()
 	}
 
-	var reversedSeq : ISeq {
+	public var reversedSeq : ISeq {
 		if self.count > 0 {
 			return RVecSeq(vector: self, index: Int(self.count) - 1)
 		}
@@ -103,11 +103,11 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return true
 	}
 
-	func isEqual(object: AnyObject) -> Bool {
+	public func isEqual(object: AnyObject) -> Bool {
 		return AbstractPersistentVector.doisEqual(self, object: object)
 	}
 
-	func equiv(o: AnyObject) -> Bool {
+	public func equiv(o: AnyObject) -> Bool {
 		return AbstractPersistentVector.doEquiv(self, object: o)
 	}
 
@@ -122,7 +122,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return _hash
 	}
 
-	var hasheq : Int {
+	public var hasheq : Int {
 		if _hasheq == -1 {
 			var hash: Int = 1
 			for obj in self.generate() {
@@ -137,7 +137,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return self.objectAtIndex(index)
 	}
 
-	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
+	public func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
 		if i >= 0 && i < Int(self.count) {
 			return self.objectAtIndex(i)!
 		}
@@ -153,7 +153,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return NSNotFound
 	}
 
-	func lastIndexOf(o: AnyObject) -> Int {
+	public func lastIndexOf(o: AnyObject) -> Int {
 		for var i = Int(self.count) - 1; i >= 0; i-- {
 			if Utils.equiv(self.objectAtIndex(i)!, other: (o)) {
 				return i
@@ -162,7 +162,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return NSNotFound
 	}
 
-	func subListFromIndex(fromIndex: Int, toIndex: Int) -> IList? {
+	public func subListFromIndex(fromIndex: Int, toIndex: Int) -> IList? {
 		return Utils.subvecOf(self, start: fromIndex, end: toIndex) as? IList
 	}
 
@@ -170,14 +170,14 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var peek : AnyObject? {
+	public var peek : AnyObject? {
 		if self.count > 0 {
 			return self.objectAtIndex(Int(self.count) - 1)
 		}
 		return nil
 	}
 
-	func containsKey(key: AnyObject) -> Bool {
+	public func containsKey(key: AnyObject) -> Bool {
 		if !Utils.isInteger(key) {
 			return false
 		}
@@ -185,7 +185,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return i >= 0 && i < Int(self.count)
 	}
 
-	func entryForKey(key: AnyObject) -> IMapEntry? {
+	public func entryForKey(key: AnyObject) -> IMapEntry? {
 		if !Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
 			if i >= 0 && i < Int(self.count) {
@@ -195,7 +195,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return nil
 	}
 
-	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative {
+	public func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative {
 		if !Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
 			return self.assocN(i, value: value)
@@ -203,7 +203,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		fatalError("Key must be integer")
 	}
 
-	func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
+	public func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
 			if i >= 0 && i < Int(self.count) {
@@ -213,7 +213,7 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return notFound
 	}
 
-	func objectForKey(key: AnyObject) -> AnyObject? {
+	public func objectForKey(key: AnyObject) -> AnyObject? {
 		if Utils.isInteger(key) {
 			let i: Int = (key as! NSNumber).integerValue
 			if i >= 0 && i < Int(self.count) {
@@ -223,19 +223,19 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return nil
 	}
 
-	var toArray : Array<AnyObject> {
+	public var toArray : Array<AnyObject> {
 		return Utils.seqToArray(self.seq)
 	}
 
-	var isEmpty : Bool {
+	public var isEmpty : Bool {
 		return self.count == 0
 	}
 
-	var count : Int {
+	public var count : Int {
 		return 0
 	}
 
-	func containsObject(o: AnyObject) -> Bool {
+	public func containsObject(o: AnyObject) -> Bool {
 		for var s = self.seq; s.count != 0; s = s.next {
 			if Utils.equiv(s.first, other: o) {
 				return true
@@ -267,27 +267,27 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 		return .OrderedSame
 	}
 
-	func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
+	public func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func cons(other : AnyObject) -> IPersistentCollection {
+	public func cons(other : AnyObject) -> IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 	
-	func cons(o: AnyObject) -> IPersistentVector {
+	public func cons(o: AnyObject) -> IPersistentVector {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	var empty : IPersistentCollection {
+	public var empty : IPersistentCollection {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func pop() -> IPersistentStack {
+	public func pop() -> IPersistentStack {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func objectAtIndex(i: Int) -> AnyObject? {
+	public func objectAtIndex(i: Int) -> AnyObject? {
 		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

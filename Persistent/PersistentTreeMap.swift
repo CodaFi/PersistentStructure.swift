@@ -8,7 +8,7 @@
 
 private let EMPTY: PersistentTreeMap = PersistentTreeMap(meta: nil, comparator: { _ in .OrderedSame })
 
-class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
+public class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	private var _comp: (AnyObject?, AnyObject?) -> NSComparisonResult
 	private var _tree: TreeNode?
 	private var _count: Int
@@ -55,7 +55,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return EMPTY
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj {
+	public func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentTreeMap(meta: meta, comparator: _comp, tree: _tree, count: _count)
 	}
 
@@ -91,7 +91,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return ret as! PersistentTreeMap
 	}
 
-	override func containsKey(key: AnyObject) -> Bool {
+	public override func containsKey(key: AnyObject) -> Bool {
 		return self.objectForKey(key) != nil
 	}
 
@@ -114,7 +114,7 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return PersistentTreeMap(meta: self.meta, comparator: _comp, tree: t?.blacken, count: _count + 1)
 	}
 
-	override func without(key: AnyObject) -> IPersistentMap {
+	public override func without(key: AnyObject) -> IPersistentMap {
 		let (t, found) = self.remove(_tree, key: key)
 		if let tn = t {
 			return PersistentTreeMap(meta: self.meta, comparator: _comp, tree: tn.blacken, count: _count - 1)
@@ -125,36 +125,36 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		}
 	}
 
-	override var seq : ISeq {
+	public override var seq : ISeq {
 		if _count > 0 {
 			return SortedTreeSeq(withRoot: _tree, ascending: true, count: _count)
 		}
 		return EmptySeq()
 	}
 
-	var reversedSeq : ISeq {
+	public var reversedSeq : ISeq {
 		if _count > 0 {
 			return SortedTreeSeq(withRoot: _tree, ascending: false, count: _count)
 		}
 		return EmptySeq()
 	}
 
-	var comparator : (AnyObject?, AnyObject?) -> NSComparisonResult {
+	public var comparator : (AnyObject?, AnyObject?) -> NSComparisonResult {
 		return _comp
 	}
 
-	func entryKey(entry: AnyObject) -> AnyObject? {
+	public func entryKey(entry: AnyObject) -> AnyObject? {
 		return (entry as? IMapEntry)?.key
 	}
 
-	func seq(ascending: Bool) -> ISeq? {
+	public func seq(ascending: Bool) -> ISeq? {
 		if _count > 0 {
 			return SortedTreeSeq(withRoot: _tree, ascending: ascending, count: _count)
 		}
 		return nil
 	}
 
-	func seqFrom(key: AnyObject, ascending: Bool) -> ISeq? {
+	public func seqFrom(key: AnyObject, ascending: Bool) -> ISeq? {
 		if _count > 0 {
 			var stack: ISeq = EmptySeq()
 			var t: TreeNode? = _tree
@@ -226,14 +226,14 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return 1 + ((ll > rr) ? ll : rr)
 	}
 
-	override func objectForKey(key: AnyObject, def: AnyObject) -> AnyObject {
+	public override func objectForKey(key: AnyObject, def: AnyObject) -> AnyObject {
 		if let n = self.entryForKey(key) as? TreeNode {
 			return n.val
 		}
 		return def
 	}
 
-	override func objectForKey(key: AnyObject) -> AnyObject? {
+	public override func objectForKey(key: AnyObject) -> AnyObject? {
 		if let n = self.entryForKey(key) as? TreeNode {
 			return n.val
 		}
@@ -244,11 +244,11 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return _count
 	}
 
-	override var count : Int {
+	public override var count : Int {
 		return _count
 	}
 
-	override func entryForKey(aKey: AnyObject) -> IMapEntry? {
+	public override func entryForKey(aKey: AnyObject) -> IMapEntry? {
 		var t: TreeNode? = _tree
 		while t != nil {
 			let c: NSComparisonResult = self.doCompare(aKey, k2: t!.key)

@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ICollection : class, ICounted {
+public protocol ICollection : class, ICounted {
 	func containsObject(object : AnyObject) -> Bool
 	var toArray : Array<AnyObject> { get }
 	var isEmpty : Bool { get }

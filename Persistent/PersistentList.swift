@@ -8,7 +8,7 @@
 
 private let EMPTY: EmptyList = EmptyList(meta: nil)
 
-class PersistentList: AbstractSeq, IPersistentList, IReducible {
+public class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	private var _first: AnyObject
 	private var _rest: IPersistentList
 	private var _count: Int
@@ -39,22 +39,22 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return ret
 	}
 
-	override var first : AnyObject {
+	public override var first : AnyObject {
 		return _first
 	}
 
-	override var next : ISeq {
+	public override var next : ISeq {
 		if _count == 1 {
 			return EmptySeq()
 		}
 		return _rest as! ISeq
 	}
 
-	var peek : AnyObject? {
+	public var peek : AnyObject? {
 		return self.first
 	}
 
-	func pop() -> IPersistentStack {
+	public func pop() -> IPersistentStack {
 		if _rest.count != 0 {
 			return _rest
 		}
@@ -68,7 +68,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return EMPTY.withMeta(_meta)
 	}
 
-	override var count : Int {
+	public override var count : Int {
 		return _count
 	}
 
@@ -83,7 +83,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return self
 	}
 
-	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
+	public func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = self.first
 		for var s = self.next; s.count != 0; s = s.next {
 			ret = combine(ret, s.first!)
@@ -91,7 +91,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return ret
 	}
 
-	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
+	public func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = combine(initial, self.first)
 		for var s = self.next; s.count != 0; s = s.next {
 			ret = combine(ret, s.first!)
@@ -99,7 +99,7 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return ret
 	}
 
-	override var empty : IPersistentCollection {
+	public override var empty : IPersistentCollection {
 		return EMPTY.withMeta(_meta)
 	}
 }
