@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: PersistentHashMap = PersistentHashMap(count: 0, root: nil, hasNull: false, nullValue: nil)
+private let EMPTY: PersistentHashMap = PersistentHashMap(count: 0, root: nil, hasNull: false, nullValue: nil)
 private var _NOT_FOUND: AnyObject = NSNull()
 
 class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
@@ -155,8 +155,8 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 	}
 
 
-	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
-		initial = _hasNull ? f(initial, nil, _nullValue) : initial
+	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial ini: AnyObject) -> AnyObject {
+		let initial = _hasNull ? f(ini, nil, _nullValue) : ini
 		if Utils.isReduced(initial) {
 			return (initial as? IDeref)!.deref()
 		}

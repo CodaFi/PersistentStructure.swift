@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: EmptyList = EmptyList(meta: nil)
+private let EMPTY: EmptyList = EmptyList(meta: nil)
 
 class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	private var _first: AnyObject

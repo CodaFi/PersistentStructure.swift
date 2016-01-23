@@ -7,10 +7,10 @@
 //
 
 class HashCollisionNode : INode {
-	private var _hash: Int
+	private let _hash: Int
 	private var _count: Int
 	private var _array: Array<AnyObject>
-	private var _edit: NSThread?
+	private let _edit: NSThread?
 
 	init(edit: NSThread?, hash: Int, count: Int, array: Array<AnyObject>) {
 		_edit = edit

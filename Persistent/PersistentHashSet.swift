@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY = PersistentHashSet(meta: nil, impl: PersistentHashMap.empty() as! IPersistentMap)
+private let EMPTY = PersistentHashSet(meta: nil, impl: PersistentHashMap.empty() as! IPersistentMap)
 
 class PersistentHashSet: AbstractPersistentSet, IObj, IEditableCollection {
 	private var _meta: IPersistentMap?

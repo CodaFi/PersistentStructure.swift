@@ -7,10 +7,10 @@
 //
 
 class ChunkedSeq: AbstractSeq, IChunkedSeq {
-	private var _vec: PersistentVector
-	private var _node: Array<AnyObject>
-	private var _i: Int
-	private var _offset: Int
+	private let _vec: PersistentVector
+	private let _node: Array<AnyObject>
+	private let _i: Int
+	private let _offset: Int
 
 	init(vec: PersistentVector, index i: Int, offset: Int) {
 		_vec = vec

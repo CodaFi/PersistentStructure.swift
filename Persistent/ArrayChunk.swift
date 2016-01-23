@@ -7,9 +7,9 @@
 //
 
 class ArrayChunk : IChunk {
-	private var _array: Array<AnyObject>
-	private var _off: Int
-	private var _end: Int
+	private let _array: Array<AnyObject>
+	private let _off: Int
+	private let _end: Int
 
 	convenience init(array: Array<AnyObject>) {
 		self.init(array: array, offset: 0, end: array.count)

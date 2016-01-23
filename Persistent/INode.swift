@@ -16,7 +16,7 @@ protocol INode : class {
 	func nodeSeq() -> ISeq
 	func assocOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject, val : AnyObject) -> INode?
 	func withoutOnThread(edit : NSThread?, shift : Int, hash : Int, key : AnyObject) -> INode?
-	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject
+	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial: AnyObject) -> AnyObject
 	
 //	- (id)kvreduce:(IKeyValueReduceBlock)f init:(id)init;
 }

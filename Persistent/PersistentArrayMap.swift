@@ -7,7 +7,7 @@
 //
 
 private let HASHTABLE_THRESHOLD: Int = 16
-private var EMPTY: PersistentArrayMap = PersistentArrayMap()
+private let EMPTY: PersistentArrayMap = PersistentArrayMap()
 
 class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 	private var _array: Array<AnyObject>
@@ -193,7 +193,8 @@ class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollection {
 		return _meta
 	}
 
-	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
+	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial ini: AnyObject) -> AnyObject {
+		var initial = ini
 		for i in 0.stride(to: _array.count, by: 2) {
 			initial = f(initial, _array[i], _array[i + 1])
 			if Utils.isReduced(initial) {

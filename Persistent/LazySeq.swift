@@ -7,13 +7,14 @@
 //
 
 class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
-	var _meta: IPersistentMap?
+	let _meta: IPersistentMap?
 
 	private var _generatorFunction: (() -> AnyObject?)? = nil
 	private var _secondValue: AnyObject?
 	private var _backingSeq: ISeq?
 
 	init(generator: () -> AnyObject?) {
+		_meta = nil
 		_generatorFunction = generator
 	}
 

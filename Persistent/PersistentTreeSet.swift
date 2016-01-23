@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY : PersistentTreeSet = PersistentTreeSet(meta: nil, implementation: PersistentTreeMap.empty())
+private let EMPTY : PersistentTreeSet = PersistentTreeSet(meta: nil, implementation: PersistentTreeMap.empty())
 
 class PersistentTreeSet: AbstractPersistentSet, IObj, IReversible, ISorted {
 	private var _meta: IPersistentMap?

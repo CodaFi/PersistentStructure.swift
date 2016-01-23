@@ -7,8 +7,8 @@
 //
 
 private var NOEDIT: NSThread? = nil
-private var EmptyNode: Node = Node(edit: NOEDIT)
-private var EMPTY: PersistentVector = PersistentVector(cnt: 0, shift: 5, root: (EmptyNode as? INode)!, tail: [])
+private let EMPTYNODE: Node = Node(edit: NOEDIT)
+private let EMPTY: PersistentVector = PersistentVector(meta: nil, count: 0, shift: 5, node: EMPTYNODE, tail: [])
 
 class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	private var _count: Int
@@ -116,7 +116,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	}
 
 	class func emptyNode() -> Node {
-		return EmptyNode
+		return EMPTYNODE
 	}
 
 	func asTransient() -> ITransientCollection {
@@ -224,7 +224,8 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 		return self.chunkedSeq()
 	}
 
-	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
+	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial ini: AnyObject) -> AnyObject {
+		var initial = ini
 		var step: Int = 0
 		for i in 0.stride(to: _count, by: step) {
 			var array: Array = self.arrayFor(i)
@@ -256,7 +257,7 @@ class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 			return PersistentVector(meta: self.meta(), count: _count - 1, shift: _shift, node: _root, tail: newTail)
 		}
 		let newtail: Array = self.arrayFor(_count - 2)
-		var newroot: Node = self.popTailAtLevel(_shift, node: _root) ?? EmptyNode
+		var newroot: Node = self.popTailAtLevel(_shift, node: _root) ?? EMPTYNODE
 		var newshift: Int = _shift
 
 		if _shift > 5 /*&& newroot!.array[1] == nil*/ {

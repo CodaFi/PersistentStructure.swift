@@ -7,8 +7,8 @@
 //
 
 final class AbstractCons : AbstractSeq {
-	var _first : AnyObject
-	var _more : ISeq
+	let _first : AnyObject
+	let _more : ISeq
 
 	init(first : AnyObject, rest : ISeq) {
 		self._first = first

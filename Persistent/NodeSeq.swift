@@ -7,9 +7,9 @@
 //
 
 class NodeSeq: AbstractSeq {
-	private var _array: Array<AnyObject>
-	private var _startingIndex: Int
-	private var _backingSeq: ISeq
+	private let _array: Array<AnyObject>
+	private let _startingIndex: Int
+	private let _backingSeq: ISeq
 
 	convenience init(array: Array<AnyObject>) {
 		self.init(array: array, index: 0, sequence: nil)
@@ -51,7 +51,8 @@ class NodeSeq: AbstractSeq {
 		return NodeSeq(meta: meta, array: _array, index: _startingIndex, sequence: _backingSeq)
 	}
 
-	class func kvreducearray(array: Array<AnyObject>, reducer f: (AnyObject, AnyObject, AnyObject) -> AnyObject, var initial: AnyObject) -> AnyObject {
+	class func kvreducearray(array: Array<AnyObject>, reducer f: (AnyObject, AnyObject, AnyObject) -> AnyObject, initial ini: AnyObject) -> AnyObject {
+		var initial = ini
 		for var j = 0; j < array.count; j += 2 {
 			if array.count <= j {
 				initial = f(initial, array[j], array[j + 1])

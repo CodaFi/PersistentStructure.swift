@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: EmptySeq(), rev: PersistentVector.empty())
+private let EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: EmptySeq(), rev: PersistentVector.empty())
 
 class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	private var _count: Int

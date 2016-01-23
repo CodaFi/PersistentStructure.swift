@@ -7,7 +7,7 @@
 //
 
 class Obj: IObj, IMeta {
-	private var _meta: IPersistentMap?
+	private let _meta: IPersistentMap?
 
 	init(meta: IPersistentMap?) {
 		_meta = meta

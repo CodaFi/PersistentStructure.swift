@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: BitmapIndexedNode = BitmapIndexedNode(onThread: nil, bitmap: 0, array: [])
+private let EMPTY: BitmapIndexedNode = BitmapIndexedNode(onThread: nil, bitmap: 0, array: [])
 
 class BitmapIndexedNode : INode {
 	var _array: Array<AnyObject>

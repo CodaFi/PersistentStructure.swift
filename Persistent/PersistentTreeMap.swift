@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: PersistentTreeMap = PersistentTreeMap(meta: nil, comparator: { _ in .OrderedSame })
+private let EMPTY: PersistentTreeMap = PersistentTreeMap(meta: nil, comparator: { _ in .OrderedSame })
 
 class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 	private var _comp: (AnyObject?, AnyObject?) -> NSComparisonResult
@@ -74,13 +74,19 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return ret as! PersistentTreeMap
 	}
 
-	class func createWithComparator(comp: (AnyObject?, AnyObject?) -> NSComparisonResult, var seq items: ISeq?) -> AnyObject {
+	class func createWithComparator(comp: (AnyObject?, AnyObject?) -> NSComparisonResult, seq items: ISeq) -> AnyObject {
 		var ret: IPersistentMap = PersistentTreeMap(comparator: comp)
-		for ; items != nil; items = items!.next().next() {
-			if items!.next().count == 0 {
-				fatalError("No value supplied for key: \(items!.first)")
+		var stripe = false
+		for (entry, next) in zip(items.generate(), items.next().generate()) {
+			if stripe {
+				continue
 			}
-			ret = ret.associateKey(items!.first()!, withValue: Utils.second(items!)!) as! PersistentTreeMap
+			
+			if next.count == 0 {
+				fatalError("No value supplied for key: \(next)")
+			}
+			ret = ret.associateKey(entry, withValue: next) as! PersistentTreeMap
+			stripe = !stripe
 		}
 		return ret as! PersistentTreeMap
 	}

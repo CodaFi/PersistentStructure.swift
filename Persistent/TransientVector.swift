@@ -99,8 +99,8 @@ class TransientVector : ITransientVector, ICounted {
 		return self
 	}
 
-	func pushTailAtLevel(level: Int, var parent: Node, tail tailnode: Node) -> Node {
-		parent = self.ensureEditableNode(parent)
+	func pushTailAtLevel(level: Int, parent ep: Node, tail tailnode: Node) -> Node {
+		let parent = self.ensureEditableNode(ep)
 		let subidx: Int = ((_count - 1) >> level) & 0x01f
 		let ret: Node = parent
 		
@@ -220,8 +220,8 @@ class TransientVector : ITransientVector, ICounted {
 		fatalError("Key must be an integer")
 	}
 
-	func doAssocAtLevel(level: Int, var node: Node, index i: Int, value val: AnyObject) -> Node {
-		node = self.ensureEditableNode(node)
+	func doAssocAtLevel(level: Int, node ne: Node, index i: Int, value val: AnyObject) -> Node {
+		let node = self.ensureEditableNode(ne)
 		let ret: Node = node
 		if level == 0 {
 			ret.array[i & 0x01f] = val
@@ -260,8 +260,8 @@ class TransientVector : ITransientVector, ICounted {
 		return self
 	}
 
-	func popTailAtLevel(level: Int, var node: Node) -> Node? {
-		node = self.ensureEditableNode(node)
+	func popTailAtLevel(level: Int, node ne: Node) -> Node? {
+		let node = self.ensureEditableNode(ne)
 		let subidx: Int = ((_count - 2) >> level) & 0x01f
 		if level > 5 {
 			let newchild: Node? = self.popTailAtLevel(level - 5, node: node.array[subidx] as! Node)

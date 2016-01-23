@@ -9,7 +9,7 @@
 class ArrayNode : INode {
 	private var _count: Int
 	private var _array: Array<AnyObject>
-	private var _edit: NSThread?
+	private let _edit: NSThread?
 
 	init() {
 		_count = 0
@@ -75,7 +75,8 @@ class ArrayNode : INode {
 		return Seq(nodes: _array)
 	}
 
-	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, var initial: AnyObject) -> AnyObject {
+	func kvreduce(f: (AnyObject?, AnyObject?, AnyObject?) -> AnyObject, initial ini: AnyObject) -> AnyObject {
+		var initial = ini
 		for i in (0..<_array.count) {
 			if let node = _array[i] as? INode {
 				initial = node.kvreduce(f, initial: initial)

@@ -7,7 +7,7 @@
 //
 
 class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
-	var _impl: IPersistentMap
+	let _impl: IPersistentMap
 
 	private var _hash: Int32 = 0
 	private var _hasheq: Int32 = 0
