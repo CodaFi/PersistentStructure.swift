@@ -6,20 +6,24 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class LazilyPersistentVector: NSObject {
-	class func createOwning(items: Array<AnyObject>) -> LazilyPersistentVector {
+class LazilyPersistentVector {
+	class func createOwning(items: Array<AnyObject>) -> IPersistentVector {
 		if items.count == 0 {
-			return PersistentVector.empty() as! LazilyPersistentVector
+			return PersistentVector.empty
 		} else if items.count <= 32 {
-			return PersistentVector(cnt: items.count, shift: 5, root: (PersistentVector.emptyNode as? INode)!, tail: items) as! LazilyPersistentVector
+			return PersistentVector(cnt: items.count, shift: 5, root: (PersistentVector.emptyNode as? INode)!, tail: items)
 		}
-		return PersistentVector.createWithItems(items) as! LazilyPersistentVector
+		return PersistentVector.createWithItems(items)
 	}
 
-	class func create(coll: ICollection?) -> LazilyPersistentVector {
-		if !(coll is ISeq) && coll!.count() <= 32 {
-			return LazilyPersistentVector.createOwning(coll!.toArray())
+	class func create(collec: ICollection?) -> IPersistentVector {
+		guard let coll = collec as? ISeq else {
+			return LazilyPersistentVector.createOwning(collec?.toArray ?? [])
 		}
-		return PersistentVector.createWithSeq(Utils.seq(coll!)) as! LazilyPersistentVector
+		
+		if coll.count <= 32 {
+			return LazilyPersistentVector.createOwning(collec?.toArray ?? [])
+		}
+		return PersistentVector.createWithSeq(Utils.seq(coll))
 	}
 }

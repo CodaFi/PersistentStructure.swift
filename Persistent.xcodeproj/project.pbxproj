@@ -12,6 +12,10 @@
 		822B2A9E1BFEB03800146A7F /* AbstractPersistentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9D1BFEB03800146A7F /* AbstractPersistentMap.swift */; };
 		822B2AA01BFEB47300146A7F /* Seq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9F1BFEB47300146A7F /* Seq.swift */; };
 		822F358A1C2D233A00E1D42E /* ValSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F35891C2D233A00E1D42E /* ValSeq.swift */; };
+		822F358E1C2D31E000E1D42E /* EmptySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F358D1C2D31E000E1D42E /* EmptySeq.swift */; };
+		8230B0071C2D6CD40068D04B /* Clojure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0061C2D6CD40068D04B /* Clojure.swift */; };
+		8230B00A1C2DBC9F0068D04B /* murmur3.c in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0081C2DBC9F0068D04B /* murmur3.c */; };
+		8230B00B1C2DBC9F0068D04B /* murmur3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8230B0091C2DBC9F0068D04B /* murmur3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		829C0ADF1C2B180600AA3331 /* PersistentHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */; };
 		829C0AE11C2B182600AA3331 /* TransientHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE01C2B182600AA3331 /* TransientHashSet.swift */; };
 		829C0AE31C2B185800AA3331 /* PersistentTreeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */; };
@@ -19,7 +23,6 @@
 		829C0AE71C2B1D4F00AA3331 /* Murmur3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */; };
 		82A667311BF9166400EBCDFA /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82A667301BF9166400EBCDFA /* Persistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82A667381BF9166400EBCDFA /* Persistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A6672D1BF9166400EBCDFA /* Persistent.framework */; };
-		82A6673D1BF9166400EBCDFA /* PersistentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6673C1BF9166400EBCDFA /* PersistentTests.swift */; };
 		82A6674A1BF91C0100EBCDFA /* IAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667491BF91C0100EBCDFA /* IAssociative.swift */; };
 		82A6674C1BF91C4E00EBCDFA /* IChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674B1BF91C4E00EBCDFA /* IChunk.swift */; };
 		82A6674E1BF91CD900EBCDFA /* IChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674D1BF91CD900EBCDFA /* IChunkedSeq.swift */; };
@@ -60,6 +63,278 @@
 		82A667971BF925BF00EBCDFA /* AbstractSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667961BF925BF00EBCDFA /* AbstractSeq.swift */; };
 		82A667991BF9262900EBCDFA /* SeqIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667981BF9262900EBCDFA /* SeqIterator.swift */; };
 		82A6679D1BF9281A00EBCDFA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6679C1BF9281A00EBCDFA /* Utils.swift */; };
+		82A71E511C54222B003F7B96 /* Persistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A71E471C54222B003F7B96 /* Persistent.framework */; };
+		82A71E5E1C542274003F7B96 /* IAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667491BF91C0100EBCDFA /* IAssociative.swift */; };
+		82A71E5F1C542274003F7B96 /* IChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674B1BF91C4E00EBCDFA /* IChunk.swift */; };
+		82A71E601C542274003F7B96 /* IChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674D1BF91CD900EBCDFA /* IChunkedSeq.swift */; };
+		82A71E611C542274003F7B96 /* ICollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674F1BF91D0500EBCDFA /* ICollection.swift */; };
+		82A71E621C542274003F7B96 /* ICounted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667531BF91DA200EBCDFA /* ICounted.swift */; };
+		82A71E631C542274003F7B96 /* IDeref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DB1C2B2F7A00064CB7 /* IDeref.swift */; };
+		82A71E641C542274003F7B96 /* IEditableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667551BF91DC700EBCDFA /* IEditableCollection.swift */; };
+		82A71E651C542274003F7B96 /* IHashEq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667571BF91DF600EBCDFA /* IHashEq.swift */; };
+		82A71E661C542274003F7B96 /* IIndexed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667591BF91E0C00EBCDFA /* IIndexed.swift */; };
+		82A71E671C542274003F7B96 /* IIndexedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675B1BF91E3A00EBCDFA /* IIndexedSeq.swift */; };
+		82A71E681C542274003F7B96 /* IList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675D1BF91F0100EBCDFA /* IList.swift */; };
+		82A71E691C542274003F7B96 /* ILookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675F1BF91F4100EBCDFA /* ILookup.swift */; };
+		82A71E6A1C542274003F7B96 /* IMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667611BF91F6100EBCDFA /* IMap.swift */; };
+		82A71E6B1C542274003F7B96 /* IMapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667631BF91FBF00EBCDFA /* IMapEntry.swift */; };
+		82A71E6C1C542274003F7B96 /* IMapEquivalence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667651BF91FF100EBCDFA /* IMapEquivalence.swift */; };
+		82A71E6D1C542274003F7B96 /* IMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667671BF9200C00EBCDFA /* IMeta.swift */; };
+		82A71E6E1C542274003F7B96 /* INode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667691BF9202500EBCDFA /* INode.swift */; };
+		82A71E6F1C542274003F7B96 /* IObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676B1BF9216D00EBCDFA /* IObj.swift */; };
+		82A71E701C542274003F7B96 /* IPending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676D1BF9218200EBCDFA /* IPending.swift */; };
+		82A71E711C542274003F7B96 /* IPersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676F1BF921A800EBCDFA /* IPersistentCollection.swift */; };
+		82A71E721C542274003F7B96 /* IPersistentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667711BF921E700EBCDFA /* IPersistentList.swift */; };
+		82A71E731C542274003F7B96 /* IPersistentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667731BF9220200EBCDFA /* IPersistentMap.swift */; };
+		82A71E741C542274003F7B96 /* IPersistentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667751BF9226200EBCDFA /* IPersistentSet.swift */; };
+		82A71E751C542274003F7B96 /* IPersistentStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667771BF9228F00EBCDFA /* IPersistentStack.swift */; };
+		82A71E761C542274003F7B96 /* IPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667791BF922B100EBCDFA /* IPersistentVector.swift */; };
+		82A71E771C542274003F7B96 /* IRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677B1BF922E600EBCDFA /* IRandom.swift */; };
+		82A71E781C542274003F7B96 /* IReducible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677D1BF922F800EBCDFA /* IReducible.swift */; };
+		82A71E791C542274003F7B96 /* IReversible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677F1BF9232E00EBCDFA /* IReversible.swift */; };
+		82A71E7A1C542274003F7B96 /* ISeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667811BF9233E00EBCDFA /* ISeq.swift */; };
+		82A71E7B1C542274003F7B96 /* ISeqable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667831BF9236900EBCDFA /* ISeqable.swift */; };
+		82A71E7C1C542274003F7B96 /* ISequential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667851BF9237E00EBCDFA /* ISequential.swift */; };
+		82A71E7D1C542274003F7B96 /* ISet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667871BF9238D00EBCDFA /* ISet.swift */; };
+		82A71E7E1C542274003F7B96 /* ISorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667891BF9239900EBCDFA /* ISorted.swift */; };
+		82A71E7F1C542274003F7B96 /* ITransientAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678B1BF9247700EBCDFA /* ITransientAssociative.swift */; };
+		82A71E801C542274003F7B96 /* ITransientCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678D1BF9249C00EBCDFA /* ITransientCollection.swift */; };
+		82A71E811C542274003F7B96 /* ITransientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678F1BF924C400EBCDFA /* ITransientMap.swift */; };
+		82A71E821C542274003F7B96 /* ITransientVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667911BF9251500EBCDFA /* ITransientVector.swift */; };
+		82A71E831C542274003F7B96 /* ITransientSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667931BF9254800EBCDFA /* ITransientSet.swift */; };
+		82A71E841C542274003F7B96 /* TransientVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF51C29D85A00D4677B /* TransientVector.swift */; };
+		82A71E851C542274003F7B96 /* PersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */; };
+		82A71E861C542274003F7B96 /* LazilyPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD681C2A0146006BA8F5 /* LazilyPersistentVector.swift */; };
+		82A71E871C542274003F7B96 /* PersistentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6A1C2A01F2006BA8F5 /* PersistentList.swift */; };
+		82A71E881C542274003F7B96 /* TransientArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */; };
+		82A71E891C542274003F7B96 /* PersistentArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */; };
+		82A71E8A1C542274003F7B96 /* TransientHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */; };
+		82A71E8B1C542274003F7B96 /* PersistentHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */; };
+		82A71E8C1C542274003F7B96 /* PersistentHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */; };
+		82A71E8D1C542274003F7B96 /* TransientHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE01C2B182600AA3331 /* TransientHashSet.swift */; };
+		82A71E8E1C542274003F7B96 /* PersistentTreeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */; };
+		82A71E8F1C542274003F7B96 /* PersistentTreeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E51C2B522700064CB7 /* PersistentTreeMap.swift */; };
+		82A71E901C542274003F7B96 /* SortedTreeSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E71C2D0F9000064CB7 /* SortedTreeSeq.swift */; };
+		82A71E911C542274003F7B96 /* PersistentQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE41C2B187800AA3331 /* PersistentQueue.swift */; };
+		82A71E921C542274003F7B96 /* SubVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E31C2B4C5100064CB7 /* SubVector.swift */; };
+		82A71E931C542274003F7B96 /* AbstractCons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A991BFEAE2900146A7F /* AbstractCons.swift */; };
+		82A71E941C542274003F7B96 /* AbstractMapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE01C2939DD00D4677B /* AbstractMapEntry.swift */; };
+		82A71E951C542274003F7B96 /* AbstractPersistentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9D1BFEB03800146A7F /* AbstractPersistentMap.swift */; };
+		82A71E961C542274003F7B96 /* AbstractPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADE1C29391800D4677B /* AbstractPersistentVector.swift */; };
+		82A71E971C542274003F7B96 /* AbstractSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667961BF925BF00EBCDFA /* AbstractSeq.swift */; };
+		82A71E981C542274003F7B96 /* AbstractTransientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9B1BFEAF5D00146A7F /* AbstractTransientMap.swift */; };
+		82A71E991C542274003F7B96 /* AbstractTransientSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE61C293F0400D4677B /* AbstractTransientSet.swift */; };
+		82A71E9A1C542274003F7B96 /* AbstractPersistentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE91C293FD400D4677B /* AbstractPersistentSet.swift */; };
+		82A71E9B1C542274003F7B96 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AEB1C29411A00D4677B /* TreeNode.swift */; };
+		82A71E9C1C542274003F7B96 /* ArrayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AED1C29D24800D4677B /* ArrayNode.swift */; };
+		82A71E9D1C542274003F7B96 /* BitmapIndexedNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AEF1C29D4D800D4677B /* BitmapIndexedNode.swift */; };
+		82A71E9E1C542274003F7B96 /* HashCollisionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF11C29D78B00D4677B /* HashCollisionNode.swift */; };
+		82A71E9F1C542274003F7B96 /* Seq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9F1BFEB47300146A7F /* Seq.swift */; };
+		82A71EA01C542274003F7B96 /* EmptySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F358D1C2D31E000E1D42E /* EmptySeq.swift */; };
+		82A71EA11C542274003F7B96 /* ValSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F35891C2D233A00E1D42E /* ValSeq.swift */; };
+		82A71EA21C542274003F7B96 /* NodeSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFF1C29F83200D4677B /* NodeSeq.swift */; };
+		82A71EA31C542274003F7B96 /* ChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */; };
+		82A71EA41C542274003F7B96 /* StringSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD621C29FB0C006BA8F5 /* StringSeq.swift */; };
+		82A71EA51C542274003F7B96 /* KeySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD61C29375900D4677B /* KeySeq.swift */; };
+		82A71EA61C542274003F7B96 /* VecSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE21C293A9600D4677B /* VecSeq.swift */; };
+		82A71EA71C542274003F7B96 /* LazySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF81C29EC3400D4677B /* LazySeq.swift */; };
+		82A71EA81C542274003F7B96 /* RVecSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE41C293C0B00D4677B /* RVecSeq.swift */; };
+		82A71EA91C542274003F7B96 /* QueueSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6C1C2A03DF006BA8F5 /* QueueSeq.swift */; };
+		82A71EAA1C542274003F7B96 /* SeqIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667981BF9262900EBCDFA /* SeqIterator.swift */; };
+		82A71EAB1C542274003F7B96 /* VectorListIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFB1C29F2AB00D4677B /* VectorListIterator.swift */; };
+		82A71EAC1C542274003F7B96 /* PersistentVectorIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFD1C29F2C600D4677B /* PersistentVectorIterator.swift */; };
+		82A71EAD1C542274003F7B96 /* MapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD81C29387E00D4677B /* MapEntry.swift */; };
+		82A71EAE1C542274003F7B96 /* Clojure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0061C2D6CD40068D04B /* Clojure.swift */; };
+		82A71EAF1C542274003F7B96 /* ArrayChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DD1C2B452700064CB7 /* ArrayChunk.swift */; };
+		82A71EB01C542274003F7B96 /* Murmur3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */; };
+		82A71EB11C542274003F7B96 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADA1C2938A700D4677B /* Node.swift */; };
+		82A71EB21C542274003F7B96 /* Obj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADC1C2938E000D4677B /* Obj.swift */; };
+		82A71EB31C542274003F7B96 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6679C1BF9281A00EBCDFA /* Utils.swift */; };
+		82A71EB41C542274003F7B96 /* Reduced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DF1C2B4C0500064CB7 /* Reduced.swift */; };
+		82A71EB51C54227C003F7B96 /* murmur3.c in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0081C2DBC9F0068D04B /* murmur3.c */; };
+		82A71EB61C542281003F7B96 /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82A667301BF9166400EBCDFA /* Persistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82A71EB71C5422DD003F7B96 /* murmur3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8230B0091C2DBC9F0068D04B /* murmur3.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82A71EE31C54236E003F7B96 /* Persistent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A71ED91C54236D003F7B96 /* Persistent.framework */; };
+		82A71EF01C542397003F7B96 /* IAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667491BF91C0100EBCDFA /* IAssociative.swift */; };
+		82A71EF11C542397003F7B96 /* IChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674B1BF91C4E00EBCDFA /* IChunk.swift */; };
+		82A71EF21C542397003F7B96 /* IChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674D1BF91CD900EBCDFA /* IChunkedSeq.swift */; };
+		82A71EF31C542397003F7B96 /* ICollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674F1BF91D0500EBCDFA /* ICollection.swift */; };
+		82A71EF41C542397003F7B96 /* ICounted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667531BF91DA200EBCDFA /* ICounted.swift */; };
+		82A71EF51C542397003F7B96 /* IDeref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DB1C2B2F7A00064CB7 /* IDeref.swift */; };
+		82A71EF61C542397003F7B96 /* IEditableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667551BF91DC700EBCDFA /* IEditableCollection.swift */; };
+		82A71EF71C542397003F7B96 /* IHashEq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667571BF91DF600EBCDFA /* IHashEq.swift */; };
+		82A71EF81C542397003F7B96 /* IIndexed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667591BF91E0C00EBCDFA /* IIndexed.swift */; };
+		82A71EF91C542397003F7B96 /* IIndexedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675B1BF91E3A00EBCDFA /* IIndexedSeq.swift */; };
+		82A71EFA1C542397003F7B96 /* IList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675D1BF91F0100EBCDFA /* IList.swift */; };
+		82A71EFB1C542397003F7B96 /* ILookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675F1BF91F4100EBCDFA /* ILookup.swift */; };
+		82A71EFC1C542397003F7B96 /* IMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667611BF91F6100EBCDFA /* IMap.swift */; };
+		82A71EFD1C542397003F7B96 /* IMapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667631BF91FBF00EBCDFA /* IMapEntry.swift */; };
+		82A71EFE1C542397003F7B96 /* IMapEquivalence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667651BF91FF100EBCDFA /* IMapEquivalence.swift */; };
+		82A71EFF1C542397003F7B96 /* IMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667671BF9200C00EBCDFA /* IMeta.swift */; };
+		82A71F001C542397003F7B96 /* INode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667691BF9202500EBCDFA /* INode.swift */; };
+		82A71F011C542397003F7B96 /* IObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676B1BF9216D00EBCDFA /* IObj.swift */; };
+		82A71F021C542397003F7B96 /* IPending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676D1BF9218200EBCDFA /* IPending.swift */; };
+		82A71F031C542397003F7B96 /* IPersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676F1BF921A800EBCDFA /* IPersistentCollection.swift */; };
+		82A71F041C542397003F7B96 /* IPersistentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667711BF921E700EBCDFA /* IPersistentList.swift */; };
+		82A71F051C542397003F7B96 /* IPersistentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667731BF9220200EBCDFA /* IPersistentMap.swift */; };
+		82A71F061C542397003F7B96 /* IPersistentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667751BF9226200EBCDFA /* IPersistentSet.swift */; };
+		82A71F071C542397003F7B96 /* IPersistentStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667771BF9228F00EBCDFA /* IPersistentStack.swift */; };
+		82A71F081C542397003F7B96 /* IPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667791BF922B100EBCDFA /* IPersistentVector.swift */; };
+		82A71F091C542398003F7B96 /* IRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677B1BF922E600EBCDFA /* IRandom.swift */; };
+		82A71F0A1C542398003F7B96 /* IReducible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677D1BF922F800EBCDFA /* IReducible.swift */; };
+		82A71F0B1C542398003F7B96 /* IReversible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677F1BF9232E00EBCDFA /* IReversible.swift */; };
+		82A71F0C1C542398003F7B96 /* ISeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667811BF9233E00EBCDFA /* ISeq.swift */; };
+		82A71F0D1C542398003F7B96 /* ISeqable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667831BF9236900EBCDFA /* ISeqable.swift */; };
+		82A71F0E1C542398003F7B96 /* ISequential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667851BF9237E00EBCDFA /* ISequential.swift */; };
+		82A71F0F1C542398003F7B96 /* ISet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667871BF9238D00EBCDFA /* ISet.swift */; };
+		82A71F101C542398003F7B96 /* ISorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667891BF9239900EBCDFA /* ISorted.swift */; };
+		82A71F111C542398003F7B96 /* ITransientAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678B1BF9247700EBCDFA /* ITransientAssociative.swift */; };
+		82A71F121C542398003F7B96 /* ITransientCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678D1BF9249C00EBCDFA /* ITransientCollection.swift */; };
+		82A71F131C542398003F7B96 /* ITransientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678F1BF924C400EBCDFA /* ITransientMap.swift */; };
+		82A71F141C542398003F7B96 /* ITransientVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667911BF9251500EBCDFA /* ITransientVector.swift */; };
+		82A71F151C542398003F7B96 /* ITransientSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667931BF9254800EBCDFA /* ITransientSet.swift */; };
+		82A71F161C542398003F7B96 /* TransientVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF51C29D85A00D4677B /* TransientVector.swift */; };
+		82A71F171C542398003F7B96 /* PersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */; };
+		82A71F181C542398003F7B96 /* LazilyPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD681C2A0146006BA8F5 /* LazilyPersistentVector.swift */; };
+		82A71F191C542398003F7B96 /* PersistentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6A1C2A01F2006BA8F5 /* PersistentList.swift */; };
+		82A71F1A1C542398003F7B96 /* TransientArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */; };
+		82A71F1B1C542398003F7B96 /* PersistentArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */; };
+		82A71F1C1C542398003F7B96 /* TransientHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */; };
+		82A71F1D1C542398003F7B96 /* PersistentHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */; };
+		82A71F1E1C542398003F7B96 /* PersistentHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */; };
+		82A71F1F1C542398003F7B96 /* TransientHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE01C2B182600AA3331 /* TransientHashSet.swift */; };
+		82A71F201C542398003F7B96 /* PersistentTreeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */; };
+		82A71F211C542398003F7B96 /* PersistentTreeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E51C2B522700064CB7 /* PersistentTreeMap.swift */; };
+		82A71F221C542398003F7B96 /* SortedTreeSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E71C2D0F9000064CB7 /* SortedTreeSeq.swift */; };
+		82A71F231C542398003F7B96 /* PersistentQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE41C2B187800AA3331 /* PersistentQueue.swift */; };
+		82A71F241C542398003F7B96 /* SubVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E31C2B4C5100064CB7 /* SubVector.swift */; };
+		82A71F251C542398003F7B96 /* AbstractCons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A991BFEAE2900146A7F /* AbstractCons.swift */; };
+		82A71F261C542398003F7B96 /* AbstractMapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE01C2939DD00D4677B /* AbstractMapEntry.swift */; };
+		82A71F271C542398003F7B96 /* AbstractPersistentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9D1BFEB03800146A7F /* AbstractPersistentMap.swift */; };
+		82A71F281C542398003F7B96 /* AbstractPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADE1C29391800D4677B /* AbstractPersistentVector.swift */; };
+		82A71F291C542398003F7B96 /* AbstractSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667961BF925BF00EBCDFA /* AbstractSeq.swift */; };
+		82A71F2A1C542398003F7B96 /* AbstractTransientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9B1BFEAF5D00146A7F /* AbstractTransientMap.swift */; };
+		82A71F2B1C542398003F7B96 /* AbstractTransientSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE61C293F0400D4677B /* AbstractTransientSet.swift */; };
+		82A71F2C1C542398003F7B96 /* AbstractPersistentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE91C293FD400D4677B /* AbstractPersistentSet.swift */; };
+		82A71F2D1C542398003F7B96 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AEB1C29411A00D4677B /* TreeNode.swift */; };
+		82A71F2E1C542398003F7B96 /* ArrayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AED1C29D24800D4677B /* ArrayNode.swift */; };
+		82A71F2F1C542398003F7B96 /* BitmapIndexedNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AEF1C29D4D800D4677B /* BitmapIndexedNode.swift */; };
+		82A71F301C542398003F7B96 /* HashCollisionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF11C29D78B00D4677B /* HashCollisionNode.swift */; };
+		82A71F311C542398003F7B96 /* Seq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9F1BFEB47300146A7F /* Seq.swift */; };
+		82A71F321C542398003F7B96 /* EmptySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F358D1C2D31E000E1D42E /* EmptySeq.swift */; };
+		82A71F331C542398003F7B96 /* ValSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F35891C2D233A00E1D42E /* ValSeq.swift */; };
+		82A71F341C542398003F7B96 /* NodeSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFF1C29F83200D4677B /* NodeSeq.swift */; };
+		82A71F351C542398003F7B96 /* ChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */; };
+		82A71F361C542398003F7B96 /* StringSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD621C29FB0C006BA8F5 /* StringSeq.swift */; };
+		82A71F371C542398003F7B96 /* KeySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD61C29375900D4677B /* KeySeq.swift */; };
+		82A71F381C542398003F7B96 /* VecSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE21C293A9600D4677B /* VecSeq.swift */; };
+		82A71F391C542398003F7B96 /* LazySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF81C29EC3400D4677B /* LazySeq.swift */; };
+		82A71F3A1C542398003F7B96 /* RVecSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE41C293C0B00D4677B /* RVecSeq.swift */; };
+		82A71F3B1C542398003F7B96 /* QueueSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6C1C2A03DF006BA8F5 /* QueueSeq.swift */; };
+		82A71F3C1C542398003F7B96 /* SeqIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667981BF9262900EBCDFA /* SeqIterator.swift */; };
+		82A71F3D1C542398003F7B96 /* VectorListIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFB1C29F2AB00D4677B /* VectorListIterator.swift */; };
+		82A71F3E1C542398003F7B96 /* PersistentVectorIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFD1C29F2C600D4677B /* PersistentVectorIterator.swift */; };
+		82A71F3F1C542398003F7B96 /* MapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD81C29387E00D4677B /* MapEntry.swift */; };
+		82A71F401C542398003F7B96 /* Clojure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0061C2D6CD40068D04B /* Clojure.swift */; };
+		82A71F411C542398003F7B96 /* ArrayChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DD1C2B452700064CB7 /* ArrayChunk.swift */; };
+		82A71F421C542398003F7B96 /* Murmur3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */; };
+		82A71F431C542398003F7B96 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADA1C2938A700D4677B /* Node.swift */; };
+		82A71F441C542398003F7B96 /* Obj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADC1C2938E000D4677B /* Obj.swift */; };
+		82A71F451C542398003F7B96 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6679C1BF9281A00EBCDFA /* Utils.swift */; };
+		82A71F461C542398003F7B96 /* Reduced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DF1C2B4C0500064CB7 /* Reduced.swift */; };
+		82A71F471C54239D003F7B96 /* murmur3.c in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0081C2DBC9F0068D04B /* murmur3.c */; };
+		82A71F481C5423A2003F7B96 /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82A667301BF9166400EBCDFA /* Persistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82A71F491C5423A2003F7B96 /* murmur3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8230B0091C2DBC9F0068D04B /* murmur3.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82A71F571C5423CD003F7B96 /* IAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667491BF91C0100EBCDFA /* IAssociative.swift */; };
+		82A71F581C5423CD003F7B96 /* IChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674B1BF91C4E00EBCDFA /* IChunk.swift */; };
+		82A71F591C5423CD003F7B96 /* IChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674D1BF91CD900EBCDFA /* IChunkedSeq.swift */; };
+		82A71F5A1C5423CD003F7B96 /* ICollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6674F1BF91D0500EBCDFA /* ICollection.swift */; };
+		82A71F5B1C5423CD003F7B96 /* ICounted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667531BF91DA200EBCDFA /* ICounted.swift */; };
+		82A71F5C1C5423CD003F7B96 /* IDeref.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DB1C2B2F7A00064CB7 /* IDeref.swift */; };
+		82A71F5D1C5423CD003F7B96 /* IEditableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667551BF91DC700EBCDFA /* IEditableCollection.swift */; };
+		82A71F5E1C5423CD003F7B96 /* IHashEq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667571BF91DF600EBCDFA /* IHashEq.swift */; };
+		82A71F5F1C5423CD003F7B96 /* IIndexed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667591BF91E0C00EBCDFA /* IIndexed.swift */; };
+		82A71F601C5423CD003F7B96 /* IIndexedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675B1BF91E3A00EBCDFA /* IIndexedSeq.swift */; };
+		82A71F611C5423CD003F7B96 /* IList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675D1BF91F0100EBCDFA /* IList.swift */; };
+		82A71F621C5423CD003F7B96 /* ILookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6675F1BF91F4100EBCDFA /* ILookup.swift */; };
+		82A71F631C5423CD003F7B96 /* IMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667611BF91F6100EBCDFA /* IMap.swift */; };
+		82A71F641C5423CD003F7B96 /* IMapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667631BF91FBF00EBCDFA /* IMapEntry.swift */; };
+		82A71F651C5423CD003F7B96 /* IMapEquivalence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667651BF91FF100EBCDFA /* IMapEquivalence.swift */; };
+		82A71F661C5423CD003F7B96 /* IMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667671BF9200C00EBCDFA /* IMeta.swift */; };
+		82A71F671C5423CD003F7B96 /* INode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667691BF9202500EBCDFA /* INode.swift */; };
+		82A71F681C5423CD003F7B96 /* IObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676B1BF9216D00EBCDFA /* IObj.swift */; };
+		82A71F691C5423CD003F7B96 /* IPending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676D1BF9218200EBCDFA /* IPending.swift */; };
+		82A71F6A1C5423CD003F7B96 /* IPersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6676F1BF921A800EBCDFA /* IPersistentCollection.swift */; };
+		82A71F6B1C5423CD003F7B96 /* IPersistentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667711BF921E700EBCDFA /* IPersistentList.swift */; };
+		82A71F6C1C5423CD003F7B96 /* IPersistentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667731BF9220200EBCDFA /* IPersistentMap.swift */; };
+		82A71F6D1C5423CD003F7B96 /* IPersistentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667751BF9226200EBCDFA /* IPersistentSet.swift */; };
+		82A71F6E1C5423CD003F7B96 /* IPersistentStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667771BF9228F00EBCDFA /* IPersistentStack.swift */; };
+		82A71F6F1C5423CD003F7B96 /* IPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667791BF922B100EBCDFA /* IPersistentVector.swift */; };
+		82A71F701C5423CD003F7B96 /* IRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677B1BF922E600EBCDFA /* IRandom.swift */; };
+		82A71F711C5423CD003F7B96 /* IReducible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677D1BF922F800EBCDFA /* IReducible.swift */; };
+		82A71F721C5423CD003F7B96 /* IReversible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6677F1BF9232E00EBCDFA /* IReversible.swift */; };
+		82A71F731C5423CD003F7B96 /* ISeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667811BF9233E00EBCDFA /* ISeq.swift */; };
+		82A71F741C5423CD003F7B96 /* ISeqable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667831BF9236900EBCDFA /* ISeqable.swift */; };
+		82A71F751C5423CD003F7B96 /* ISequential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667851BF9237E00EBCDFA /* ISequential.swift */; };
+		82A71F761C5423CD003F7B96 /* ISet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667871BF9238D00EBCDFA /* ISet.swift */; };
+		82A71F771C5423CD003F7B96 /* ISorted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667891BF9239900EBCDFA /* ISorted.swift */; };
+		82A71F781C5423CD003F7B96 /* ITransientAssociative.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678B1BF9247700EBCDFA /* ITransientAssociative.swift */; };
+		82A71F791C5423CD003F7B96 /* ITransientCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678D1BF9249C00EBCDFA /* ITransientCollection.swift */; };
+		82A71F7A1C5423CD003F7B96 /* ITransientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6678F1BF924C400EBCDFA /* ITransientMap.swift */; };
+		82A71F7B1C5423CD003F7B96 /* ITransientVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667911BF9251500EBCDFA /* ITransientVector.swift */; };
+		82A71F7C1C5423CD003F7B96 /* ITransientSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667931BF9254800EBCDFA /* ITransientSet.swift */; };
+		82A71F7D1C5423CD003F7B96 /* TransientVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF51C29D85A00D4677B /* TransientVector.swift */; };
+		82A71F7E1C5423CD003F7B96 /* PersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */; };
+		82A71F7F1C5423CD003F7B96 /* LazilyPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD681C2A0146006BA8F5 /* LazilyPersistentVector.swift */; };
+		82A71F801C5423CD003F7B96 /* PersistentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6A1C2A01F2006BA8F5 /* PersistentList.swift */; };
+		82A71F811C5423CD003F7B96 /* TransientArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */; };
+		82A71F821C5423CD003F7B96 /* PersistentArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */; };
+		82A71F831C5423CD003F7B96 /* TransientHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */; };
+		82A71F841C5423CD003F7B96 /* PersistentHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */; };
+		82A71F851C5423CD003F7B96 /* PersistentHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */; };
+		82A71F861C5423CD003F7B96 /* TransientHashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE01C2B182600AA3331 /* TransientHashSet.swift */; };
+		82A71F871C5423CD003F7B96 /* PersistentTreeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */; };
+		82A71F881C5423CD003F7B96 /* PersistentTreeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E51C2B522700064CB7 /* PersistentTreeMap.swift */; };
+		82A71F891C5423CD003F7B96 /* SortedTreeSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E71C2D0F9000064CB7 /* SortedTreeSeq.swift */; };
+		82A71F8A1C5423CD003F7B96 /* PersistentQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE41C2B187800AA3331 /* PersistentQueue.swift */; };
+		82A71F8B1C5423CD003F7B96 /* SubVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94E31C2B4C5100064CB7 /* SubVector.swift */; };
+		82A71F8C1C5423CD003F7B96 /* AbstractCons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A991BFEAE2900146A7F /* AbstractCons.swift */; };
+		82A71F8D1C5423CD003F7B96 /* AbstractMapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE01C2939DD00D4677B /* AbstractMapEntry.swift */; };
+		82A71F8E1C5423CD003F7B96 /* AbstractPersistentMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9D1BFEB03800146A7F /* AbstractPersistentMap.swift */; };
+		82A71F8F1C5423CD003F7B96 /* AbstractPersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADE1C29391800D4677B /* AbstractPersistentVector.swift */; };
+		82A71F901C5423CD003F7B96 /* AbstractSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667961BF925BF00EBCDFA /* AbstractSeq.swift */; };
+		82A71F911C5423CD003F7B96 /* AbstractTransientMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9B1BFEAF5D00146A7F /* AbstractTransientMap.swift */; };
+		82A71F921C5423CD003F7B96 /* AbstractTransientSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE61C293F0400D4677B /* AbstractTransientSet.swift */; };
+		82A71F931C5423CD003F7B96 /* AbstractPersistentSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE91C293FD400D4677B /* AbstractPersistentSet.swift */; };
+		82A71F941C5423CD003F7B96 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AEB1C29411A00D4677B /* TreeNode.swift */; };
+		82A71F951C5423CD003F7B96 /* ArrayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AED1C29D24800D4677B /* ArrayNode.swift */; };
+		82A71F961C5423CD003F7B96 /* BitmapIndexedNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AEF1C29D4D800D4677B /* BitmapIndexedNode.swift */; };
+		82A71F971C5423CD003F7B96 /* HashCollisionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF11C29D78B00D4677B /* HashCollisionNode.swift */; };
+		82A71F981C5423CD003F7B96 /* Seq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822B2A9F1BFEB47300146A7F /* Seq.swift */; };
+		82A71F991C5423CD003F7B96 /* EmptySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F358D1C2D31E000E1D42E /* EmptySeq.swift */; };
+		82A71F9A1C5423CD003F7B96 /* ValSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822F35891C2D233A00E1D42E /* ValSeq.swift */; };
+		82A71F9B1C5423CD003F7B96 /* NodeSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFF1C29F83200D4677B /* NodeSeq.swift */; };
+		82A71F9C1C5423CD003F7B96 /* ChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */; };
+		82A71F9D1C5423CD003F7B96 /* StringSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD621C29FB0C006BA8F5 /* StringSeq.swift */; };
+		82A71F9E1C5423CD003F7B96 /* KeySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD61C29375900D4677B /* KeySeq.swift */; };
+		82A71F9F1C5423CD003F7B96 /* VecSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE21C293A9600D4677B /* VecSeq.swift */; };
+		82A71FA01C5423CD003F7B96 /* LazySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AF81C29EC3400D4677B /* LazySeq.swift */; };
+		82A71FA11C5423CD003F7B96 /* RVecSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AE41C293C0B00D4677B /* RVecSeq.swift */; };
+		82A71FA21C5423CD003F7B96 /* QueueSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6C1C2A03DF006BA8F5 /* QueueSeq.swift */; };
+		82A71FA31C5423CD003F7B96 /* SeqIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A667981BF9262900EBCDFA /* SeqIterator.swift */; };
+		82A71FA41C5423CE003F7B96 /* VectorListIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFB1C29F2AB00D4677B /* VectorListIterator.swift */; };
+		82A71FA51C5423CE003F7B96 /* PersistentVectorIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AFD1C29F2C600D4677B /* PersistentVectorIterator.swift */; };
+		82A71FA61C5423CE003F7B96 /* MapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD81C29387E00D4677B /* MapEntry.swift */; };
+		82A71FA71C5423CE003F7B96 /* Clojure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0061C2D6CD40068D04B /* Clojure.swift */; };
+		82A71FA81C5423CE003F7B96 /* ArrayChunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DD1C2B452700064CB7 /* ArrayChunk.swift */; };
+		82A71FA91C5423CE003F7B96 /* Murmur3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */; };
+		82A71FAA1C5423CE003F7B96 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADA1C2938A700D4677B /* Node.swift */; };
+		82A71FAB1C5423CE003F7B96 /* Obj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9ADC1C2938E000D4677B /* Obj.swift */; };
+		82A71FAC1C5423CE003F7B96 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A6679C1BF9281A00EBCDFA /* Utils.swift */; };
+		82A71FAD1C5423CE003F7B96 /* Reduced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DD94DF1C2B4C0500064CB7 /* Reduced.swift */; };
+		82A71FAE1C5423D2003F7B96 /* murmur3.c in Sources */ = {isa = PBXBuildFile; fileRef = 8230B0081C2DBC9F0068D04B /* murmur3.c */; };
+		82A71FAF1C5423DA003F7B96 /* Persistent.h in Headers */ = {isa = PBXBuildFile; fileRef = 82A667301BF9166400EBCDFA /* Persistent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		82A71FB01C5423DA003F7B96 /* murmur3.h in Headers */ = {isa = PBXBuildFile; fileRef = 8230B0091C2DBC9F0068D04B /* murmur3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82BACD631C29FB0C006BA8F5 /* StringSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD621C29FB0C006BA8F5 /* StringSeq.swift */; };
 		82BACD651C29FD2F006BA8F5 /* PersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */; };
 		82BACD671C29FF25006BA8F5 /* ChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */; };
@@ -69,7 +344,6 @@
 		82BACD6F1C2A304B006BA8F5 /* TransientArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */; };
 		82BACD711C2A3159006BA8F5 /* PersistentArrayMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */; };
 		82BACD731C2A3396006BA8F5 /* TransientHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */; };
-		82BACD751C2A33F0006BA8F5 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD741C2A33F0006BA8F5 /* Box.swift */; };
 		82BACD771C2A3469006BA8F5 /* PersistentHashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */; };
 		82CF9AD71C29375900D4677B /* KeySeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD61C29375900D4677B /* KeySeq.swift */; };
 		82CF9AD91C29387E00D4677B /* MapEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF9AD81C29387E00D4677B /* MapEntry.swift */; };
@@ -106,6 +380,20 @@
 			remoteGlobalIDString = 82A6672C1BF9166400EBCDFA;
 			remoteInfo = Persistent;
 		};
+		82A71E521C54222B003F7B96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82A667241BF9166400EBCDFA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82A71E461C54222B003F7B96;
+			remoteInfo = "Persistent-iOS";
+		};
+		82A71EE41C54236E003F7B96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 82A667241BF9166400EBCDFA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82A71ED81C54236D003F7B96;
+			remoteInfo = "Persistent-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +402,10 @@
 		822B2A9D1BFEB03800146A7F /* AbstractPersistentMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractPersistentMap.swift; sourceTree = "<group>"; };
 		822B2A9F1BFEB47300146A7F /* Seq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seq.swift; sourceTree = "<group>"; };
 		822F35891C2D233A00E1D42E /* ValSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValSeq.swift; sourceTree = "<group>"; };
+		822F358D1C2D31E000E1D42E /* EmptySeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySeq.swift; sourceTree = "<group>"; };
+		8230B0061C2D6CD40068D04B /* Clojure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clojure.swift; sourceTree = "<group>"; };
+		8230B0081C2DBC9F0068D04B /* murmur3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = murmur3.c; sourceTree = "<group>"; };
+		8230B0091C2DBC9F0068D04B /* murmur3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = murmur3.h; sourceTree = "<group>"; };
 		829C0ADE1C2B180600AA3331 /* PersistentHashSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentHashSet.swift; sourceTree = "<group>"; };
 		829C0AE01C2B182600AA3331 /* TransientHashSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientHashSet.swift; sourceTree = "<group>"; };
 		829C0AE21C2B185800AA3331 /* PersistentTreeSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentTreeSet.swift; sourceTree = "<group>"; };
@@ -123,7 +415,6 @@
 		82A667301BF9166400EBCDFA /* Persistent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Persistent.h; path = Persistent/Persistent.h; sourceTree = "<group>"; };
 		82A667321BF9166400EBCDFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82A667371BF9166400EBCDFA /* PersistentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersistentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		82A6673C1BF9166400EBCDFA /* PersistentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentTests.swift; sourceTree = "<group>"; };
 		82A6673E1BF9166400EBCDFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82A667491BF91C0100EBCDFA /* IAssociative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAssociative.swift; sourceTree = "<group>"; };
 		82A6674B1BF91C4E00EBCDFA /* IChunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IChunk.swift; sourceTree = "<group>"; };
@@ -165,6 +456,11 @@
 		82A667961BF925BF00EBCDFA /* AbstractSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractSeq.swift; sourceTree = "<group>"; };
 		82A667981BF9262900EBCDFA /* SeqIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeqIterator.swift; sourceTree = "<group>"; };
 		82A6679C1BF9281A00EBCDFA /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		82A71E471C54222B003F7B96 /* Persistent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Persistent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82A71E501C54222B003F7B96 /* Persistent-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Persistent-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		82A71ED91C54236D003F7B96 /* Persistent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Persistent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82A71EE21C54236D003F7B96 /* Persistent-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Persistent-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		82A71F4F1C5423B5003F7B96 /* Persistent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Persistent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82BACD621C29FB0C006BA8F5 /* StringSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringSeq.swift; sourceTree = "<group>"; };
 		82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentVector.swift; sourceTree = "<group>"; };
 		82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChunkedSeq.swift; sourceTree = "<group>"; };
@@ -174,7 +470,6 @@
 		82BACD6E1C2A304B006BA8F5 /* TransientArrayMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientArrayMap.swift; sourceTree = "<group>"; };
 		82BACD701C2A3159006BA8F5 /* PersistentArrayMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentArrayMap.swift; sourceTree = "<group>"; };
 		82BACD721C2A3396006BA8F5 /* TransientHashMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransientHashMap.swift; sourceTree = "<group>"; };
-		82BACD741C2A33F0006BA8F5 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		82BACD761C2A3469006BA8F5 /* PersistentHashMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentHashMap.swift; sourceTree = "<group>"; };
 		82CF9AD61C29375900D4677B /* KeySeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeySeq.swift; sourceTree = "<group>"; };
 		82CF9AD81C29387E00D4677B /* MapEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapEntry.swift; sourceTree = "<group>"; };
@@ -219,6 +514,43 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82A71E431C54222B003F7B96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71E4D1C54222B003F7B96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71E511C54222B003F7B96 /* Persistent.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71ED51C54236D003F7B96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71EDF1C54236D003F7B96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71EE31C54236E003F7B96 /* Persistent.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71F4B1C5423B5003F7B96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -259,6 +591,11 @@
 			children = (
 				82A6672D1BF9166400EBCDFA /* Persistent.framework */,
 				82A667371BF9166400EBCDFA /* PersistentTests.xctest */,
+				82A71E471C54222B003F7B96 /* Persistent.framework */,
+				82A71E501C54222B003F7B96 /* Persistent-iOSTests.xctest */,
+				82A71ED91C54236D003F7B96 /* Persistent.framework */,
+				82A71EE21C54236D003F7B96 /* Persistent-tvOSTests.xctest */,
+				82A71F4F1C5423B5003F7B96 /* Persistent.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,13 +610,15 @@
 				82CF9AF41C29D84D00D4677B /* Seq */,
 				82CF9AFA1C29F28C00D4677B /* Iterator */,
 				82CF9AD81C29387E00D4677B /* MapEntry.swift */,
+				8230B0061C2D6CD40068D04B /* Clojure.swift */,
 				82DD94DD1C2B452700064CB7 /* ArrayChunk.swift */,
 				829C0AE61C2B1D4F00AA3331 /* Murmur3.swift */,
-				82BACD741C2A33F0006BA8F5 /* Box.swift */,
 				82CF9ADA1C2938A700D4677B /* Node.swift */,
 				82CF9ADC1C2938E000D4677B /* Obj.swift */,
 				82A6679C1BF9281A00EBCDFA /* Utils.swift */,
 				82DD94DF1C2B4C0500064CB7 /* Reduced.swift */,
+				8230B0081C2DBC9F0068D04B /* murmur3.c */,
+				8230B0091C2DBC9F0068D04B /* murmur3.h */,
 				82A667321BF9166400EBCDFA /* Info.plist */,
 			);
 			path = Persistent;
@@ -288,7 +627,6 @@
 		82A6673B1BF9166400EBCDFA /* PersistentTests */ = {
 			isa = PBXGroup;
 			children = (
-				82A6673C1BF9166400EBCDFA /* PersistentTests.swift */,
 				82A6673E1BF9166400EBCDFA /* Info.plist */,
 			);
 			path = PersistentTests;
@@ -368,8 +706,9 @@
 		82CF9AF41C29D84D00D4677B /* Seq */ = {
 			isa = PBXGroup;
 			children = (
-				822F35891C2D233A00E1D42E /* ValSeq.swift */,
 				822B2A9F1BFEB47300146A7F /* Seq.swift */,
+				822F358D1C2D31E000E1D42E /* EmptySeq.swift */,
+				822F35891C2D233A00E1D42E /* ValSeq.swift */,
 				82CF9AFF1C29F83200D4677B /* NodeSeq.swift */,
 				82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */,
 				82BACD621C29FB0C006BA8F5 /* StringSeq.swift */,
@@ -399,7 +738,35 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8230B00B1C2DBC9F0068D04B /* murmur3.h in Headers */,
 				82A667311BF9166400EBCDFA /* Persistent.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71E441C54222B003F7B96 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71EB61C542281003F7B96 /* Persistent.h in Headers */,
+				82A71EB71C5422DD003F7B96 /* murmur3.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71ED61C54236D003F7B96 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71F481C5423A2003F7B96 /* Persistent.h in Headers */,
+				82A71F491C5423A2003F7B96 /* murmur3.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71F4C1C5423B5003F7B96 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71FAF1C5423DA003F7B96 /* Persistent.h in Headers */,
+				82A71FB01C5423DA003F7B96 /* murmur3.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,13 +809,103 @@
 			productReference = 82A667371BF9166400EBCDFA /* PersistentTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		82A71E461C54222B003F7B96 /* Persistent-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82A71E581C54222B003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-iOS" */;
+			buildPhases = (
+				82A71E421C54222B003F7B96 /* Sources */,
+				82A71E431C54222B003F7B96 /* Frameworks */,
+				82A71E441C54222B003F7B96 /* Headers */,
+				82A71E451C54222B003F7B96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Persistent-iOS";
+			productName = "Persistent-iOS";
+			productReference = 82A71E471C54222B003F7B96 /* Persistent.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		82A71E4F1C54222B003F7B96 /* Persistent-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82A71E5B1C54222B003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-iOSTests" */;
+			buildPhases = (
+				82A71E4C1C54222B003F7B96 /* Sources */,
+				82A71E4D1C54222B003F7B96 /* Frameworks */,
+				82A71E4E1C54222B003F7B96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82A71E531C54222B003F7B96 /* PBXTargetDependency */,
+			);
+			name = "Persistent-iOSTests";
+			productName = "Persistent-iOSTests";
+			productReference = 82A71E501C54222B003F7B96 /* Persistent-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		82A71ED81C54236D003F7B96 /* Persistent-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82A71EEA1C54236E003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-tvOS" */;
+			buildPhases = (
+				82A71ED41C54236D003F7B96 /* Sources */,
+				82A71ED51C54236D003F7B96 /* Frameworks */,
+				82A71ED61C54236D003F7B96 /* Headers */,
+				82A71ED71C54236D003F7B96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Persistent-tvOS";
+			productName = "Persistent-tvOS";
+			productReference = 82A71ED91C54236D003F7B96 /* Persistent.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		82A71EE11C54236D003F7B96 /* Persistent-tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82A71EED1C54236E003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-tvOSTests" */;
+			buildPhases = (
+				82A71EDE1C54236D003F7B96 /* Sources */,
+				82A71EDF1C54236D003F7B96 /* Frameworks */,
+				82A71EE01C54236D003F7B96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82A71EE51C54236E003F7B96 /* PBXTargetDependency */,
+			);
+			name = "Persistent-tvOSTests";
+			productName = "Persistent-tvOSTests";
+			productReference = 82A71EE21C54236D003F7B96 /* Persistent-tvOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		82A71F4E1C5423B5003F7B96 /* Persistent-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82A71F541C5423B5003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-watchOS" */;
+			buildPhases = (
+				82A71F4A1C5423B5003F7B96 /* Sources */,
+				82A71F4B1C5423B5003F7B96 /* Frameworks */,
+				82A71F4C1C5423B5003F7B96 /* Headers */,
+				82A71F4D1C5423B5003F7B96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Persistent-watchOS";
+			productName = "Persistent-watchOS";
+			productReference = 82A71F4F1C5423B5003F7B96 /* Persistent.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		82A667241BF9166400EBCDFA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = TypeLift;
 				TargetAttributes = {
@@ -457,6 +914,21 @@
 					};
 					82A667361BF9166400EBCDFA = {
 						CreatedOnToolsVersion = 7.2;
+					};
+					82A71E461C54222B003F7B96 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					82A71E4F1C54222B003F7B96 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					82A71ED81C54236D003F7B96 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					82A71EE11C54236D003F7B96 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					82A71F4E1C5423B5003F7B96 = {
+						CreatedOnToolsVersion = 7.3;
 					};
 				};
 			};
@@ -474,6 +946,11 @@
 			targets = (
 				82A6672C1BF9166400EBCDFA /* Persistent */,
 				82A667361BF9166400EBCDFA /* PersistentTests */,
+				82A71E461C54222B003F7B96 /* Persistent-iOS */,
+				82A71E4F1C54222B003F7B96 /* Persistent-iOSTests */,
+				82A71ED81C54236D003F7B96 /* Persistent-tvOS */,
+				82A71EE11C54236D003F7B96 /* Persistent-tvOSTests */,
+				82A71F4E1C5423B5003F7B96 /* Persistent-watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -493,6 +970,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82A71E451C54222B003F7B96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71E4E1C54222B003F7B96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71ED71C54236D003F7B96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71EE01C54236D003F7B96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71F4D1C5423B5003F7B96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -501,7 +1013,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82A667741BF9220200EBCDFA /* IPersistentMap.swift in Sources */,
-				82BACD751C2A33F0006BA8F5 /* Box.swift in Sources */,
 				82A6677E1BF922F800EBCDFA /* IReducible.swift in Sources */,
 				822F358A1C2D233A00E1D42E /* ValSeq.swift in Sources */,
 				822B2A9E1BFEB03800146A7F /* AbstractPersistentMap.swift in Sources */,
@@ -520,6 +1031,7 @@
 				82BACD6B1C2A01F2006BA8F5 /* PersistentList.swift in Sources */,
 				82A6676C1BF9216D00EBCDFA /* IObj.swift in Sources */,
 				829C0AE71C2B1D4F00AA3331 /* Murmur3.swift in Sources */,
+				8230B0071C2D6CD40068D04B /* Clojure.swift in Sources */,
 				82A667761BF9226200EBCDFA /* IPersistentSet.swift in Sources */,
 				82BACD651C29FD2F006BA8F5 /* PersistentVector.swift in Sources */,
 				82A6674A1BF91C0100EBCDFA /* IAssociative.swift in Sources */,
@@ -541,6 +1053,7 @@
 				82A667541BF91DA200EBCDFA /* ICounted.swift in Sources */,
 				82A6677C1BF922E600EBCDFA /* IRandom.swift in Sources */,
 				82A667601BF91F4100EBCDFA /* ILookup.swift in Sources */,
+				822F358E1C2D31E000E1D42E /* EmptySeq.swift in Sources */,
 				822B2A9C1BFEAF5D00146A7F /* AbstractTransientMap.swift in Sources */,
 				82CF9AD71C29375900D4677B /* KeySeq.swift in Sources */,
 				82CF9ADB1C2938A700D4677B /* Node.swift in Sources */,
@@ -553,6 +1066,7 @@
 				82CF9AEE1C29D24800D4677B /* ArrayNode.swift in Sources */,
 				82A6677A1BF922B100EBCDFA /* IPersistentVector.swift in Sources */,
 				82BACD6F1C2A304B006BA8F5 /* TransientArrayMap.swift in Sources */,
+				8230B00A1C2DBC9F0068D04B /* murmur3.c in Sources */,
 				82A667821BF9233E00EBCDFA /* ISeq.swift in Sources */,
 				82A6678E1BF9249C00EBCDFA /* ITransientCollection.swift in Sources */,
 				82A667681BF9200C00EBCDFA /* IMeta.swift in Sources */,
@@ -593,7 +1107,305 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82A6673D1BF9166400EBCDFA /* PersistentTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71E421C54222B003F7B96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71EB51C54227C003F7B96 /* murmur3.c in Sources */,
+				82A71E5E1C542274003F7B96 /* IAssociative.swift in Sources */,
+				82A71E5F1C542274003F7B96 /* IChunk.swift in Sources */,
+				82A71E601C542274003F7B96 /* IChunkedSeq.swift in Sources */,
+				82A71E611C542274003F7B96 /* ICollection.swift in Sources */,
+				82A71E621C542274003F7B96 /* ICounted.swift in Sources */,
+				82A71E631C542274003F7B96 /* IDeref.swift in Sources */,
+				82A71E641C542274003F7B96 /* IEditableCollection.swift in Sources */,
+				82A71E651C542274003F7B96 /* IHashEq.swift in Sources */,
+				82A71E661C542274003F7B96 /* IIndexed.swift in Sources */,
+				82A71E671C542274003F7B96 /* IIndexedSeq.swift in Sources */,
+				82A71E681C542274003F7B96 /* IList.swift in Sources */,
+				82A71E691C542274003F7B96 /* ILookup.swift in Sources */,
+				82A71E6A1C542274003F7B96 /* IMap.swift in Sources */,
+				82A71E6B1C542274003F7B96 /* IMapEntry.swift in Sources */,
+				82A71E6C1C542274003F7B96 /* IMapEquivalence.swift in Sources */,
+				82A71E6D1C542274003F7B96 /* IMeta.swift in Sources */,
+				82A71E6E1C542274003F7B96 /* INode.swift in Sources */,
+				82A71E6F1C542274003F7B96 /* IObj.swift in Sources */,
+				82A71E701C542274003F7B96 /* IPending.swift in Sources */,
+				82A71E711C542274003F7B96 /* IPersistentCollection.swift in Sources */,
+				82A71E721C542274003F7B96 /* IPersistentList.swift in Sources */,
+				82A71E731C542274003F7B96 /* IPersistentMap.swift in Sources */,
+				82A71E741C542274003F7B96 /* IPersistentSet.swift in Sources */,
+				82A71E751C542274003F7B96 /* IPersistentStack.swift in Sources */,
+				82A71E761C542274003F7B96 /* IPersistentVector.swift in Sources */,
+				82A71E771C542274003F7B96 /* IRandom.swift in Sources */,
+				82A71E781C542274003F7B96 /* IReducible.swift in Sources */,
+				82A71E791C542274003F7B96 /* IReversible.swift in Sources */,
+				82A71E7A1C542274003F7B96 /* ISeq.swift in Sources */,
+				82A71E7B1C542274003F7B96 /* ISeqable.swift in Sources */,
+				82A71E7C1C542274003F7B96 /* ISequential.swift in Sources */,
+				82A71E7D1C542274003F7B96 /* ISet.swift in Sources */,
+				82A71E7E1C542274003F7B96 /* ISorted.swift in Sources */,
+				82A71E7F1C542274003F7B96 /* ITransientAssociative.swift in Sources */,
+				82A71E801C542274003F7B96 /* ITransientCollection.swift in Sources */,
+				82A71E811C542274003F7B96 /* ITransientMap.swift in Sources */,
+				82A71E821C542274003F7B96 /* ITransientVector.swift in Sources */,
+				82A71E831C542274003F7B96 /* ITransientSet.swift in Sources */,
+				82A71E841C542274003F7B96 /* TransientVector.swift in Sources */,
+				82A71E851C542274003F7B96 /* PersistentVector.swift in Sources */,
+				82A71E861C542274003F7B96 /* LazilyPersistentVector.swift in Sources */,
+				82A71E871C542274003F7B96 /* PersistentList.swift in Sources */,
+				82A71E881C542274003F7B96 /* TransientArrayMap.swift in Sources */,
+				82A71E891C542274003F7B96 /* PersistentArrayMap.swift in Sources */,
+				82A71E8A1C542274003F7B96 /* TransientHashMap.swift in Sources */,
+				82A71E8B1C542274003F7B96 /* PersistentHashMap.swift in Sources */,
+				82A71E8C1C542274003F7B96 /* PersistentHashSet.swift in Sources */,
+				82A71E8D1C542274003F7B96 /* TransientHashSet.swift in Sources */,
+				82A71E8E1C542274003F7B96 /* PersistentTreeSet.swift in Sources */,
+				82A71E8F1C542274003F7B96 /* PersistentTreeMap.swift in Sources */,
+				82A71E901C542274003F7B96 /* SortedTreeSeq.swift in Sources */,
+				82A71E911C542274003F7B96 /* PersistentQueue.swift in Sources */,
+				82A71E921C542274003F7B96 /* SubVector.swift in Sources */,
+				82A71E931C542274003F7B96 /* AbstractCons.swift in Sources */,
+				82A71E941C542274003F7B96 /* AbstractMapEntry.swift in Sources */,
+				82A71E951C542274003F7B96 /* AbstractPersistentMap.swift in Sources */,
+				82A71E961C542274003F7B96 /* AbstractPersistentVector.swift in Sources */,
+				82A71E971C542274003F7B96 /* AbstractSeq.swift in Sources */,
+				82A71E981C542274003F7B96 /* AbstractTransientMap.swift in Sources */,
+				82A71E991C542274003F7B96 /* AbstractTransientSet.swift in Sources */,
+				82A71E9A1C542274003F7B96 /* AbstractPersistentSet.swift in Sources */,
+				82A71E9B1C542274003F7B96 /* TreeNode.swift in Sources */,
+				82A71E9C1C542274003F7B96 /* ArrayNode.swift in Sources */,
+				82A71E9D1C542274003F7B96 /* BitmapIndexedNode.swift in Sources */,
+				82A71E9E1C542274003F7B96 /* HashCollisionNode.swift in Sources */,
+				82A71E9F1C542274003F7B96 /* Seq.swift in Sources */,
+				82A71EA01C542274003F7B96 /* EmptySeq.swift in Sources */,
+				82A71EA11C542274003F7B96 /* ValSeq.swift in Sources */,
+				82A71EA21C542274003F7B96 /* NodeSeq.swift in Sources */,
+				82A71EA31C542274003F7B96 /* ChunkedSeq.swift in Sources */,
+				82A71EA41C542274003F7B96 /* StringSeq.swift in Sources */,
+				82A71EA51C542274003F7B96 /* KeySeq.swift in Sources */,
+				82A71EA61C542274003F7B96 /* VecSeq.swift in Sources */,
+				82A71EA71C542274003F7B96 /* LazySeq.swift in Sources */,
+				82A71EA81C542274003F7B96 /* RVecSeq.swift in Sources */,
+				82A71EA91C542274003F7B96 /* QueueSeq.swift in Sources */,
+				82A71EAA1C542274003F7B96 /* SeqIterator.swift in Sources */,
+				82A71EAB1C542274003F7B96 /* VectorListIterator.swift in Sources */,
+				82A71EAC1C542274003F7B96 /* PersistentVectorIterator.swift in Sources */,
+				82A71EAD1C542274003F7B96 /* MapEntry.swift in Sources */,
+				82A71EAE1C542274003F7B96 /* Clojure.swift in Sources */,
+				82A71EAF1C542274003F7B96 /* ArrayChunk.swift in Sources */,
+				82A71EB01C542274003F7B96 /* Murmur3.swift in Sources */,
+				82A71EB11C542274003F7B96 /* Node.swift in Sources */,
+				82A71EB21C542274003F7B96 /* Obj.swift in Sources */,
+				82A71EB31C542274003F7B96 /* Utils.swift in Sources */,
+				82A71EB41C542274003F7B96 /* Reduced.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71E4C1C54222B003F7B96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71ED41C54236D003F7B96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71F471C54239D003F7B96 /* murmur3.c in Sources */,
+				82A71EF01C542397003F7B96 /* IAssociative.swift in Sources */,
+				82A71EF11C542397003F7B96 /* IChunk.swift in Sources */,
+				82A71EF21C542397003F7B96 /* IChunkedSeq.swift in Sources */,
+				82A71EF31C542397003F7B96 /* ICollection.swift in Sources */,
+				82A71EF41C542397003F7B96 /* ICounted.swift in Sources */,
+				82A71EF51C542397003F7B96 /* IDeref.swift in Sources */,
+				82A71EF61C542397003F7B96 /* IEditableCollection.swift in Sources */,
+				82A71EF71C542397003F7B96 /* IHashEq.swift in Sources */,
+				82A71EF81C542397003F7B96 /* IIndexed.swift in Sources */,
+				82A71EF91C542397003F7B96 /* IIndexedSeq.swift in Sources */,
+				82A71EFA1C542397003F7B96 /* IList.swift in Sources */,
+				82A71EFB1C542397003F7B96 /* ILookup.swift in Sources */,
+				82A71EFC1C542397003F7B96 /* IMap.swift in Sources */,
+				82A71EFD1C542397003F7B96 /* IMapEntry.swift in Sources */,
+				82A71EFE1C542397003F7B96 /* IMapEquivalence.swift in Sources */,
+				82A71EFF1C542397003F7B96 /* IMeta.swift in Sources */,
+				82A71F001C542397003F7B96 /* INode.swift in Sources */,
+				82A71F011C542397003F7B96 /* IObj.swift in Sources */,
+				82A71F021C542397003F7B96 /* IPending.swift in Sources */,
+				82A71F031C542397003F7B96 /* IPersistentCollection.swift in Sources */,
+				82A71F041C542397003F7B96 /* IPersistentList.swift in Sources */,
+				82A71F051C542397003F7B96 /* IPersistentMap.swift in Sources */,
+				82A71F061C542397003F7B96 /* IPersistentSet.swift in Sources */,
+				82A71F071C542397003F7B96 /* IPersistentStack.swift in Sources */,
+				82A71F081C542397003F7B96 /* IPersistentVector.swift in Sources */,
+				82A71F091C542398003F7B96 /* IRandom.swift in Sources */,
+				82A71F0A1C542398003F7B96 /* IReducible.swift in Sources */,
+				82A71F0B1C542398003F7B96 /* IReversible.swift in Sources */,
+				82A71F0C1C542398003F7B96 /* ISeq.swift in Sources */,
+				82A71F0D1C542398003F7B96 /* ISeqable.swift in Sources */,
+				82A71F0E1C542398003F7B96 /* ISequential.swift in Sources */,
+				82A71F0F1C542398003F7B96 /* ISet.swift in Sources */,
+				82A71F101C542398003F7B96 /* ISorted.swift in Sources */,
+				82A71F111C542398003F7B96 /* ITransientAssociative.swift in Sources */,
+				82A71F121C542398003F7B96 /* ITransientCollection.swift in Sources */,
+				82A71F131C542398003F7B96 /* ITransientMap.swift in Sources */,
+				82A71F141C542398003F7B96 /* ITransientVector.swift in Sources */,
+				82A71F151C542398003F7B96 /* ITransientSet.swift in Sources */,
+				82A71F161C542398003F7B96 /* TransientVector.swift in Sources */,
+				82A71F171C542398003F7B96 /* PersistentVector.swift in Sources */,
+				82A71F181C542398003F7B96 /* LazilyPersistentVector.swift in Sources */,
+				82A71F191C542398003F7B96 /* PersistentList.swift in Sources */,
+				82A71F1A1C542398003F7B96 /* TransientArrayMap.swift in Sources */,
+				82A71F1B1C542398003F7B96 /* PersistentArrayMap.swift in Sources */,
+				82A71F1C1C542398003F7B96 /* TransientHashMap.swift in Sources */,
+				82A71F1D1C542398003F7B96 /* PersistentHashMap.swift in Sources */,
+				82A71F1E1C542398003F7B96 /* PersistentHashSet.swift in Sources */,
+				82A71F1F1C542398003F7B96 /* TransientHashSet.swift in Sources */,
+				82A71F201C542398003F7B96 /* PersistentTreeSet.swift in Sources */,
+				82A71F211C542398003F7B96 /* PersistentTreeMap.swift in Sources */,
+				82A71F221C542398003F7B96 /* SortedTreeSeq.swift in Sources */,
+				82A71F231C542398003F7B96 /* PersistentQueue.swift in Sources */,
+				82A71F241C542398003F7B96 /* SubVector.swift in Sources */,
+				82A71F251C542398003F7B96 /* AbstractCons.swift in Sources */,
+				82A71F261C542398003F7B96 /* AbstractMapEntry.swift in Sources */,
+				82A71F271C542398003F7B96 /* AbstractPersistentMap.swift in Sources */,
+				82A71F281C542398003F7B96 /* AbstractPersistentVector.swift in Sources */,
+				82A71F291C542398003F7B96 /* AbstractSeq.swift in Sources */,
+				82A71F2A1C542398003F7B96 /* AbstractTransientMap.swift in Sources */,
+				82A71F2B1C542398003F7B96 /* AbstractTransientSet.swift in Sources */,
+				82A71F2C1C542398003F7B96 /* AbstractPersistentSet.swift in Sources */,
+				82A71F2D1C542398003F7B96 /* TreeNode.swift in Sources */,
+				82A71F2E1C542398003F7B96 /* ArrayNode.swift in Sources */,
+				82A71F2F1C542398003F7B96 /* BitmapIndexedNode.swift in Sources */,
+				82A71F301C542398003F7B96 /* HashCollisionNode.swift in Sources */,
+				82A71F311C542398003F7B96 /* Seq.swift in Sources */,
+				82A71F321C542398003F7B96 /* EmptySeq.swift in Sources */,
+				82A71F331C542398003F7B96 /* ValSeq.swift in Sources */,
+				82A71F341C542398003F7B96 /* NodeSeq.swift in Sources */,
+				82A71F351C542398003F7B96 /* ChunkedSeq.swift in Sources */,
+				82A71F361C542398003F7B96 /* StringSeq.swift in Sources */,
+				82A71F371C542398003F7B96 /* KeySeq.swift in Sources */,
+				82A71F381C542398003F7B96 /* VecSeq.swift in Sources */,
+				82A71F391C542398003F7B96 /* LazySeq.swift in Sources */,
+				82A71F3A1C542398003F7B96 /* RVecSeq.swift in Sources */,
+				82A71F3B1C542398003F7B96 /* QueueSeq.swift in Sources */,
+				82A71F3C1C542398003F7B96 /* SeqIterator.swift in Sources */,
+				82A71F3D1C542398003F7B96 /* VectorListIterator.swift in Sources */,
+				82A71F3E1C542398003F7B96 /* PersistentVectorIterator.swift in Sources */,
+				82A71F3F1C542398003F7B96 /* MapEntry.swift in Sources */,
+				82A71F401C542398003F7B96 /* Clojure.swift in Sources */,
+				82A71F411C542398003F7B96 /* ArrayChunk.swift in Sources */,
+				82A71F421C542398003F7B96 /* Murmur3.swift in Sources */,
+				82A71F431C542398003F7B96 /* Node.swift in Sources */,
+				82A71F441C542398003F7B96 /* Obj.swift in Sources */,
+				82A71F451C542398003F7B96 /* Utils.swift in Sources */,
+				82A71F461C542398003F7B96 /* Reduced.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71EDE1C54236D003F7B96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		82A71F4A1C5423B5003F7B96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82A71FAE1C5423D2003F7B96 /* murmur3.c in Sources */,
+				82A71F571C5423CD003F7B96 /* IAssociative.swift in Sources */,
+				82A71F581C5423CD003F7B96 /* IChunk.swift in Sources */,
+				82A71F591C5423CD003F7B96 /* IChunkedSeq.swift in Sources */,
+				82A71F5A1C5423CD003F7B96 /* ICollection.swift in Sources */,
+				82A71F5B1C5423CD003F7B96 /* ICounted.swift in Sources */,
+				82A71F5C1C5423CD003F7B96 /* IDeref.swift in Sources */,
+				82A71F5D1C5423CD003F7B96 /* IEditableCollection.swift in Sources */,
+				82A71F5E1C5423CD003F7B96 /* IHashEq.swift in Sources */,
+				82A71F5F1C5423CD003F7B96 /* IIndexed.swift in Sources */,
+				82A71F601C5423CD003F7B96 /* IIndexedSeq.swift in Sources */,
+				82A71F611C5423CD003F7B96 /* IList.swift in Sources */,
+				82A71F621C5423CD003F7B96 /* ILookup.swift in Sources */,
+				82A71F631C5423CD003F7B96 /* IMap.swift in Sources */,
+				82A71F641C5423CD003F7B96 /* IMapEntry.swift in Sources */,
+				82A71F651C5423CD003F7B96 /* IMapEquivalence.swift in Sources */,
+				82A71F661C5423CD003F7B96 /* IMeta.swift in Sources */,
+				82A71F671C5423CD003F7B96 /* INode.swift in Sources */,
+				82A71F681C5423CD003F7B96 /* IObj.swift in Sources */,
+				82A71F691C5423CD003F7B96 /* IPending.swift in Sources */,
+				82A71F6A1C5423CD003F7B96 /* IPersistentCollection.swift in Sources */,
+				82A71F6B1C5423CD003F7B96 /* IPersistentList.swift in Sources */,
+				82A71F6C1C5423CD003F7B96 /* IPersistentMap.swift in Sources */,
+				82A71F6D1C5423CD003F7B96 /* IPersistentSet.swift in Sources */,
+				82A71F6E1C5423CD003F7B96 /* IPersistentStack.swift in Sources */,
+				82A71F6F1C5423CD003F7B96 /* IPersistentVector.swift in Sources */,
+				82A71F701C5423CD003F7B96 /* IRandom.swift in Sources */,
+				82A71F711C5423CD003F7B96 /* IReducible.swift in Sources */,
+				82A71F721C5423CD003F7B96 /* IReversible.swift in Sources */,
+				82A71F731C5423CD003F7B96 /* ISeq.swift in Sources */,
+				82A71F741C5423CD003F7B96 /* ISeqable.swift in Sources */,
+				82A71F751C5423CD003F7B96 /* ISequential.swift in Sources */,
+				82A71F761C5423CD003F7B96 /* ISet.swift in Sources */,
+				82A71F771C5423CD003F7B96 /* ISorted.swift in Sources */,
+				82A71F781C5423CD003F7B96 /* ITransientAssociative.swift in Sources */,
+				82A71F791C5423CD003F7B96 /* ITransientCollection.swift in Sources */,
+				82A71F7A1C5423CD003F7B96 /* ITransientMap.swift in Sources */,
+				82A71F7B1C5423CD003F7B96 /* ITransientVector.swift in Sources */,
+				82A71F7C1C5423CD003F7B96 /* ITransientSet.swift in Sources */,
+				82A71F7D1C5423CD003F7B96 /* TransientVector.swift in Sources */,
+				82A71F7E1C5423CD003F7B96 /* PersistentVector.swift in Sources */,
+				82A71F7F1C5423CD003F7B96 /* LazilyPersistentVector.swift in Sources */,
+				82A71F801C5423CD003F7B96 /* PersistentList.swift in Sources */,
+				82A71F811C5423CD003F7B96 /* TransientArrayMap.swift in Sources */,
+				82A71F821C5423CD003F7B96 /* PersistentArrayMap.swift in Sources */,
+				82A71F831C5423CD003F7B96 /* TransientHashMap.swift in Sources */,
+				82A71F841C5423CD003F7B96 /* PersistentHashMap.swift in Sources */,
+				82A71F851C5423CD003F7B96 /* PersistentHashSet.swift in Sources */,
+				82A71F861C5423CD003F7B96 /* TransientHashSet.swift in Sources */,
+				82A71F871C5423CD003F7B96 /* PersistentTreeSet.swift in Sources */,
+				82A71F881C5423CD003F7B96 /* PersistentTreeMap.swift in Sources */,
+				82A71F891C5423CD003F7B96 /* SortedTreeSeq.swift in Sources */,
+				82A71F8A1C5423CD003F7B96 /* PersistentQueue.swift in Sources */,
+				82A71F8B1C5423CD003F7B96 /* SubVector.swift in Sources */,
+				82A71F8C1C5423CD003F7B96 /* AbstractCons.swift in Sources */,
+				82A71F8D1C5423CD003F7B96 /* AbstractMapEntry.swift in Sources */,
+				82A71F8E1C5423CD003F7B96 /* AbstractPersistentMap.swift in Sources */,
+				82A71F8F1C5423CD003F7B96 /* AbstractPersistentVector.swift in Sources */,
+				82A71F901C5423CD003F7B96 /* AbstractSeq.swift in Sources */,
+				82A71F911C5423CD003F7B96 /* AbstractTransientMap.swift in Sources */,
+				82A71F921C5423CD003F7B96 /* AbstractTransientSet.swift in Sources */,
+				82A71F931C5423CD003F7B96 /* AbstractPersistentSet.swift in Sources */,
+				82A71F941C5423CD003F7B96 /* TreeNode.swift in Sources */,
+				82A71F951C5423CD003F7B96 /* ArrayNode.swift in Sources */,
+				82A71F961C5423CD003F7B96 /* BitmapIndexedNode.swift in Sources */,
+				82A71F971C5423CD003F7B96 /* HashCollisionNode.swift in Sources */,
+				82A71F981C5423CD003F7B96 /* Seq.swift in Sources */,
+				82A71F991C5423CD003F7B96 /* EmptySeq.swift in Sources */,
+				82A71F9A1C5423CD003F7B96 /* ValSeq.swift in Sources */,
+				82A71F9B1C5423CD003F7B96 /* NodeSeq.swift in Sources */,
+				82A71F9C1C5423CD003F7B96 /* ChunkedSeq.swift in Sources */,
+				82A71F9D1C5423CD003F7B96 /* StringSeq.swift in Sources */,
+				82A71F9E1C5423CD003F7B96 /* KeySeq.swift in Sources */,
+				82A71F9F1C5423CD003F7B96 /* VecSeq.swift in Sources */,
+				82A71FA01C5423CD003F7B96 /* LazySeq.swift in Sources */,
+				82A71FA11C5423CD003F7B96 /* RVecSeq.swift in Sources */,
+				82A71FA21C5423CD003F7B96 /* QueueSeq.swift in Sources */,
+				82A71FA31C5423CD003F7B96 /* SeqIterator.swift in Sources */,
+				82A71FA41C5423CE003F7B96 /* VectorListIterator.swift in Sources */,
+				82A71FA51C5423CE003F7B96 /* PersistentVectorIterator.swift in Sources */,
+				82A71FA61C5423CE003F7B96 /* MapEntry.swift in Sources */,
+				82A71FA71C5423CE003F7B96 /* Clojure.swift in Sources */,
+				82A71FA81C5423CE003F7B96 /* ArrayChunk.swift in Sources */,
+				82A71FA91C5423CE003F7B96 /* Murmur3.swift in Sources */,
+				82A71FAA1C5423CE003F7B96 /* Node.swift in Sources */,
+				82A71FAB1C5423CE003F7B96 /* Obj.swift in Sources */,
+				82A71FAC1C5423CE003F7B96 /* Utils.swift in Sources */,
+				82A71FAD1C5423CE003F7B96 /* Reduced.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +1416,16 @@
 			isa = PBXTargetDependency;
 			target = 82A6672C1BF9166400EBCDFA /* Persistent */;
 			targetProxy = 82A667391BF9166400EBCDFA /* PBXContainerItemProxy */;
+		};
+		82A71E531C54222B003F7B96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82A71E461C54222B003F7B96 /* Persistent-iOS */;
+			targetProxy = 82A71E521C54222B003F7B96 /* PBXContainerItemProxy */;
+		};
+		82A71EE51C54236E003F7B96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82A71ED81C54236D003F7B96 /* Persistent-tvOS */;
+			targetProxy = 82A71EE41C54236E003F7B96 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -755,6 +1577,179 @@
 			};
 			name = Release;
 		};
+		82A71E591C54222B003F7B96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Persistent/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-iOS";
+				PRODUCT_NAME = Persistent;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		82A71E5A1C54222B003F7B96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Persistent/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-iOS";
+				PRODUCT_NAME = Persistent;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		82A71E5C1C54222B003F7B96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = PersistentTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		82A71E5D1C54222B003F7B96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = PersistentTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		82A71EEB1C54236E003F7B96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Persistent/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-tvOS";
+				PRODUCT_NAME = Persistent;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		82A71EEC1C54236E003F7B96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Persistent/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-tvOS";
+				PRODUCT_NAME = Persistent;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		82A71EEE1C54236E003F7B96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PersistentTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		82A71EEF1C54236E003F7B96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PersistentTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		82A71F551C5423B5003F7B96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Persistent/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-watchOS";
+				PRODUCT_NAME = Persistent;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		82A71F561C5423B5003F7B96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Persistent/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-watchOS";
+				PRODUCT_NAME = Persistent;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -784,6 +1779,48 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		82A71E581C54222B003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82A71E591C54222B003F7B96 /* Debug */,
+				82A71E5A1C54222B003F7B96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82A71E5B1C54222B003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82A71E5C1C54222B003F7B96 /* Debug */,
+				82A71E5D1C54222B003F7B96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82A71EEA1C54236E003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82A71EEB1C54236E003F7B96 /* Debug */,
+				82A71EEC1C54236E003F7B96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		82A71EED1C54236E003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82A71EEE1C54236E003F7B96 /* Debug */,
+				82A71EEF1C54236E003F7B96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		82A71F541C5423B5003F7B96 /* Build configuration list for PBXNativeTarget "Persistent-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82A71F551C5423B5003F7B96 /* Debug */,
+				82A71F561C5423B5003F7B96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

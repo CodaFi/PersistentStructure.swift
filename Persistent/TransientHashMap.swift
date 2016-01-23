@@ -6,93 +6,75 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class TransientHashMap: AbstractTransientMap {
+public class TransientHashMap: AbstractTransientMap {
 	private var _edit: NSThread?
 	private var _root: INode?
 	private var _count: Int = 0
 	private var _hasNull: Bool = false
 	private var _nullValue: AnyObject?
-	private var _leafFlag: Box = Box()
+	private var _leafFlag: AnyObject? = nil
 
-	class func create(m: PersistentHashMap) -> TransientHashMap {
-		return TransientHashMap.createOnThread(NSThread.currentThread(), root: m.root(), count: Int(m.count()), hasNull: m.hasNull(), nullValue: m.nullValue())
+	convenience init(withMap m: PersistentHashMap) {
+		self.init(onThread: NSThread.currentThread(), root: m.root, count: Int(m.count), hasNull: m.hasNull, nullValue: m.nullValue)
 	}
 
 	override init() { }
 
-	class func createOnThread(thread: NSThread?, root: INode?, count: Int, hasNull: Bool, nullValue: AnyObject) -> TransientHashMap {
-		let map: TransientHashMap = TransientHashMap()
-		map._edit = thread
-		map._root = root
-		map._count = count
-		map._hasNull = hasNull
-		map._nullValue = nullValue
-		map._leafFlag = Box()
-		return map
+	init(onThread thread: NSThread?, root: INode?, count: Int, hasNull: Bool, nullValue: AnyObject) {
+		_edit = thread
+		_root = root
+		_count = count
+		_hasNull = hasNull
+		_nullValue = nullValue
+		_leafFlag = nil
 	}
 
-	override func doassociateKey(key: AnyObject?,  val: AnyObject?) -> ITransientMap? {
-		if key == nil {
-			if _nullValue !== val {
-				_nullValue = val
-			}
-			if !_hasNull {
-				_count++
-				_hasNull = true
-			}
-			return self
-		}
-		_leafFlag.val = nil
-		let n: INode? = (_root == nil ? BitmapIndexedNode.empty() : _root)!.assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key!, val: val!, addedLeaf: _leafFlag)
+	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
+		_leafFlag = nil
+		let n: INode? = (_root ?? BitmapIndexedNode.empty).assocOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key, val: val)
 		if n !== _root {
 			_root = n
 		}
-		if _leafFlag.val != nil {
-			_count++
+		if _leafFlag != nil {
+			_count = _count.successor()
 		}
 		return self
 	}
 
-	override func doWithout(key: AnyObject?) -> ITransientMap? {
-		if key == nil {
-			if !_hasNull {
-				return self
-			}
-			_hasNull = false
-			_nullValue = nil
-			_count--
+	override func doWithout(key: AnyObject) -> ITransientMap {
+		guard let r = _root else {
 			return self
 		}
-		if _root == nil {
-			return self
-		}
-		_leafFlag.val = nil
-		let n: INode? = _root!.withoutOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key!, addedLeaf: _leafFlag)
+		
+		_leafFlag = nil
+		let n: INode? = r.withoutOnThread(_edit, shift: 0, hash: Int(Utils.hash(key)), key: key)
 		if n !== _root {
 			_root = n
 		}
-		if _leafFlag.val != nil {
+		if _leafFlag != nil {
 			_count--
 		}
 		return self
 	}
 
-	override func doPersistent() -> IPersistentMap? {
-		return PersistentHashMap(count: UInt(_count), root: _root, hasNull: _hasNull, nullValue: _nullValue)
+	override func doPersistent() -> IPersistentMap {
+		return PersistentHashMap(count: _count, root: _root, hasNull: _hasNull, nullValue: _nullValue)
 	}
 
-	override func doobjectForKey(key: AnyObject?,  notFound: AnyObject) -> AnyObject? {
-		if key == nil {
+	override func doobjectForKey(keye: AnyObject?,  notFound: AnyObject) -> AnyObject? {
+		guard let key = keye else {
 			if _hasNull {
-				return _nullValue!
+				return _nullValue
 			} else {
 				return notFound
 			}
 		}
-		if _root == nil {
+		
+		guard let r = _root else {
 			return notFound
 		}
-		return _root!.findWithShift(0, hash: Int(Utils.hash(key)), key: key!, notFound: notFound)
+		
+		return r.findWithShift(0, hash: Int(Utils.hash(key)), key: key, notFound: notFound)
 	}
 
 

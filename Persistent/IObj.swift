@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IObj {
-	func withMeta(meta : IPersistentMap?) -> IObj?
+public protocol IObj {
+	func withMeta(meta: IPersistentMap?) -> IObj
 }

@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IHashEq {
-	func hasheq() -> Int
+public protocol IHashEq {
+	var hasheq : Int { get }
 }

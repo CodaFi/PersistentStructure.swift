@@ -6,4 +6,4 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IMapEquivalence { }
+public protocol IMapEquivalence { }

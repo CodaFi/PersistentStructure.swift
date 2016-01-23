@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IChunk : IIndexed {
-	func tail() -> IChunk
+public protocol IChunk : IIndexed {
+	var tail : IChunk { get }
 	func reduce(f: (AnyObject, AnyObject) -> AnyObject, start: AnyObject) -> AnyObject
 }

@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ICounted {
-	func count() -> UInt
+public protocol ICounted {
+	var count : Int { get }
 }

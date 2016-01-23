@@ -7,21 +7,24 @@
 //
 
 class MapEntry : AbstractMapEntry {
-	private var _key: AnyObject? = nil
-	private var _val: AnyObject? = nil
+	private let _key: AnyObject?
+	private let _val: AnyObject?
 
-	override init() {}
+	override init() {
+		_key = nil
+		_val = nil
+	}
 
-	init(key: AnyObject?, val: AnyObject?) {
+	init(key: AnyObject, val: AnyObject) {
 		_key = key
 		_val = val
 	}
 
-	override func key() -> AnyObject? {
-		return _key
+	override var key : AnyObject {
+		return _key!
 	}
 
-	override func val() -> AnyObject? {
-		return _val
+	override var val : AnyObject {
+		return _val!
 	}
 }

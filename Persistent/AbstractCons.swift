@@ -6,40 +6,37 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-final class AbstractCons : AbstractSeq {
-	var _first : AnyObject
-	var _more : ISeq?
+public final class AbstractCons : AbstractSeq {
+	let _first : AnyObject
+	let _more : ISeq
 
-	init(first : AnyObject, rest : ISeq?) {
+	init(first : AnyObject, rest : ISeq) {
 		self._first = first
 		self._more = rest
 		super.init()
 	}
 
-	init(meta : IPersistentMap, first : AnyObject, more : ISeq?) {
+	init(meta : IPersistentMap, first : AnyObject, more : ISeq) {
 		self._first = first
 		self._more = more
 		super.init(meta: meta)
 	}
 
 
-	override func first() -> AnyObject? {
+	public override var first : AnyObject? {
 		return _first
 	}
 
-	override func next() -> ISeq? {
-		return _more!.seq()
+	public override var next : ISeq {
+		return _more.seq
 	}
 
-	override func more() -> ISeq? {
-		if let m = self._more {
-			return m
-		}
-		return PersistentList.empty()! as? ISeq
+	public override var more : ISeq {
+		return _more
 	}
 
-	override func count() -> UInt {
-		return UInt(1 + Utils.count(_more!))
+	public override var count : Int {
+		return 1 + Utils.count(_more)
 	}
 
 	func withMeta(meta : IPersistentMap) -> AbstractCons {

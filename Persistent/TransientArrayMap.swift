@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class TransientArrayMap: AbstractTransientMap {
+public class TransientArrayMap: AbstractTransientMap {
 	private var _length: Int
 	private var _array: Array<AnyObject>
 	private var _owner: NSThread?
@@ -20,7 +20,7 @@ class TransientArrayMap: AbstractTransientMap {
 	}
 
 	func indexOf(key: AnyObject) -> Int {
-		for var i = 0; i < _length; i += 2 {
+		for i in 0.stride(to: _length, by: 2) {
 			if TransientArrayMap.equalKey(_array[i], other: key) {
 				return i
 			}
@@ -32,7 +32,7 @@ class TransientArrayMap: AbstractTransientMap {
 		return Utils.equiv(k1, other: k2)
 	}
 
-	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap? {
+	override func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			if _array[i + 1] !== val {
@@ -40,16 +40,17 @@ class TransientArrayMap: AbstractTransientMap {
 			}
 		} else {
 			if _length >= _array.count {
-				let ll = PersistentHashMap.createWithMeta(nil, array: _array).asTransient()
-				return (ll as! IAssociative).associateKey(key, withValue: val) as? ITransientMap
+				let ll = PersistentHashMap.createWithMeta(nil, array: _array).asTransient
+				return (ll as! IAssociative).associateKey(key, withValue: val) as! ITransientMap
 			}
-			_array[_length++] = key
-			_array[_length++] = val
+			_array[_length.successor()] = key
+			_array[_length.successor().successor()] = val
+			_length = _length.successor().successor()
 		}
 		return self
 	}
 
-	override func doWithout(key: AnyObject) -> ITransientMap? {
+	override func doWithout(key: AnyObject) -> ITransientMap {
 		let i: Int = self.indexOf(key)
 		if i >= 0 {
 			if _length >= 2 {
@@ -73,7 +74,7 @@ class TransientArrayMap: AbstractTransientMap {
 		return _length / 2
 	}
 
-	override func doPersistent() -> IPersistentMap? {
+	override func doPersistent() -> IPersistentMap {
 		self.ensureEditable()
 		_owner = nil
 		var a: Array<AnyObject> = []

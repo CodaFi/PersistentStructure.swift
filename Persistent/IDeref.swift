@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IDeref {
-	func deref() -> AnyObject
+public protocol IDeref {
+	var deref : AnyObject { get }
 }

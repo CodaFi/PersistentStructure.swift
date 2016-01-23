@@ -9,10 +9,10 @@
 func ArrayCopy(src : Array<AnyObject>, _ srcPos : UInt, var _ dest : Array<AnyObject>, _ destPos : UInt, _ length : UInt) -> Array<AnyObject> {
 	var mergeArr : Array<AnyObject> = []
 	mergeArr.reserveCapacity(Int(length))
-	for var i = Int(srcPos), j = 0; i < Int(srcPos + length); i++, j++ {
+	for var i = Int(srcPos), j = 0; i < Int(srcPos + length); i = i.successor(), j = j.successor() {
 		mergeArr[j] = src[i];
 	}
-	for var i = Int(destPos), j = 0; i < Int(destPos + length); i++, j++ {
+	for var i = Int(destPos), j = 0; i < Int(destPos + length); i = i.successor(), j = j.successor() {
 		dest[i] = mergeArr[j]
 	}
 	return dest;
@@ -20,21 +20,19 @@ func ArrayCopy(src : Array<AnyObject>, _ srcPos : UInt, var _ dest : Array<AnyOb
 
 
 class Utils: NSObject {
-	class func seq(coll: AnyObject) -> ISeq? {
+	class func seq(coll: AnyObject) -> ISeq {
 		if let cc = coll as? AbstractSeq {
 			return cc
 		} else if let cc = coll as? LazySeq {
-			return cc.seq()
+			return cc.seq
 		} else {
 			return Utils.seqFrom(coll)
 		}
 	}
 
-	class func seqFrom(coll: AnyObject?) -> ISeq? {
+	class func seqFrom(coll: AnyObject) -> ISeq {
 		if let cc = coll as? (ISeqable) {
-			return cc.seq()
-		} else if coll == nil {
-			return nil
+			return cc.seq
 		} else if let cc = coll as? NSString {
 			return StringSeq(s: cc)
 		} else {
@@ -46,7 +44,7 @@ class Utils: NSObject {
 		if k1 === k2 {
 			return true
 		}
-		return k1 != nil && k1!.isEqual(k2)
+		return k1?.isEqual(k2) ?? false
 	}
 
 	class func equiv(k1: AnyObject?, other k2: AnyObject?) -> Bool {
@@ -54,61 +52,65 @@ class Utils: NSObject {
 	}
 
 	class func dohasheq(o: IHashEq?) -> Int {
-		return o!.hasheq()
+		return o?.hasheq ?? 0
 	}
 
-	class func seqToArray(var seq: ISeq?) -> Array<AnyObject> {
+	class func seqToArray(seq: ISeq) -> Array<AnyObject> {
 		let len: Int = Utils.length(seq)
 		var ret: Array<AnyObject> = []
 		ret.reserveCapacity(len)
-		for var i = 0; seq != nil; i++, seq = seq!.next() {
-			ret[i] = seq!.first()!
+		for (entry, i) in zip(seq.generate(), 0..<len) {
+			ret[i] = entry
 		}
 		return ret
 	}
 
-	class func length(list: ISeq?) -> Int {
+	class func length(list: ISeq) -> Int {
 		var i: Int = 0
-		for var c = list; c != nil; c = c!.next() {
-			i++
+		for _ in list.generate() {
+			i = i.successor()
 		}
 		return i
 	}
 
 	class func count(o: AnyObject) -> Int {
 		if let ic = o as? (ICounted) {
-			return Int(ic.count())
+			return Int(ic.count)
 		}
 		return Utils.countFrom(Utils.ret1o(o, null: nil))
 	}
 
-	class func countFrom(var o: AnyObject?) -> Int {
-		if o == nil {
+	class func countFrom(var obj: AnyObject?) -> Int {
+		guard let o = obj else {
 			return 0
-		} else if let _ = o! as? (IPersistentCollection) {
-			var s: ISeq? = Utils.seq(o!)
-			o = nil
+		}
+		
+		if let _ = o as? (IPersistentCollection) {
+			var s: ISeq? = Utils.seq(o)
+			obj = nil
 			var i: Int = 0
-			for ; s != nil; s = s!.next() {
+			for ; s != nil; s = s!.next {
 				if let cc = s as? (ICounted) {
-					return i + Int(cc.count())
+					return i + Int(cc.count)
 				}
-				i++
+				i = i.successor()
 			}
 			return i
-		} else if o!.respondsToSelector("length") {
-			return o!.length
-		} else if o!.respondsToSelector("count") {
-			return o!.count
+		} else if o.respondsToSelector("length") {
+			return o.length
+		} else if o.respondsToSelector("count") {
+			return o.count
 		}
 //		RequestConcreteImplementation(o, "count", o.class())
 		return -1
 	}
 
-	class func containsObject(coll: AnyObject?, key: AnyObject) -> Bool {
-		if coll == nil {
+	class func containsObject(colle: AnyObject?, key: AnyObject) -> Bool {
+		guard let coll = colle else {
 			return false
-		} else if let c = coll as? (IAssociative) {
+		} 
+		
+		if let c = coll as? (IAssociative) {
 			return c.containsKey(key)
 		} else if let c = coll as? (IPersistentSet) {
 			return c.containsObject(key)
@@ -129,68 +131,68 @@ class Utils: NSObject {
 		return Utils.nthFrom(Utils.ret1s(coll as? ISeq, null: nil), index: n)
 	}
 
-	class func nthOf(coll: AnyObject, index n: Int, notFound: AnyObject) -> AnyObject? {
+	class func nthOf(coll: AnyObject, index n: Int, notFound: AnyObject) -> AnyObject {
 		if let v = coll as? (IIndexed) {
 			return v.objectAtIndex(n, def: notFound)
 		}
 		return Utils.nthFrom(coll, index: n, notFound: notFound)
 	}
 
-	class func nthFrom(coll: AnyObject?, index n: Int) -> AnyObject? {
-		if coll == nil {
+	class func nthFrom(colle: AnyObject?, index n: Int) -> AnyObject? {
+		guard let coll = colle else {
 			return nil
-		} else if let c = coll as? (NSString) {
+		}
+		
+		if let c = coll as? (NSString) {
 			return NSNumber(unsignedShort: c.characterAtIndex(n))
-		} else if coll!.respondsToSelector("objectAtIndexedSubscript:") {
-			return coll!.performSelector("objectAtIndexedSubscript:", withObject: n).takeRetainedValue()
+		} else if coll.respondsToSelector("objectAtIndexedSubscript:") {
+			return coll.performSelector("objectAtIndexedSubscript:", withObject: n).takeRetainedValue()
 		} else if let e = coll as? (MapEntry) {
 			if n == 0 {
-				return e.key()
+				return e.key
 			} else if n == 1 {
-				return e.val()
+				return e.val
 			}
 			fatalError("Range or index out of bounds")
 		} else if let _ = coll as? (ISequential) {
-			var seq: ISeq? = Utils.seq(coll!)
-			for var i = 0; i <= n && seq != nil; i++, seq = seq!.next() {
+			let seq: ISeq = Utils.seq(coll)
+			for (entry, i) in zip(seq.generate(), 0..<seq.count) {
 				if i == n {
-					return seq!.first()
+					return entry
 				}
 			}
 			fatalError("Range or index out of bounds")
 		} else {
-//			RequestConcreteImplementation(coll, "nthFrom:index:", coll.dynamicType)
+			fatalError("nthFrom:index:")
 		}
-		return nil
 	}
 
-	class func nthFrom(coll: AnyObject?, index n: Int, notFound: AnyObject) -> AnyObject? {
+	class func nthFrom(coll: AnyObject?, index n: Int, notFound: AnyObject) -> AnyObject {
 		if coll == nil {
 			return notFound
 		} else if n < 0 {
 			return notFound
 		} else if let e = coll as? (IMapEntry) {
 			if n == 0 {
-				return e.key()
+				return e.key
 			} else if n == 1 {
-				return e.val()
+				return e.val
 			}
 			return notFound
 		} else if let _ = coll as? (ISequential) {
-			var seq: ISeq? = Utils.seq(coll!)
-			for var i = 0; i <= n && seq != nil; i++, seq = seq!.next() {
+			var seq: ISeq = Utils.seq(coll!)
+			for var i = 0; i <= n && seq.count != 0; i = i.successor(), seq = seq.next {
 				if i == n {
-					return seq!.first()
+					return seq.first!
 				}
 			}
 			return notFound
 		} else {
-//			RequestConcreteImplementation(coll, "nthFrom:index:", coll.class())
+			fatalError("nthFrom:index:")
 		}
-		return nil
 	}
 
-	class func cons(x: AnyObject, to coll: AnyObject?) -> ISeq? {
+	class func cons(x: AnyObject, to coll: AnyObject?) -> ISeq {
 		if coll == nil {
 			return PersistentList(first: x)
 		} else if let cc = coll as? (ISeq) {
@@ -200,39 +202,35 @@ class Utils: NSObject {
 		}
 	}
 
-	class func conj(x: AnyObject, to coll: IPersistentCollection?) -> IPersistentCollection? {
-		if coll == nil {
+	class func conj(x: AnyObject, to colle: IPersistentCollection?) -> IPersistentCollection? {
+		guard let coll = colle else {
 			return PersistentList(first: x)
 		}
-		return coll!.cons(x)
+		return coll.cons(x)
 	}
 
-	class func subvecOf(v: IPersistentVector?, start: Int, end: Int) -> IPersistentVector? {
-		if end < start || start < 0 || end > Int(v!.count()) {
+	class func subvecOf(v: IPersistentVector, start: Int, end: Int) -> IPersistentVector? {
+		if end < start || start < 0 || end > Int(v.count) {
 			fatalError("Range or index out of bounds")
 		}
 		if start == end {
-			return PersistentVector.empty()
+			return PersistentVector.empty
 		}
 		return SubVector(meta: nil, vector: v, start: start, end: end)
 	}
 
-	class func associateKey(key: AnyObject, to val: AnyObject, into coll: AnyObject?) -> IAssociative? {
+	class func associateKey(key: AnyObject, to val: AnyObject, into coll: AnyObject?) -> IAssociative {
 		if coll == nil {
 			return PersistentArrayMap(initial: [])
 		}
-		return (coll as? IAssociative)!.associateKey(key, withValue: val)
+		return (coll as! IAssociative).associateKey(key, withValue: val)
 	}
 
 	class func first(x: AnyObject) -> AnyObject? {
-		if let ss = x as? (ISeq) {
-			return ss.first()
+		if let ss = x as? ISeq {
+			return ss.first
 		}
-		let seq: ISeq? = Utils.seq(x)
-		if seq == nil {
-			return nil
-		}
-		return seq!.first()
+		return Utils.seq(x).first
 	}
 
 	class func second(x: AnyObject) -> AnyObject? {
@@ -249,24 +247,16 @@ class Utils: NSObject {
 
 	class func next(x: AnyObject) -> ISeq? {
 		if let ss = x as? (ISeq) {
-			return ss.next()
+			return ss.next
 		}
-		let seq: ISeq? = Utils.seq(x)
-		if seq == nil {
-			return nil
-		}
-		return seq!.next()
+		return Utils.seq(x).next
 	}
 
-	class func more(x: AnyObject) -> ISeq? {
+	class func more(x: AnyObject) -> ISeq {
 		if let ss = x as? (ISeq) {
-			return ss.more()
+			return ss.more
 		}
-		let seq: ISeq? = Utils.seq(x)
-		if seq == nil {
-			return nil
-		}
-		return seq!.more()
+		return Utils.seq(x).more
 	}
 
 	class func ret1o(ret: AnyObject, null: AnyObject?) -> AnyObject {
@@ -288,20 +278,24 @@ class Utils: NSObject {
 	}
 
 	class func hash(obj: AnyObject?) -> UInt {
-		return obj != nil ? UInt(obj!.hash!) : 0
+		if let o = obj {
+			return UInt(o.hash!)
+		}
+		return 0
 	}
 
-	class func hasheq(o: AnyObject?) -> Int {
-		if o == nil {
+	class func hasheq(obj: AnyObject?) -> Int {
+		guard let o = obj else {
 			return 0
 		}
+		
 		if let ih = o as? (IHashEq) {
 			return Utils.dohasheq(ih)
 		}
-		return o!.hash
+		return o.hash
 	}
 
-	class func _emptyArray() -> Array<AnyObject> {
+	class var _emptyArray : Array<AnyObject> {
 		return []
 	}
 
@@ -353,12 +347,11 @@ class Utils: NSObject {
 		if key1hash == key2hash {
 			return HashCollisionNode(edit: nil, hash: key1hash, count: 2, array: [ key1, val1, key2, val2 ])
 		}
-		let addedLeaf: Box = Box(withVal: nil)
 		let edit: NSThread = NSThread.currentThread()
 		return BitmapIndexedNode
-			.empty()
-			.assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1, addedLeaf: addedLeaf)!
-			.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2, addedLeaf: addedLeaf)
+			.empty
+			.assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1)!
+			.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2)
 	}
 
 	class func createNodeOnThread(edit: NSThread, shift: Int, key key1: AnyObject, value val1: AnyObject, hash key2hash: Int, key key2: AnyObject, value val2: AnyObject) -> INode? {
@@ -366,8 +359,7 @@ class Utils: NSObject {
 		if key1hash == key2hash {
 			return HashCollisionNode(edit: nil, hash: key1hash, count: 2, array: [key1, val1, key2, val2])
 		}
-		let addedLeaf: Box = Box(withVal: nil)
-		return BitmapIndexedNode.empty().assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1, addedLeaf: addedLeaf)!.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2, addedLeaf: addedLeaf)
+		return BitmapIndexedNode.empty.assocOnThread(edit, shift: shift, hash: key1hash, key: key1, val: val1)?.assocOnThread(edit, shift: shift, hash: key2hash, key: key2, val: val2)
 	}
 
 	class func compare(k1: AnyObject?, to k2: AnyObject?) -> NSComparisonResult {
@@ -378,24 +370,24 @@ class Utils: NSObject {
 			if k2 == nil {
 				return .OrderedAscending
 			}
-			if k1!.respondsToSelector("compare:") {
-				return k1!.compare(k2!)
-			}
+//			if k1!.respondsToSelector("compare:") {
+//				return k1!.compare(k2!)
+//			}
 			return .OrderedSame
 //			return (k1 as? Comparable)!.compareTo(k2)
 		}
 		return .OrderedDescending
 	}
 
-	class func keys(coll: AnyObject) -> ISeq? {
-		return KeySeq.create(Utils.seq(coll))
+	class func keys(coll: AnyObject) -> ISeq {
+		return KeySeq(seq: Utils.seq(coll))
 	}
 
-	class func vals(coll: AnyObject) -> ISeq? {
-		return ValSeq.create(Utils.seq(coll))
+	class func vals(coll: AnyObject) -> ISeq {
+		return ValSeq(seq: Utils.seq(coll))
 	}
 
-	class func list(arg1: AnyObject) -> ISeq? {
+	class func list(arg1: AnyObject) -> ISeq {
 		return PersistentList(first: arg1)
 	}
 }

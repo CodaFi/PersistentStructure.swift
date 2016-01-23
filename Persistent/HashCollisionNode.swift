@@ -6,11 +6,11 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class HashCollisionNode: NSObject, INode {
-	private var _hash: Int
+class HashCollisionNode : INode {
+	private let _hash: Int
 	private var _count: Int
 	private var _array: Array<AnyObject>
-	private var _edit: NSThread?
+	private let _edit: NSThread?
 
 	init(edit: NSThread?, hash: Int, count: Int, array: Array<AnyObject>) {
 		_edit = edit
@@ -19,7 +19,7 @@ class HashCollisionNode: NSObject, INode {
 		_array = array
 	}
 
-	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject, addedLeaf: Box) -> INode? {
+	func assocWithShift(shift: Int, hash: Int, key: AnyObject, value val: AnyObject) -> INode? {
 		if hash == _hash {
 			let idx: Int = self.findIndex(key)
 			if idx != NSNotFound {
@@ -33,10 +33,9 @@ class HashCollisionNode: NSObject, INode {
 			ArrayCopy(_array, 0, newArray, 0, UInt(2 * _count))
 			newArray[2 * _count] = key
 			newArray[2 * _count + 1] = val
-			addedLeaf.val = addedLeaf
 			return HashCollisionNode(edit: _edit, hash: hash, count: _count + 1, array: newArray)
 		}
-		return BitmapIndexedNode.createOnThread(nil, bitmap: Utils.bitPos(_hash, shift: shift), array: [ NSNull(), self ])
+		return BitmapIndexedNode(onThread: nil, bitmap: Utils.bitPos(_hash, shift: shift), array: [ NSNull(), self ])
 	}
 
 	func withoutWithShift(shift: Int, hash: Int, key: AnyObject) -> INode? {
@@ -72,7 +71,7 @@ class HashCollisionNode: NSObject, INode {
 		return notFound
 	}
 
-	func nodeSeq() -> ISeq? {
+	var nodeSeq : ISeq {
 		return NodeSeq(array: _array)
 	}
 
@@ -81,7 +80,7 @@ class HashCollisionNode: NSObject, INode {
 	}
 
 	func findIndex(key: AnyObject) -> Int {
-		for var i = 0; i < 2 * _count; i += 2 {
+		for i in 0.stride(to: 2 * _count, by: 2) {
 			if Utils.equiv(key, other: _array[i]) {
 				return i
 			}
@@ -121,7 +120,7 @@ class HashCollisionNode: NSObject, INode {
 		return editable
 	}
 
-	func assocOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject, val: AnyObject, addedLeaf: Box) -> INode? {
+	func assocOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject, val: AnyObject) -> INode? {
 		if hash == _hash {
 			let idx: Int = self.findIndex(key)
 			if idx != NSNotFound {
@@ -131,9 +130,8 @@ class HashCollisionNode: NSObject, INode {
 				return self.editAndSetOnThread(edit!, index: idx + 1, withObject: val)
 			}
 			if _array.count > 2 * _count {
-				addedLeaf.val = addedLeaf
 				let editable: HashCollisionNode = self.editAndSetOnThread(edit!, index: 2 * _count, withObject: key, index: 2 * _count, withObject: val)
-				editable._count++
+				editable._count = _count.successor()
 				return editable
 			}
 			var newArray: Array<AnyObject> = []
@@ -141,18 +139,16 @@ class HashCollisionNode: NSObject, INode {
 			ArrayCopy(_array, 0, newArray, 0, UInt(_array.count))
 			newArray[_array.count] = key
 			newArray[_array.count + 1] = val
-			addedLeaf.val = addedLeaf
 			return self.ensureEditable(edit!, count: _count + 1, array: newArray)
 		}
 		return nil
 	}
 
-	func withoutOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject, addedLeaf removedLeaf: Box) -> INode? {
+	func withoutOnThread(edit: NSThread?, shift: Int, hash: Int, key: AnyObject) -> INode? {
 		let idx: Int = self.findIndex(key)
 		if idx == NSNotFound {
 			return self
 		}
-		removedLeaf.val = removedLeaf
 		if _count == 1 {
 			return nil
 		}

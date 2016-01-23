@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IMeta {
-	func meta() -> IPersistentMap?
+public protocol IMeta {
+	var meta : IPersistentMap? { get }
 }

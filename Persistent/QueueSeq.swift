@@ -7,40 +7,40 @@
 //
 
 class QueueSeq: AbstractSeq {
-	private var _f: ISeq?
-	private var _rseq: ISeq?
+	private var _f: ISeq
+	private var _rseq: ISeq
 
-	init(f: ISeq?, rev rseq: ISeq?) {
+	init(f: ISeq, rev rseq: ISeq) {
 		_f = f
 		_rseq = rseq
 		super.init()
 	}
 
-	init(meta: IPersistentMap?, first f: ISeq?, rev rseq: ISeq?) {
+	init(meta: IPersistentMap?, first f: ISeq, rev rseq: ISeq) {
 		_f = f
 		_rseq = rseq
 		super.init(meta: meta)
 	}
 
-	override func first() -> AnyObject? {
-		return _f!.first()
+	override var first : AnyObject? {
+		return _f.first
 	}
 
-	override func next() -> ISeq? {
-		var f1: ISeq? = _f!.next()
-		var r1: ISeq? = _rseq
-		if f1 == nil {
-			if _rseq == nil {
-				return nil
+	override var next : ISeq {
+		var f1: ISeq = _f.next
+		var r1: ISeq = _rseq
+		if f1.count == 0 {
+			if _rseq.count == 0 {
+				return EmptySeq()
 			}
 			f1 = _rseq
-			r1 = nil
+			r1 = EmptySeq()
 		}
 		return QueueSeq(f: f1, rev: r1)
 	}
 
-	override func count() -> UInt {
-		return UInt(Utils.count(_f!) + Utils.count(_rseq!))
+	override var count : Int {
+		return Utils.count(_f) + Utils.count(_rseq)
 	}
 
 	func withMeta(meta: IPersistentMap?) -> ISeq? {

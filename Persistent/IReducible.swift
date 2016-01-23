@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IReducible {
+public protocol IReducible {
 	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject
 	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject
 }

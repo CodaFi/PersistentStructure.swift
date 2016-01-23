@@ -6,8 +6,8 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IChunkedSeq : ISeq, ISequential {
-	func chunkedFirst() -> IChunk?
-	func chunkedNext() -> ISeq?
-	func chunkedMore() -> ISeq?
+public protocol IChunkedSeq : ISeq, ISequential {
+	var chunkedFirst : IChunk? { get }
+	var chunkedNext : ISeq { get }
+	var chunkedMore : ISeq { get }
 }

@@ -6,73 +6,70 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-var _SingletonEmptyList: EmptyList = EmptyList(meta: nil)
+private let EMPTY: EmptyList = EmptyList(meta: nil)
 
-class PersistentList: AbstractSeq, IPersistentList, IReducible {
+public class PersistentList: AbstractSeq, IPersistentList, IReducible {
 	private var _first: AnyObject
-	private var _rest: IPersistentList?
+	private var _rest: IPersistentList
 	private var _count: Int
 
 	init(first: AnyObject) {
 		_first = first
-		_rest = nil
+		_rest = EMPTY
 		_count = 1
 		super.init()
 	}
 
-	class func empty() -> IPersistentCollection? {
-		return _SingletonEmptyList
+	class var empty : ISeq {
+		return EMPTY
 	}
 
-	init(meta: IPersistentMap?, first: AnyObject, rest: IPersistentList?, count: Int) {
+	init(meta: IPersistentMap?, first: AnyObject, rest: IPersistentList, count: Int) {
 		_first = first
 		_rest = rest
 		_count = count
 		super.init(meta: meta)
 	}
 
-	class func create(initial: IList?) -> IPersistentList? {
-		var ret: IPersistentList? = PersistentList.empty() as! IPersistentList?
-		let it: NSEnumerator = initial!.objectEnumerator()
-		var obj: AnyObject? = it.nextObject()
-		while obj != nil {
-			ret = ret!.cons(obj!) as? IPersistentList
-			obj = it.nextObject()
+	class func create(initial: IList) -> IPersistentList? {
+		var ret: IPersistentList = EMPTY
+		for obj in initial.generate() {
+			ret = ret.cons(obj) as! IPersistentList
 		}
 		return ret
 	}
 
-	override func first() -> AnyObject {
+	public override var first : AnyObject {
 		return _first
 	}
 
-	override func next() -> ISeq? {
+	public override var next : ISeq {
 		if _count == 1 {
-			return nil
+			return EmptySeq()
 		}
-		return _rest as! ISeq?
+		return _rest as! ISeq
 	}
 
-	func peek() -> AnyObject? {
-		return self.first()
+	public var peek : AnyObject? {
+		return self.first
 	}
 
-	func pop() -> IPersistentStack? {
-		if _rest == nil {
-			return _SingletonEmptyList.withMeta(_meta)
+	public func pop() -> IPersistentStack {
+		if _rest.count != 0 {
+			return _rest
 		}
-		return _rest
+		return EMPTY.withMeta(_meta)
 	}
 
-	func pop() -> IPersistentList? {
-		if _rest == nil {
-			return _SingletonEmptyList.withMeta(_meta)
+	func pop() -> IPersistentList {
+		if _rest.count != 0 {
+			return _rest
 		}
-		return _rest
+		return EMPTY.withMeta(_meta)
 	}
 
-	override func count() -> UInt {
-		return UInt(_count)
+	public override var count : Int {
+		return _count
 	}
 
 	func cons(o: AnyObject) -> PersistentList {
@@ -86,24 +83,24 @@ class PersistentList: AbstractSeq, IPersistentList, IReducible {
 		return self
 	}
 
-	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
-		var ret: AnyObject = self.first()
-		for var s = self.next(); s != nil; s = s!.next() {
-			ret = combine(ret, s!.first()!)
+	public func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
+		var ret: AnyObject = self.first
+		for var s = self.next; s.count != 0; s = s.next {
+			ret = combine(ret, s.first!)
 		}
 		return ret
 	}
 
-	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
-		var ret: AnyObject = combine(initial, self.first())
-		for var s = self.next(); s != nil; s = s!.next() {
-			ret = combine(ret, s!.first()!)
+	public func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
+		var ret: AnyObject = combine(initial, self.first)
+		for var s = self.next; s.count != 0; s = s.next {
+			ret = combine(ret, s.first!)
 		}
 		return ret
 	}
 
-	override func empty() -> IPersistentCollection? {
-		return _SingletonEmptyList.withMeta(_meta)
+	public override var empty : IPersistentCollection {
+		return EMPTY.withMeta(_meta)
 	}
 }
 
@@ -121,72 +118,68 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return self
 	}
 
-	func hash() -> UInt {
+	var hash : UInt {
 		return 1
 	}
 
-	func isEqual(other: AnyObject?) -> Bool {
-		if let o = other {
-			return (o is ISequential
-				|| o is IList)
-				&& Utils.seq(o) == nil
-		}
-		return false
+	func isEqual(other: AnyObject) -> Bool {
+		return (other is ISequential
+			|| other is IList)
 	}
 
 	func equiv(o: AnyObject) -> Bool {
 		return self.isEqual(o)
 	}
 
-	func first() -> AnyObject? {
+	var first : AnyObject? {
 		return nil
 	}
 
-	func next() -> ISeq? {
-		return nil
+	var next : ISeq {
+		return self
 	}
 
-	func more() -> ISeq? {
+	var more : ISeq {
 		return self
 	}
 
 	func cons(o: AnyObject) -> PersistentList {
-		return PersistentList(meta: _meta, first: o, rest: nil, count: 1)
+		return PersistentList(meta: _meta, first: o, rest: EMPTY, count: 1)
 	}
 
-	func cons(other : AnyObject) -> IPersistentCollection? {
-		return PersistentList(meta: _meta, first: other, rest: nil, count: 1)
+	func cons(other : AnyObject) -> IPersistentCollection {
+		return PersistentList(meta: _meta, first: other, rest: EMPTY, count: 1)
 	}
 
 	func cons(other: AnyObject) -> ISeq {
-		return PersistentList(meta: _meta, first: other, rest: nil, count: 1)
+		return PersistentList(meta: _meta, first: other, rest: EMPTY, count: 1)
 	}
 
-	func empty() -> IPersistentCollection? {
+	var empty : IPersistentCollection {
 		return self
 	}
 
-	func peek() -> AnyObject? {
+	var peek : AnyObject? {
 		return nil
 	}
 
-	func pop() -> IPersistentList? {
+	func pop() -> IPersistentList {
 		fatalError("Can't pop empty list")
 	}
 
-	func pop() -> IPersistentStack? {
+	func pop() -> IPersistentStack {
 		fatalError("Can't pop empty list")
 	}
 
-	func count() -> UInt {
+	var count : Int {
 		return 0
 	}
 
-	func seq() -> ISeq? {
-		return nil
+	var seq : ISeq {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func isEmpty() -> Bool {
+	var isEmpty : Bool {
 		return true
 	}
 
@@ -194,20 +187,17 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 		return false
 	}
 
-	func objectEnumerator() -> NSEnumerator {
-		return NSEnumerator()
+
+	var toArray : Array<AnyObject> {
+		return Utils._emptyArray
 	}
 
-	func toArray() -> Array<AnyObject> {
-		return Utils._emptyArray()
-	}
-
-	func reify() -> IList? {
+	var reify : IList? {
 		return nil
 	}
 
 	func subListFromIndex(fromIndex: Int, toIndex: Int) -> IList? {
-		return self.reify()!.subListFromIndex(fromIndex, toIndex: toIndex)
+		return self.reify!.subListFromIndex(fromIndex, toIndex: toIndex)
 	}
 
 	func set(index: Int, element: AnyObject) -> AnyObject? {
@@ -216,9 +206,9 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 	func indexOf(o: AnyObject) -> Int {
-		var s: ISeq? = self.seq()
-		for var i = 0; s != nil; s = s!.next(), i++ {
-			if Utils.equiv(s!.first(), other: o) {
+		let s: ISeq = self.seq
+		for (entry, i) in zip(s.generate(), 0..<s.count) {
+			if Utils.equiv(entry, other: o) {
 				return i
 			}
 		}
@@ -226,15 +216,11 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 	func lastIndexOf(o: AnyObject) -> Int {
-		return self.reify()!.lastIndexOf(o)
+		return self.reify!.lastIndexOf(o)
 	}
 
 	func get(index: Int) -> AnyObject {
 		return Utils.nthOf(self, index: index)!
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return 0
 	}
 }
 

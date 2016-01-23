@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IIndexedSeq : ISeq, ISequential, ICounted {
-	func index() -> Int
+public protocol IIndexedSeq : ISeq, ISequential, ICounted {
+	var currentIndex : Int { get }
 }

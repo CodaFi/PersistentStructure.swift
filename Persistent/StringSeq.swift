@@ -10,10 +10,7 @@ class StringSeq: AbstractSeq, IIndexedSeq {
 	private var _string: NSString
 	private var _index: Int
 
-	convenience init?(s: NSString) {
-		if s.length == 0 {
-			return nil
-		}
+	convenience init(s: NSString) {
 		self.init(meta: nil, string: s, index: 0)
 	}
 
@@ -30,22 +27,22 @@ class StringSeq: AbstractSeq, IIndexedSeq {
 		return StringSeq(meta: meta, string: _string, index: _index)
 	}
 
-	override func first() -> AnyObject {
+	override var first : AnyObject {
 		return NSNumber(unsignedShort: _string.characterAtIndex(_index))
 	}
 
-	override func next() -> ISeq? {
+	override var next : ISeq {
 		if _index + 1 < _string.length {
 			return StringSeq(meta: _meta, string: _string, index: _index + 1)
 		}
-		return nil
+		return EmptySeq()
 	}
 
-	func index() -> Int {
+	var currentIndex : Int {
 		return _index
 	}
 
-	override func count() -> UInt {
-		return UInt(_string.length - _index)
+	override var count : Int {
+		return _string.length - _index
 	}
 }

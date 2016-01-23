@@ -6,19 +6,18 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class Obj: IObj, IMeta {
-	private var _meta: IPersistentMap?
+public class Obj: IObj, IMeta {
+	private let _meta: IPersistentMap?
 
 	init(meta: IPersistentMap?) {
 		_meta = meta
 	}
 
-	func meta() -> IPersistentMap? {
+	public var meta : IPersistentMap? {
 		return _meta
 	}
 
-	func withMeta(meta: IPersistentMap?) -> IObj? {
-//		RequestConcreteImplementation(self, _cmd, Obj.class)
-		return nil
+	public func withMeta(meta: IPersistentMap?) -> IObj {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

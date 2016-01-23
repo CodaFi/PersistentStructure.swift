@@ -6,7 +6,8 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import "murmur3.h"
 
 //! Project version number for Persistent.
 FOUNDATION_EXPORT double PersistentVersionNumber;

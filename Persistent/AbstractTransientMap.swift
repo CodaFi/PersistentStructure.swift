@@ -6,80 +6,79 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractTransientMap: NSObject, ITransientMap {
-	func ensureEditable() {
+public class AbstractTransientMap : ITransientMap {
+	func ensureEditable() { }
 
+	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap? {
-		return nil
-	}
-
-	func doWithout(key: AnyObject) -> ITransientMap? {
-		return nil
+	func doWithout(key: AnyObject) -> ITransientMap {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func doobjectForKey(key: AnyObject?,  notFound: AnyObject) -> AnyObject? {
-		return nil
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
 	func doCount() -> Int {
-		return 0
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func doPersistent() -> IPersistentMap? {
-		return nil
+	func doPersistent() -> IPersistentMap {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func conj(o: AnyObject) -> ITransientCollection? {
+	public func conj(o: AnyObject) -> ITransientCollection {
 		self.ensureEditable()
 		if let e = o as? MapEntry {
-			return self.associateKey(e.key()!, value: e.val()!)
+			return self.associateKey(e.key, value: e.val)
 		} else if let v: IPersistentVector = o as? IPersistentVector {
-			if v.count() != 2 {
+			guard let k1 = v.objectAtIndex(0), v1 = v.objectAtIndex(1) else {
 				fatalError("Vector arg to map conj: must be a pair")
 			}
-			return self.associateKey(v.objectAtIndex(0)!, value: v.objectAtIndex(1)!)
+			return self.associateKey(k1, value: v1)
 		}
-		var ret: ITransientMap? = self
-		for var es = Utils.seq(o); es != nil; es = es!.next() {
-			let e: MapEntry = es!.first() as! MapEntry
-			ret = ret!.associateKey(e.key()!, value: e.val()!)
+		var ret: ITransientMap = self
+		for var es : ISeq = Utils.seq(o); es.count != 0; es = es.next {
+			let e: MapEntry = es.first as! MapEntry
+			ret = ret.associateKey(e.key, value: e.val)
 		}
 		return ret
 	}
 
-	func objectForKey(key: AnyObject) -> AnyObject? {
-		return self.objectForKey(key, def: nil)
+	public func objectForKey(key: AnyObject) -> AnyObject? {
+		self.ensureEditable()
+		return self.doobjectForKey(key, notFound: NSNull())
 	}
 
-	func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap? {
+	public func associateKey(key: AnyObject, value val: AnyObject) -> ITransientMap {
 		self.ensureEditable()
 		return self.doassociateKey(key, val: val)
 	}
 
-	func without(key: AnyObject) -> ITransientMap? {
+	public func without(key: AnyObject) -> ITransientMap {
 		self.ensureEditable()
 		return self.doWithout(key)
 	}
 
-	func persistent() -> IPersistentCollection? {
+	public func persistent() -> IPersistentCollection {
 		self.ensureEditable()
 		return self.doPersistent()
 	}
 
-	func persistent() -> IPersistentMap? {
+	public func persistent() -> IPersistentMap {
 		self.ensureEditable()
 		return self.doPersistent()
 	}
 
-	func objectForKey(key: AnyObject, def notFound: AnyObject?) -> AnyObject? {
+	public func objectForKey(key: AnyObject, def notFound: AnyObject) -> AnyObject {
 		self.ensureEditable()
-		return self.doobjectForKey(key, notFound: notFound!)!
+		return self.doobjectForKey(key, notFound: notFound)!
 	}
 
-	func count() -> UInt {
+	public var count : Int {
 		self.ensureEditable()
-		return UInt(self.doCount())
+		return self.doCount()
 	}
 }

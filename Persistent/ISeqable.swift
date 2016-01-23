@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ISeqable {
-	func seq() -> ISeq?
+public protocol ISeqable {
+	var seq : ISeq { get }
 }

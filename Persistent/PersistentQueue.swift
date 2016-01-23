@@ -6,16 +6,16 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-private var EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: nil, rev: nil)
+private let EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: EmptySeq(), rev: PersistentVector.empty)
 
-class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
+public class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	private var _count: Int
-	private var _front: ISeq?
-	private var _rear: IPersistentVector?
+	private var _front: ISeq
+	private var _rear: IPersistentVector
 	private var _hash: Int
 	private var _hasheq: Int
 
-	init(meta: IPersistentMap?, count cnt: Int, seq f: ISeq?, rev r: IPersistentVector?) {
+	init(meta: IPersistentMap?, count cnt: Int, seq f: ISeq, rev r: IPersistentVector) {
 		_count = cnt
 		_front = f
 		_rear = r
@@ -24,116 +24,106 @@ class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 		super.init(meta: meta)
 	}
 
-	func equiv(obj: AnyObject) -> Bool {
+	public func equiv(obj: AnyObject) -> Bool {
 		if !(obj is ISequential) {
 			return false
 		}
-		var ms: ISeq? = Utils.seq(obj)
-		for var s : ISeq? = self.seq(); s != nil; s = s!.next(), ms = ms!.next() {
-			if ms == nil || !Utils.equiv((s!.first()), other: (ms!.first())) {
+		for (e1, e2) in zip(self.seq.generate(), Utils.seq(obj).generate()) {
+			if !Utils.equiv(e1, other: e2) {
 				return false
 			}
 		}
-		return ms == nil
+		return self.seq.count == Utils.seq(obj).count
 	}
 
 	func isEqual(obj: AnyObject) -> Bool {
 		if !(obj is ISequential) {
 			return false
 		}
-		var ms: ISeq? = Utils.seq(obj)
-		for var s = self.seq(); s != nil; s = s!.next(), ms = ms!.next() {
-			if ms == nil || !Utils.isEqual(s!.first(), other: ms!.first()) {
+		for (e1, e2) in zip(self.seq.generate(), Utils.seq(obj).generate()) {
+			if !Utils.equiv(e1, other: e2) {
 				return false
 			}
 		}
-		return ms == nil
+		return self.seq.count == Utils.seq(obj).count
 	}
 
-	func hash() -> UInt {
+	var hash : UInt {
 		if _hash == -1 {
 			var hash: UInt = 1
-			for var s = self.seq(); s != nil; s = s!.next() {
-				hash = 31 * hash + (s?.first() == nil ? 0 : UInt(s!.first()!.hash!))
+			for var s = self.seq; s.count != 0; s = s.next {
+				hash = 31 * hash + (s.first == nil ? 0 : UInt(s.first!.hash!))
 			}
 			_hash = Int(hash)
 		}
 		return UInt(_hash)
 	}
 
-	func hasheq() -> Int {
+	public var hasheq : Int {
 		if _hasheq == -1 {
 			_hasheq = Int(Murmur3.hashOrdered(self))
 		}
 		return _hasheq
 	}
 
-	func peek() -> AnyObject? {
-		return Utils.first(_front!)
+	public var peek : AnyObject? {
+		return Utils.first(_front)
 	}
 
-	func pop() -> IPersistentStack? {
-		if _front == nil {
-			return self
+	public func pop() -> IPersistentStack {
+		var f1: ISeq = _front.next
+		var r1: IPersistentVector = _rear
+		if f1.count == 0 {
+			f1 = Utils.seq(_rear)
+			r1 = PersistentVector.empty
 		}
-		var f1: ISeq? = _front!.next()
-		var r1: IPersistentVector? = _rear
-		if f1 == nil {
-			f1 = Utils.seq(_rear!)
-			r1 = nil
+		return PersistentQueue(meta: self.meta, count: _count - 1, seq: f1, rev: r1)
+	}
+
+	public var count : Int {
+		return _count
+	}
+
+	public var seq : ISeq {
+		if _front.count == 0 {
+			return EmptySeq()
 		}
-		return PersistentQueue(meta: self.meta(), count: _count - 1, seq: f1, rev: r1)
+		return QueueSeq(f: _front, rev: Utils.seq(_rear))
 	}
 
-	func count() -> UInt {
-		return UInt(_count)
-	}
-
-	func seq() -> ISeq? {
-		if _front == nil {
-			return nil
-		}
-		return QueueSeq(f: _front, rev: Utils.seq(_rear!))
-	}
-
-	func cons(other: AnyObject) -> IPersistentCollection? {
-		if _front == nil {
-			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: Utils.list(other), rev: nil)
+	public func cons(other : AnyObject) -> IPersistentCollection {
+		if _front.count == 0 {
+			return PersistentQueue(meta: self.meta, count: _count + 1, seq: Utils.list(other), rev: PersistentVector.empty)
 		} else {
-			return PersistentQueue(meta: self.meta(), count: _count + 1, seq: _front, rev: (_rear != nil ? _rear : PersistentVector.empty().cons(other)))
+			return PersistentQueue(meta: self.meta, count: _count + 1, seq: _front, rev: (_rear.count != 0 ? _rear : PersistentVector.empty.cons(other)))
 		}
 	}
 
-	func empty() -> IPersistentCollection? {
-		return EMPTY.withMeta(self.meta()) as! IPersistentCollection?
+	public var empty : IPersistentCollection {
+		if let m = self.meta {
+			return EMPTY.withMeta(m) as! IPersistentCollection
+		}
+		return EMPTY
 	}
 
-	override func withMeta(meta: IPersistentMap?) -> IObj? {
+	public override func withMeta(meta: IPersistentMap?) -> IObj {
 		return PersistentQueue(meta: meta, count: _count, seq: _front, rev: _rear)
 	}
 
-	func toArray() -> Array<AnyObject> {
-		return Utils.seqToArray(self.seq())
+	public var toArray : Array<AnyObject> {
+		return Utils.seqToArray(self.seq)
 	}
 
-	func isEmpty() -> Bool {
-		return self.count() == 0
+	public var isEmpty : Bool {
+		return self.count == 0
 	}
 
-	func containsObject(anObject: AnyObject) -> Bool {
-		for var s = self.seq(); s != nil; s = s!.next() {
-			if Utils.equiv(s!.first(), other: anObject) {
+	public func containsObject(anObject: AnyObject) -> Bool {
+		for var s = self.seq; s.count != 0; s = s.next {
+			if Utils.equiv(s.first, other: anObject) {
 				return true
 			}
 		}
 		return false
-	}
-
-	func objectEnumerator() -> NSEnumerator {
-		return SeqIterator(seq: self.seq())
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return self.objectEnumerator().countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
 }

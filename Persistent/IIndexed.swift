@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IIndexed : ICounted {
+public protocol IIndexed : ICounted {
 	func objectAtIndex(index : Int) -> AnyObject?
-	func objectAtIndex(index : Int, def : AnyObject) -> AnyObject?
+	func objectAtIndex(index : Int, def : AnyObject) -> AnyObject
 }

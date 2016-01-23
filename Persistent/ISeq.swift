@@ -6,9 +6,17 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ISeq : class, IPersistentCollection {
-	func first() -> AnyObject?
-	func next() -> ISeq?
-	func more() -> ISeq?
+public protocol ISeq : class, IPersistentCollection {
+	var first : AnyObject? { get }
+	var next : ISeq { get } 
+	var more : ISeq { get }
 	func cons(other: AnyObject) -> ISeq
+}
+
+extension ISeq {
+	typealias Generator = IndexingGenerator<Array<AnyObject>>
+	
+	func generate() -> IndexingGenerator<Array<AnyObject>> {
+		return Utils.seqToArray(self).generate()
+	}
 }

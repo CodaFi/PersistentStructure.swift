@@ -6,64 +6,65 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
-	var _impl: IPersistentMap?
+public class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
+	let _impl: IPersistentMap
 
 	private var _hash: Int32 = 0
 	private var _hasheq: Int32 = 0
 
-	init(impl: IPersistentMap?) {
+	init(impl: IPersistentMap) {
 		_impl = impl
 	}
 
-	func containsObject(o: AnyObject) -> Bool {
-		return _impl!.containsKey(o)
+	public func containsObject(o: AnyObject) -> Bool {
+		return _impl.containsKey(o)
 	}
 
-	func objectForKey(key: AnyObject) -> AnyObject {
-		return _impl!.objectForKey(key)!
+	public func objectForKey(key: AnyObject) -> AnyObject {
+		return _impl.objectForKey(key)!
 	}
 
-	func count() -> UInt {
-		return _impl!.count()
+	public var count : Int {
+		return _impl.count
 	}
 
-	func seq() -> ISeq? {
-		return KeySeq.create(self.seq())
+	public var seq : ISeq {
+		return KeySeq(seq: self.seq)
 	}
 
-	func isEqual(o: AnyObject) -> Bool {
+	public func isEqual(o: AnyObject) -> Bool {
 		return AbstractPersistentSet.setisEqual(self, other: o)
 	}
 
-	class func setisEqual(s1: IPersistentSet?, other obj: AnyObject) -> Bool {
-		if s1 === obj {
+	class func setisEqual(seq1: IPersistentSet?, other obj: AnyObject) -> Bool {
+		if seq1 === obj {
 			return true
 		}
-		if !(obj is ISet) {
+		
+		guard let m = obj as? ISet, s1 = seq1 else {
 			return false
 		}
-		let m: ISet? = obj as? ISet
-		if m?.count() != s1?.count() {
+		
+		if m.count != s1.count {
 			return false
 		}
-		for aM: AnyObject in m!.generate() {
-			if !s1!.containsObject(aM) {
+		for aM in m.generate() {
+			if !s1.containsObject(aM) {
 				return false
 			}
 		}
 		return true
 	}
 
-	func equiv(o: AnyObject) -> Bool {
+	public func equiv(o: AnyObject) -> Bool {
 		return AbstractPersistentSet.setisEqual(self, other: o)
 	}
 
-	func hash() -> UInt {
+	var hash : UInt {
 		if _hash == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s != nil; s = s?.next() {
-				let e: AnyObject = s!.first()!
+			for var s = self.seq; s.count != 0; s = s.next {
+				let e: AnyObject = s.first!
 				hash += Int32(Utils.hash(e))
 			}
 			_hash = hash
@@ -71,42 +72,34 @@ class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq {
 		return UInt(_hash)
 	}
 
-	func hasheq() -> Int {
+	public var hasheq : Int {
 		if _hasheq == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq(); s != nil; s = s!.next() {
-				hash += Utils.hasheq(s!.first())
+			for var s = self.seq; s.count != 0; s = s.next {
+				hash += Utils.hasheq(s.first)
 			}
 			_hasheq = hash
 		}
 		return Int(_hasheq)
 	}
 
-	func toArray() -> Array<AnyObject> {
-		return Utils.seqToArray(self.seq())
+	public var toArray : Array<AnyObject> {
+		return Utils.seqToArray(self.seq)
 	}
 
-	func isEmpty() -> Bool {
-		return self.count() == 0
+	public var isEmpty : Bool {
+		return self.count == 0
 	}
 
-	func objectEnumerator() -> NSEnumerator {
-		return SeqIterator(seq: self.seq())
+	public func disjoin(key: AnyObject) -> IPersistentSet {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func disjoin(key: AnyObject) -> IPersistentSet? {
-		return nil
+	public func cons(other : AnyObject) -> IPersistentCollection {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 
-	func cons(other: AnyObject) -> IPersistentCollection? {
-		return nil
-	}
-
-	func empty() -> IPersistentCollection? {
-		return nil
-	}
-
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
-		return 0
+	public var empty : IPersistentCollection {
+		fatalError("\(__FUNCTION__) unimplemented")
 	}
 }

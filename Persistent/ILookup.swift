@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol ILookup {
+public protocol ILookup {
 	func objectForKey(key : AnyObject) -> AnyObject?
-	func objectForKey(key : AnyObject, def : AnyObject?) -> AnyObject?
+	func objectForKey(key : AnyObject, def : AnyObject) -> AnyObject
 }

@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IEditableCollection {
-	func asTransient() -> ITransientCollection?
+public protocol IEditableCollection {
+	var asTransient : ITransientCollection { get }
 }

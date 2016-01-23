@@ -6,10 +6,10 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-class ArrayChunk: NSObject, IChunk {
-	private var _array: Array<AnyObject>
-	private var _off: Int
-	private var _end: Int
+class ArrayChunk : IChunk {
+	private let _array: Array<AnyObject>
+	private let _off: Int
+	private let _end: Int
 
 	convenience init(array: Array<AnyObject>) {
 		self.init(array: array, offset: 0, end: array.count)
@@ -29,18 +29,18 @@ class ArrayChunk: NSObject, IChunk {
 		return _array[_off + i]
 	}
 
-	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject? {
-		if i >= 0 && i < Int(self.count()) {
-			return self.objectAtIndex(i)
+	func objectAtIndex(i: Int, def notFound: AnyObject) -> AnyObject {
+		if i >= 0 && i < self.count {
+			return self.objectAtIndex(i)!
 		}
 		return notFound
 	}
 
-	func count() -> UInt {
-		return UInt(_end - _off)
+	var count : Int {
+		return _end - _off
 	}
 
-	func tail() -> IChunk {
+	var tail : IChunk {
 		if _off == _end {
 			fatalError("Cannot request tail of empty chunk.")
 		}
@@ -52,7 +52,7 @@ class ArrayChunk: NSObject, IChunk {
 		if Utils.isReduced(ret) {
 			return ret
 		}
-		for var x = _off + 1; x < _end; x++ {
+		for var x = _off + 1; x < _end; x = x.successor() {
 			ret = f(ret, _array[x])
 			if Utils.isReduced(ret) {
 				return ret

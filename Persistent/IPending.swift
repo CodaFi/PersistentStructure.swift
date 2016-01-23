@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IPending {
-	func isRealized() -> Bool
+public protocol IPending {
+	var isRealized : Bool { get }
 }

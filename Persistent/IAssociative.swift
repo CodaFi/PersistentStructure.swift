@@ -6,8 +6,8 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IAssociative : IPersistentCollection, ILookup {
+public protocol IAssociative : IPersistentCollection, ILookup {
 	func containsKey(key : AnyObject) -> Bool
 	func entryForKey(key : AnyObject) -> IMapEntry?
-	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative?
+	func associateKey(key : AnyObject, withValue value : AnyObject) -> IAssociative
 }

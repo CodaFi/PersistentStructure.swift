@@ -6,7 +6,7 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IPersistentMap : class, IAssociative, ICounted {
-	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap?
-	func without(key : AnyObject) -> IPersistentMap?
+public protocol IPersistentMap : class, IAssociative, ICounted {
+	func associateEx(key : AnyObject, value : AnyObject) -> IPersistentMap
+	func without(key : AnyObject) -> IPersistentMap
 }

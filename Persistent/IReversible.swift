@@ -6,6 +6,6 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-protocol IReversible {
-	func reversedSeq() -> ISeq?
+public protocol IReversible {
+	var reversedSeq : ISeq { get }
 }
