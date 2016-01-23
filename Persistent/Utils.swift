@@ -370,9 +370,9 @@ class Utils: NSObject {
 			if k2 == nil {
 				return .OrderedAscending
 			}
-			if k1!.respondsToSelector("compare:") {
-				return k1!.compare(k2!)
-			}
+//			if k1!.respondsToSelector("compare:") {
+//				return k1!.compare(k2!)
+//			}
 			return .OrderedSame
 //			return (k1 as? Comparable)!.compareTo(k2)
 		}
