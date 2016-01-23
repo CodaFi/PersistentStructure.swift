@@ -67,7 +67,7 @@ func Rest(coll: AnyObject) -> ISeq {
 }
 
 func Conj(x: AnyObject, _ coll: IPersistentCollection) -> IPersistentCollection {
-	return Utils.conj(x, to: coll)!
+	return Utils.conj(x, to: coll)
 }
 
 func Assoc(coll: IPersistentCollection, _ key: AnyObject, _ val: AnyObject) -> IPersistentCollection {

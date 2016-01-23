@@ -10,13 +10,21 @@ private var NOEDIT: NSThread? = nil
 private let EMPTYNODE: Node = Node(edit: NOEDIT)
 private let EMPTY: PersistentVector = PersistentVector(meta: nil, count: 0, shift: 5, node: EMPTYNODE, tail: [])
 
-public class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
+public final class PersistentVector: AbstractPersistentVector, IObj, IEditableCollection {
 	private var _count: Int
 	private var _shift: Int
 	private var _root: Node
 	private var _tail: Array<AnyObject>
 	private var _meta: IPersistentMap?
 
+	public override init() {
+		_meta = nil
+		_count = 0
+		_shift = 5
+		_root = EMPTYNODE
+		_tail = []
+	}
+	
 	init(cnt: Int, shift: Int, root: INode, tail: Array<AnyObject>) {
 		_meta = nil
 		_count = cnt
@@ -120,7 +128,7 @@ public class PersistentVector: AbstractPersistentVector, IObj, IEditableCollecti
 	}
 
 	public var asTransient : ITransientCollection {
-		return TransientVector(v: self)
+		return TransientVector(self)
 	}
 
 	var tailoff : Int {

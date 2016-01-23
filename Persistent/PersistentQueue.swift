@@ -8,13 +8,17 @@
 
 private let EMPTY: PersistentQueue = PersistentQueue(meta: nil, count: 0, seq: EmptySeq(), rev: PersistentVector.empty)
 
-public class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
+public final class PersistentQueue: Obj, IPersistentList, ICollection, ICounted, IHashEq {
 	private var _count: Int
 	private var _front: ISeq
 	private var _rear: IPersistentVector
 	private var _hash: Int
 	private var _hasheq: Int
 
+	public convenience init() {
+		self.init(meta: nil, count: 0, seq: EmptySeq(), rev: PersistentVector.empty)
+	}
+	
 	init(meta: IPersistentMap?, count cnt: Int, seq f: ISeq, rev r: IPersistentVector) {
 		_count = cnt
 		_front = f

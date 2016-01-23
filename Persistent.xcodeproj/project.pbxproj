@@ -343,6 +343,12 @@
 		82A71FD71C542891003F7B96 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 82A71FC01C542823003F7B96 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		82A71FD91C54289B003F7B96 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 82A71FBC1C542823003F7B96 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		82A71FDA1C54289B003F7B96 /* Persistent.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 82A6672D1BF9166400EBCDFA /* Persistent.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		82A71FDD1C5429FE003F7B96 /* Arbitrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A71FDC1C5429FE003F7B96 /* Arbitrary.swift */; };
+		82A71FDE1C5429FE003F7B96 /* Arbitrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A71FDC1C5429FE003F7B96 /* Arbitrary.swift */; };
+		82A71FDF1C5429FE003F7B96 /* Arbitrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A71FDC1C5429FE003F7B96 /* Arbitrary.swift */; };
+		82A71FE41C542D30003F7B96 /* CollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A71FE31C542D30003F7B96 /* CollectionSpec.swift */; };
+		82A71FE51C542D30003F7B96 /* CollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A71FE31C542D30003F7B96 /* CollectionSpec.swift */; };
+		82A71FE61C542D30003F7B96 /* CollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82A71FE31C542D30003F7B96 /* CollectionSpec.swift */; };
 		82BACD631C29FB0C006BA8F5 /* StringSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD621C29FB0C006BA8F5 /* StringSeq.swift */; };
 		82BACD651C29FD2F006BA8F5 /* PersistentVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */; };
 		82BACD671C29FF25006BA8F5 /* ChunkedSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */; };
@@ -569,6 +575,8 @@
 		82A71EE21C54236D003F7B96 /* Persistent-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Persistent-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82A71F4F1C5423B5003F7B96 /* Persistent.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Persistent.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82A71FB21C542823003F7B96 /* SwiftCheck.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftCheck.xcodeproj; path = Carthage/Checkouts/SwiftCheck/SwiftCheck.xcodeproj; sourceTree = SOURCE_ROOT; };
+		82A71FDC1C5429FE003F7B96 /* Arbitrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arbitrary.swift; sourceTree = "<group>"; };
+		82A71FE31C542D30003F7B96 /* CollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSpec.swift; sourceTree = "<group>"; };
 		82BACD621C29FB0C006BA8F5 /* StringSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringSeq.swift; sourceTree = "<group>"; };
 		82BACD641C29FD2F006BA8F5 /* PersistentVector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentVector.swift; sourceTree = "<group>"; };
 		82BACD661C29FF25006BA8F5 /* ChunkedSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChunkedSeq.swift; sourceTree = "<group>"; };
@@ -737,6 +745,8 @@
 		82A6673B1BF9166400EBCDFA /* PersistentTests */ = {
 			isa = PBXGroup;
 			children = (
+				82A71FDC1C5429FE003F7B96 /* Arbitrary.swift */,
+				82A71FE31C542D30003F7B96 /* CollectionSpec.swift */,
 				82A71FB21C542823003F7B96 /* SwiftCheck.xcodeproj */,
 				82A6673E1BF9166400EBCDFA /* Info.plist */,
 			);
@@ -1288,6 +1298,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82A71FE41C542D30003F7B96 /* CollectionSpec.swift in Sources */,
+				82A71FDD1C5429FE003F7B96 /* Arbitrary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1390,6 +1402,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82A71FE51C542D30003F7B96 /* CollectionSpec.swift in Sources */,
+				82A71FDE1C5429FE003F7B96 /* Arbitrary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1492,6 +1506,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82A71FE61C542D30003F7B96 /* CollectionSpec.swift in Sources */,
+				82A71FDF1C5429FE003F7B96 /* Arbitrary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1754,17 +1770,20 @@
 		82A667451BF9166400EBCDFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = PersistentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TypeLift.PersistentTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		82A667461BF9166400EBCDFA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = PersistentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -1817,6 +1836,7 @@
 		82A71E5C1C54222B003F7B96 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PersistentTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -1824,12 +1844,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		82A71E5D1C54222B003F7B96 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PersistentTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -1883,11 +1905,13 @@
 		82A71EEE1C54236E003F7B96 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PersistentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
@@ -1895,6 +1919,7 @@
 		82A71EEF1C54236E003F7B96 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = PersistentTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.typelift.Persistent-tvOSTests";
