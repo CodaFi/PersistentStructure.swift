@@ -391,30 +391,32 @@ class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorted {
 		return t.replaceKey(t.key(), byValue: (c == .OrderedSame) ? val : t.val(), left: (c == .OrderedDescending) ? self.replace(t.left()!, key: key, val: val) : t.left()!, right: (c == .OrderedAscending) ? self.replace(t.right()!, key: key, val: val) : t.right()!)!
 	}
 
-	class func red(key: AnyObject, val: AnyObject?, left: TreeNode?, right: TreeNode?) -> RedTreeNode {
-		if left == nil && right == nil {
-			if val == nil {
+	class func red(key: AnyObject, val vale: AnyObject?, left lefte: TreeNode?, right righte: TreeNode?) -> RedTreeNode {
+		guard let left = lefte, right = righte else {
+			guard let val = vale else {
 				return RedTreeNode(k: key)
 			}
-			return RedTreeValue(key: key, val: val!)
+			return RedTreeValue(key: key, val: val)
 		}
-		if val == nil {
-			return RedTreeBranch(k: key, left: left!, right: right!)
+		
+		guard let val = vale else {
+			return RedTreeBranch(k: key, left: left, right: right)
 		}
-		return RedTreeBranchValue(key: key, val: val!, left: left!, right: right!)
+		
+		return RedTreeBranchValue(key: key, val: val, left: left, right: right)
 	}
 
-	class func black(key: AnyObject, val: AnyObject?, left: TreeNode?, right: TreeNode?) -> BlackTreeNode {
-		if left == nil && right == nil {
-			if val == nil {
+	class func black(key: AnyObject, val vale: AnyObject?, left lefte: TreeNode?, right righte: TreeNode?) -> BlackTreeNode {
+		guard let left = lefte, right = righte else {
+			guard let val = vale else {
 				return BlackTreeNode(k: key)
 			}
-			return BlackTreeValue(key: key, val: val!)
+			return BlackTreeValue(key: key, val: val)
 		}
-		if val == nil {
-			return BlackTreeBranch(k: key, left: left!, right: right!)
+		guard let val = vale else {
+			return BlackTreeBranch(k: key, left: left, right: right)
 		}
-		return BlackTreeBranchValue(key: key, val: val!, left: left!, right: right!)
+		return BlackTreeBranchValue(key: key, val: val, left: left, right: right)
 	}
 
 	func meta() -> IPersistentMap? {

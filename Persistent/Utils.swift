@@ -105,10 +105,12 @@ class Utils: NSObject {
 		return -1
 	}
 
-	class func containsObject(coll: AnyObject?, key: AnyObject) -> Bool {
-		if coll == nil {
+	class func containsObject(colle: AnyObject?, key: AnyObject) -> Bool {
+		guard let coll = colle else {
 			return false
-		} else if let c = coll as? (IAssociative) {
+		} 
+		
+		if let c = coll as? (IAssociative) {
 			return c.containsKey(key)
 		} else if let c = coll as? (IPersistentSet) {
 			return c.containsObject(key)

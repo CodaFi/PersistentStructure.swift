@@ -63,9 +63,9 @@ class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHashEq /*, 
 					return false
 				}
 			}
-			//			if ms != nil {
-			//				return false
-			//			}
+//			if ms != nil {
+//				return false
+//			}
 		}
 		return true
 	}

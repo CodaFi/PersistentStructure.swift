@@ -160,8 +160,8 @@ class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		if Utils.isReduced(initial) {
 			return (initial as? IDeref)!.deref()
 		}
-		if _root != nil {
-			return _root!.kvreduce(f, initial: initial)
+		if let r = _root {
+			return r.kvreduce(f, initial: initial)
 		}
 		return initial
 	}

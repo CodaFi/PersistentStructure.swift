@@ -37,8 +37,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 
 	func seq() -> ISeq {
 		let _ = self.sval()
-		if _secondValue != nil {
-			var ls : AnyObject = _secondValue!
+		if var ls = _secondValue {
 			_secondValue = nil
 			while let cc = ls as? LazySeq {
 				ls = cc.sval()
