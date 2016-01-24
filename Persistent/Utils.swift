@@ -202,7 +202,7 @@ class Utils: NSObject {
 		}
 	}
 
-	class func conj(x: AnyObject, to colle: IPersistentCollection?) -> IPersistentCollection? {
+	class func conj(x: AnyObject, to colle: IPersistentCollection?) -> IPersistentCollection {
 		guard let coll = colle else {
 			return PersistentList(first: x)
 		}
@@ -224,6 +224,14 @@ class Utils: NSObject {
 			return PersistentArrayMap(initial: [])
 		}
 		return (coll as! IAssociative).associateKey(key, withValue: val)
+	}
+	
+	class func into(to : IPersistentCollection, _ from : AnyObject) -> IPersistentCollection {
+		var res : IPersistentCollection = to 
+		for entry in seq(from).generate() {
+			res = conj(entry, to: res)
+		}
+		return res
 	}
 
 	class func first(x: AnyObject) -> AnyObject? {

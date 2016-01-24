@@ -6,13 +6,17 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-public class TransientVector : ITransientVector, ICounted {
+public final class TransientVector : ITransientVector, ICounted {
 	private var _count: Int
 	private var _shift: Int
 	private var _root: Node
 	private var _tail: Array<AnyObject>
 
-	init(v: PersistentVector) {
+	public convenience init() {
+		self.init(PersistentVector.empty)
+	}
+	
+	public init(_ v: PersistentVector) {
 		_count = Int(v.count)
 		_shift = v.shift
 		_root = TransientVector.editableRoot(v.root)
