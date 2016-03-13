@@ -18,6 +18,6 @@ public class Obj: IObj, IMeta {
 	}
 
 	public func withMeta(meta: IPersistentMap?) -> IObj {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 }

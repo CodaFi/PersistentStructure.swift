@@ -6,14 +6,14 @@
 //  Copyright © 2015 TypeLift. All rights reserved.
 //
 
-func ArrayCopy(src : Array<AnyObject>, _ srcPos : UInt, var _ dest : Array<AnyObject>, _ destPos : UInt, _ length : UInt) -> Array<AnyObject> {
+func ArrayCopy(src : Array<AnyObject>, _ srcPos : UInt, inout _ dest : Array<AnyObject>, _ destPos : UInt, _ length : UInt) -> Array<AnyObject> {
 	var mergeArr : Array<AnyObject> = []
 	mergeArr.reserveCapacity(Int(length))
-	for var i = Int(srcPos), j = 0; i < Int(srcPos + length); i = i.successor(), j = j.successor() {
-		mergeArr[j] = src[i];
+	for (i, j) in zip(srcPos..<(srcPos + length), 0..<length) {
+		mergeArr[Int(j)] = src[Int(i)];
 	}
-	for var i = Int(destPos), j = 0; i < Int(destPos + length); i = i.successor(), j = j.successor() {
-		dest[i] = mergeArr[j]
+	for (i, j) in zip(destPos..<(destPos + length), 0..<length) {
+		dest[Int(i)] = mergeArr[Int(j)]
 	}
 	return dest;
 }
@@ -80,14 +80,13 @@ class Utils: NSObject {
 		return Utils.countFrom(Utils.ret1o(o, null: nil))
 	}
 
-	class func countFrom(var obj: AnyObject?) -> Int {
+	class func countFrom(obj: AnyObject?) -> Int {
 		guard let o = obj else {
 			return 0
 		}
 		
 		if let _ = o as? (IPersistentCollection) {
 			var s: ISeq? = Utils.seq(o)
-			obj = nil
 			var i: Int = 0
 			for ; s != nil; s = s!.next {
 				if let cc = s as? (ICounted) {
@@ -96,9 +95,9 @@ class Utils: NSObject {
 				i = i.successor()
 			}
 			return i
-		} else if o.respondsToSelector("length") {
+		} else if o.respondsToSelector(#selector(_NSStringCoreType.length)) {
 			return o.length
-		} else if o.respondsToSelector("count") {
+		} else if o.respondsToSelector(Selector("count")) {
 			return o.count
 		}
 //		RequestConcreteImplementation(o, "count", o.class())
@@ -145,8 +144,8 @@ class Utils: NSObject {
 		
 		if let c = coll as? (NSString) {
 			return NSNumber(unsignedShort: c.characterAtIndex(n))
-		} else if coll.respondsToSelector("objectAtIndexedSubscript:") {
-			return coll.performSelector("objectAtIndexedSubscript:", withObject: n).takeRetainedValue()
+		} else if coll.respondsToSelector(#selector(NSArray.objectAtIndex(_:))) {
+			return coll.performSelector(#selector(NSArray.objectAtIndex(_:)), withObject: n).takeRetainedValue()
 		} else if let e = coll as? (MapEntry) {
 			if n == 0 {
 				return e.key
@@ -180,10 +179,14 @@ class Utils: NSObject {
 			}
 			return notFound
 		} else if let _ = coll as? (ISequential) {
-			var seq: ISeq = Utils.seq(coll!)
-			for var i = 0; i <= n && seq.count != 0; i = i.successor(), seq = seq.next {
+			let seq: ISeq = Utils.seq(coll!)
+			guard seq.count != 0 else {
+				return notFound
+			}
+			
+			for (i, e) in zip((0...n), seq.generate()) {
 				if i == n {
-					return seq.first!
+					return e
 				}
 			}
 			return notFound
@@ -345,8 +348,8 @@ class Utils: NSObject {
 	class func removePair(array: Array<AnyObject>, index i: Int) -> Array<AnyObject> {
 		var newArray: Array<AnyObject> = []
 		newArray.reserveCapacity(array.count - 2)
-		ArrayCopy(array, 0, newArray, 0, UInt(2 * i))
-		ArrayCopy(array, UInt(2 * (i + 1)), newArray, UInt(2 * i), UInt(newArray.count - 2 * i))
+		ArrayCopy(array, 0, &newArray, 0, UInt(2 * i))
+		ArrayCopy(array, UInt(2 * (i + 1)), &newArray, UInt(2 * i), UInt(newArray.count - 2 * i))
 		return newArray
 	}
 

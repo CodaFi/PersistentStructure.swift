@@ -53,7 +53,7 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 
 	var count : Int {
 		var c: Int = 0
-		for var s = self.seq; s.count != 0; s = s.next {
+		for _ in self.seq.generate() {
 			c = c.successor()
 		}
 		return c
@@ -132,8 +132,8 @@ class LazySeq : ISeq, ISequential, IList, IPending, IHashEq {
 	}
 
 	func containsObject(o: AnyObject) -> Bool {
-		for var s = self.seq; s.count != 0; s = s.next {
-			if Utils.equiv(s.first, other: o) {
+		for e in self.seq.generate() {
+			if Utils.equiv(e, other: o) {
 				return true
 			}
 		}

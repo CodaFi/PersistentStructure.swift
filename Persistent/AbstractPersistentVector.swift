@@ -154,7 +154,7 @@ public class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHash
 	}
 
 	public func lastIndexOf(o: AnyObject) -> Int {
-		for var i = Int(self.count) - 1; i >= 0; i-- {
+		for i in Int(self.count).predecessor().stride(through: 0, by: -1) {
 			if Utils.equiv(self.objectAtIndex(i)!, other: (o)) {
 				return i
 			}
@@ -167,7 +167,7 @@ public class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHash
 	}
 
 	func set(index: Int, element: AnyObject) -> AnyObject? {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public var peek : AnyObject? {
@@ -236,8 +236,8 @@ public class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHash
 	}
 
 	public func containsObject(o: AnyObject) -> Bool {
-		for var s = self.seq; s.count != 0; s = s.next {
-			if Utils.equiv(s.first, other: o) {
+		for e in self.seq.generate() {
+			if Utils.equiv(e, other: o) {
 				return true
 			}
 		}
@@ -268,26 +268,26 @@ public class AbstractPersistentVector : IPersistentVector, IList, IRandom, IHash
 	}
 
 	public func assocN(i: Int, value val: AnyObject) -> IPersistentVector {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public func cons(other : AnyObject) -> IPersistentCollection {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 	
 	public func cons(o: AnyObject) -> IPersistentVector {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public var empty : IPersistentCollection {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public func pop() -> IPersistentStack {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public func objectAtIndex(i: Int) -> AnyObject? {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 }

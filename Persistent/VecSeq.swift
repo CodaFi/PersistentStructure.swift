@@ -47,7 +47,7 @@ class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
 
 	func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = _vector.objectAtIndex(_index)!
-		for var x = _index + 1; x < _vector.count; x = x.successor() {
+		for x in _index.successor()..<_vector.count {
 			ret = combine(ret, _vector.objectAtIndex(x)!)
 		}
 		return ret
@@ -55,7 +55,7 @@ class VecSeq: AbstractSeq, IIndexedSeq, IReducible {
 
 	func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = combine(initial, _vector.objectAtIndex(_index)!)
-		for var x = _index + 1; x < _vector.count; x = x.successor() {
+		for x in _index.successor()..<_vector.count {
 			ret = combine(ret, _vector.objectAtIndex(x)!)
 		}
 		return ret

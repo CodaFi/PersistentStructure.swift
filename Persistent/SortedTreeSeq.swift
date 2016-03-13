@@ -36,7 +36,9 @@ class SortedTreeSeq: AbstractSeq, IObj {
 		self.init(stack: SortedTreeSeq.pushNode(t, stack: EmptySeq(), ascending: asc), ascending: asc, count: cnt)
 	}
 
-	class func pushNode(var t: TreeNode?, var stack: ISeq, ascending asc: Bool) -> ISeq {
+	class func pushNode(tren: TreeNode?, stack seq: ISeq, ascending asc: Bool) -> ISeq {
+		var t = tren
+		var stack = seq
 		while t != nil {
 			stack = Utils.cons(t!, to: stack)
 			t = asc ? t!.left : t!.right

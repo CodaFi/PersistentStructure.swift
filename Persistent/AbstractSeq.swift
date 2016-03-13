@@ -89,11 +89,11 @@ public class AbstractSeq : ISeq, ISequential, IList, IHashEq {
 	}
 
 	public var first : AnyObject? {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public var next : ISeq {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public var empty : IPersistentCollection {

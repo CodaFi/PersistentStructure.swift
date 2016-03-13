@@ -42,6 +42,6 @@ public class AbstractTransientSet : ITransientSet {
 	}
 
 	public func persistent() -> IPersistentCollection {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 }

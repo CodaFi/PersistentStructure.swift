@@ -63,8 +63,7 @@ public class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq 
 	var hash : UInt {
 		if _hash == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq; s.count != 0; s = s.next {
-				let e: AnyObject = s.first!
+			for e in self.seq.generate() {
 				hash += Int32(Utils.hash(e))
 			}
 			_hash = hash
@@ -75,8 +74,8 @@ public class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq 
 	public var hasheq : Int {
 		if _hasheq == -1 {
 			var hash: Int32 = 0
-			for var s = self.seq; s.count != 0; s = s.next {
-				hash += Utils.hasheq(s.first)
+			for e in self.seq.generate() {
+				hash += Utils.hasheq(e)
 			}
 			_hasheq = hash
 		}
@@ -92,14 +91,14 @@ public class AbstractPersistentSet : IPersistentSet, ICollection, ISet, IHashEq 
 	}
 
 	public func disjoin(key: AnyObject) -> IPersistentSet {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public func cons(other : AnyObject) -> IPersistentCollection {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public var empty : IPersistentCollection {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 }

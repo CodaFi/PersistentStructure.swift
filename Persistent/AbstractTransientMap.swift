@@ -10,23 +10,23 @@ public class AbstractTransientMap : ITransientMap {
 	func ensureEditable() { }
 
 	func doassociateKey(key: AnyObject,  val: AnyObject) -> ITransientMap {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	func doWithout(key: AnyObject) -> ITransientMap {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	func doobjectForKey(key: AnyObject?,  notFound: AnyObject) -> AnyObject? {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	func doCount() -> Int {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	func doPersistent() -> IPersistentMap {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public func conj(o: AnyObject) -> ITransientCollection {
@@ -40,8 +40,13 @@ public class AbstractTransientMap : ITransientMap {
 			return self.associateKey(k1, value: v1)
 		}
 		var ret: ITransientMap = self
-		for var es : ISeq = Utils.seq(o); es.count != 0; es = es.next {
-			let e: MapEntry = es.first as! MapEntry
+		let es = Utils.seq(o)
+		guard es.count != 0 else {
+			return ret
+		}
+		
+		for el in es.generate() {
+			let e: MapEntry = el as! MapEntry
 			ret = ret.associateKey(e.key, value: e.val)
 		}
 		return ret

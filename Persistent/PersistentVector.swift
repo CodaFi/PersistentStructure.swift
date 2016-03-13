@@ -53,7 +53,7 @@ public final class PersistentVector: AbstractPersistentVector, IObj, IEditableCo
 			if i >= self.tailoff {
 				var newTail: Array<AnyObject> = []
 				newTail.reserveCapacity(_tail.count)
-				ArrayCopy(_tail, 0, newTail, 0, UInt(_tail.count))
+				ArrayCopy(_tail, 0, &newTail, 0, UInt(_tail.count))
 				newTail[i & 0x01f] = val
 				return PersistentVector(meta: self.meta, count: _count, shift: _shift, node: _root, tail: newTail)
 			}
@@ -71,7 +71,7 @@ public final class PersistentVector: AbstractPersistentVector, IObj, IEditableCo
 				return _tail
 			}
 			var node: Node = _root
-			for var level = _shift; level > 0; level -= 5 {
+			for level in _shift.stride(to: 0, by: -5) {
 				node = node.array[(i >> level) & 0x01f] as! Node
 			}
 			return node.array
@@ -177,7 +177,7 @@ public final class PersistentVector: AbstractPersistentVector, IObj, IEditableCo
 		if _count - self.tailoff < 32 {
 			var newTail: Array<AnyObject> = []
 			newTail.reserveCapacity(_tail.count + 1)
-			ArrayCopy(_tail, 0, newTail, 0, UInt(_tail.count))
+			ArrayCopy(_tail, 0, &newTail, 0, UInt(_tail.count))
 			newTail[_tail.count] = val
 			return PersistentVector(meta: self.meta, count: _count + 1, shift: _shift, node: _root, tail: newTail)
 		}
@@ -237,7 +237,7 @@ public final class PersistentVector: AbstractPersistentVector, IObj, IEditableCo
 		var step: Int = 0
 		for i in 0.stride(to: _count, by: step) {
 			var array: Array = self.arrayFor(i)
-			for var j = 0; j < array.count; j = j.successor() {
+			for j in 0..<array.count {
 				initial = f(initial, (j + i), array[j])
 				if Utils.isReduced(initial) {
 					return (initial as! IDeref).deref
@@ -261,7 +261,7 @@ public final class PersistentVector: AbstractPersistentVector, IObj, IEditableCo
 		if _count - self.tailoff > 1 {
 			var newTail: Array<AnyObject> = []
 			newTail.reserveCapacity(_tail.count - 1)
-			ArrayCopy(_tail, 0, newTail, 0, UInt(newTail.count))
+			ArrayCopy(_tail, 0, &newTail, 0, UInt(newTail.count))
 			return PersistentVector(meta: self.meta, count: _count - 1, shift: _shift, node: _root, tail: newTail)
 		}
 		let newtail: Array = self.arrayFor(_count - 2)

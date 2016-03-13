@@ -76,10 +76,10 @@ class BitmapIndexedNode : INode {
 			} else {
 				var newArray: Array<AnyObject> = []
 				newArray.reserveCapacity(2 * (n + 1))
-				ArrayCopy(_array, 0, newArray, 0, UInt(2 * idx))
+				ArrayCopy(_array, 0, &newArray, 0, UInt(2 * idx))
 				newArray[2 * idx] = key
 				newArray[2 * idx + 1] = val
-				ArrayCopy(_array, UInt(2 * idx), newArray, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
+				ArrayCopy(_array, UInt(2 * idx), &newArray, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
 				return BitmapIndexedNode(onThread: nil, bitmap: _bitmap | bit, array: newArray)
 			}
 		}
@@ -162,7 +162,7 @@ class BitmapIndexedNode : INode {
 		let n: Int = Utils.bitCount(UInt(_bitmap))
 		var newArray: Array<AnyObject> = []
 		newArray.reserveCapacity(n >= 0 ? 2 * (n + 1) : 4)
-		ArrayCopy(_array, 0, newArray, 0, UInt(2 * n))
+		ArrayCopy(_array, 0, &newArray, 0, UInt(2 * n))
 		return BitmapIndexedNode(onThread: _edit, bitmap: _bitmap, array: newArray)
 	}
 
@@ -185,7 +185,7 @@ class BitmapIndexedNode : INode {
 		}
 		let editable: BitmapIndexedNode = self.ensureEditable(edit) as! BitmapIndexedNode
 		editable._bitmap ^= bit
-		ArrayCopy(editable._array, UInt(2 * (i + 1)), editable._array, UInt(2 * i), UInt(editable._array.count - 2 * (i + 1)))
+		ArrayCopy(editable._array, UInt(2 * (i + 1)), &editable._array, UInt(2 * i), UInt(editable._array.count - 2 * (i + 1)))
 		editable._array.removeAtIndex(editable._array.count - 2)
 		editable._array.removeAtIndex(editable._array.count - 1)
 		return editable
@@ -215,7 +215,7 @@ class BitmapIndexedNode : INode {
 			let n: Int = Utils.bitCount(UInt(_bitmap))
 			if n * 2 < _array.count {
 				let editable: BitmapIndexedNode = self.ensureEditable(edit!) as! BitmapIndexedNode
-				ArrayCopy(editable._array, UInt(2 * idx), editable._array, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
+				ArrayCopy(editable._array, UInt(2 * idx), &editable._array, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
 				editable._array[2 * idx] = key
 				editable._array[2 * idx + 1] = val
 				editable._bitmap |= bit
@@ -240,10 +240,10 @@ class BitmapIndexedNode : INode {
 			} else {
 				var newArray: Array<AnyObject> = []
 				newArray.reserveCapacity(2 * (n + 4))
-				ArrayCopy(_array, 0, newArray, 0, UInt(2 * idx))
+				ArrayCopy(_array, 0, &newArray, 0, UInt(2 * idx))
 				newArray[2 * idx] = key
 				newArray[2 * idx + 1] = val
-				ArrayCopy(_array, UInt(2 * idx), newArray, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
+				ArrayCopy(_array, UInt(2 * idx), &newArray, UInt(2 * (idx + 1)), UInt(2 * (n - idx)))
 				let editable: BitmapIndexedNode = self.ensureEditable(edit!) as! BitmapIndexedNode
 				editable._array = newArray
 				editable._bitmap |= bit

@@ -30,7 +30,7 @@ class HashCollisionNode : INode {
 			}
 			var newArray: Array<AnyObject> = []
 			newArray.reserveCapacity(2 * (_count + 1))
-			ArrayCopy(_array, 0, newArray, 0, UInt(2 * _count))
+			ArrayCopy(_array, 0, &newArray, 0, UInt(2 * _count))
 			newArray[2 * _count] = key
 			newArray[2 * _count + 1] = val
 			return HashCollisionNode(edit: _edit, hash: hash, count: _count + 1, array: newArray)
@@ -94,7 +94,7 @@ class HashCollisionNode : INode {
 		}
 		var newArray: Array<AnyObject> = []
 		newArray.reserveCapacity(2 * (_count + 1))
-		ArrayCopy(_array, 0, newArray, 0, UInt(2 * _count))
+		ArrayCopy(_array, 0, &newArray, 0, UInt(2 * _count))
 		return HashCollisionNode(edit: edit, hash: _hash, count: _count, array: newArray)
 	}
 
@@ -136,7 +136,7 @@ class HashCollisionNode : INode {
 			}
 			var newArray: Array<AnyObject> = []
 			newArray.reserveCapacity(_array.count + 2)
-			ArrayCopy(_array, 0, newArray, 0, UInt(_array.count))
+			ArrayCopy(_array, 0, &newArray, 0, UInt(_array.count))
 			newArray[_array.count] = key
 			newArray[_array.count + 1] = val
 			return self.ensureEditable(edit!, count: _count + 1, array: newArray)
@@ -158,7 +158,7 @@ class HashCollisionNode : INode {
 
 		editable._array.removeAtIndex(2 * _count - 2)
 		editable._array.removeAtIndex(2 * _count - 1)
-		editable._count--
+		editable._count = editable._count.predecessor()
 		return editable
 	}
 }

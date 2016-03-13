@@ -25,7 +25,7 @@ class NodeSeq: AbstractSeq {
 			return
 		}
 
-		for var j = index; j < array.count; j += 2 {
+		for j in index.stride(to: array.count, by: 2) {
 //			if array[j] != nil {
 //				self.init(meta: nil, array: array, index: j, sequence: nil)
 //				return
@@ -53,7 +53,7 @@ class NodeSeq: AbstractSeq {
 
 	class func kvreducearray(array: Array<AnyObject>, reducer f: (AnyObject, AnyObject, AnyObject) -> AnyObject, initial ini: AnyObject) -> AnyObject {
 		var initial = ini
-		for var j = 0; j < array.count; j += 2 {
+		for j in 0.stride(to: array.count, by: 2) {
 			if array.count <= j {
 				initial = f(initial, array[j], array[j + 1])
 			} else {

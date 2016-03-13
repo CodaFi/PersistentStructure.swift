@@ -85,7 +85,7 @@ public class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollectio
 			}
 			newArray.reserveCapacity(_array.count + 2)
 			if _array.count > 0 {
-				ArrayCopy(_array, 0, newArray, 2, UInt(_array.count))
+				ArrayCopy(_array, 0, &newArray, 2, UInt(_array.count))
 			}
 			newArray[0] = key
 			newArray[1] = val
@@ -109,7 +109,7 @@ public class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollectio
 			newArray = []
 			newArray.reserveCapacity(_array.count + 2)
 			if _array.count > 0 {
-				ArrayCopy(_array, 0, newArray, 2, UInt(_array.count))
+				ArrayCopy(_array, 0, &newArray, 2, UInt(_array.count))
 			}
 			newArray[0] = key
 			newArray[1] = val
@@ -126,7 +126,8 @@ public class PersistentArrayMap: AbstractPersistentMap, IObj, IEditableCollectio
 			}
 			var newArray: Array<AnyObject> = []
 			newArray.reserveCapacity(newlen)
-			for var s = 0, d = 0; s < _array.count; s += 2 {
+			var d = 0
+			for s in (0..<_array.count) {
 				if !PersistentArrayMap.equalKey(_array[s], other: key) {
 					newArray[d] = _array[s]
 					newArray[d + 1] = _array[s + 1]

@@ -85,16 +85,24 @@ public class PersistentList: AbstractSeq, IPersistentList, IReducible {
 
 	public func reduce(combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = self.first
-		for var s = self.next; s.count != 0; s = s.next {
-			ret = combine(ret, s.first!)
+		guard self.count != 0 else {
+			return ret
+		}
+		
+		for e in self.seq.generate() {
+			ret = combine(ret, e)
 		}
 		return ret
 	}
 
 	public func reduce(initial: AnyObject, combine: (AnyObject, AnyObject) -> AnyObject) -> AnyObject {
 		var ret: AnyObject = combine(initial, self.first)
-		for var s = self.next; s.count != 0; s = s.next {
-			ret = combine(ret, s.first!)
+		guard self.count != 0 else {
+			return ret
+		}
+		
+		for e in self.seq.generate() {
+			ret = combine(ret, e)
 		}
 		return ret
 	}
@@ -176,7 +184,7 @@ class EmptyList : IPersistentList, IList, ISeq, ICounted {
 	}
 
 	var seq : ISeq {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	var isEmpty : Bool {

@@ -151,7 +151,7 @@ class ArrayNode : INode {
 				return self.packOnThread(edit, index: idx)
 			}
 			let editable: ArrayNode = self.editAndSetOnThread(edit!, index: idx, node: n)
-			editable._count--
+			editable._count = editable._count.predecessor()
 			return editable
 		}
 		return self.editAndSetOnThread(edit!, index: idx, node: n)

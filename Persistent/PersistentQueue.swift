@@ -55,8 +55,8 @@ public final class PersistentQueue: Obj, IPersistentList, ICollection, ICounted,
 	var hash : UInt {
 		if _hash == -1 {
 			var hash: UInt = 1
-			for var s = self.seq; s.count != 0; s = s.next {
-				hash = 31 * hash + (s.first == nil ? 0 : UInt(s.first!.hash!))
+			for e in self.seq.generate() {
+				hash = 31 * hash + UInt(e.hash!)
 			}
 			_hash = Int(hash)
 		}
@@ -123,8 +123,8 @@ public final class PersistentQueue: Obj, IPersistentList, ICollection, ICounted,
 	}
 
 	public func containsObject(anObject: AnyObject) -> Bool {
-		for var s = self.seq; s.count != 0; s = s.next {
-			if Utils.equiv(s.first, other: anObject) {
+		for e in self.seq.generate() {
+			if Utils.equiv(e, other: anObject) {
 				return true
 			}
 		}

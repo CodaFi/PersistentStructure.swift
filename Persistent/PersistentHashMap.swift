@@ -61,30 +61,41 @@ public class PersistentHashMap: AbstractPersistentMap, IEditableCollection {
 		return ret.persistent()
 	}
 
-	class func createWithSeq(var items: ISeq?) -> PersistentHashMap {
+	class func createWithSeq(items: ISeq) -> PersistentHashMap {
 		var ret: ITransientMap? = EMPTY.asTransient as? ITransientMap
-		for ; items != nil; items = items!.next.next {
-			if items!.next.count == 0 {
-				fatalError("No value supplied for key: \(items!.first)")
+		var sink : (AnyObject?, AnyObject?) = (nil, nil)
+		for e in items.generate() {
+			if let l = sink.0, r = sink.1 {
+				ret = ret!.associateKey(l, value: r)
+				sink = (e, nil)
+			} else if sink.0 == nil {
+				sink = (e, nil)
+			} else if let l = sink.0 {
+				sink = (l, e)
+			} else {
+				fatalError("impossible")
 			}
-			ret = ret!.associateKey(items!.first!, value: Utils.second(items!)!)
 		}
+		guard sink.1 == nil else {
+			fatalError("Unassociated key in hash map")
+		}
+		
 		return ret!.persistent() as! PersistentHashMap
 	}
 
-	class func createWithCheckSeq(var items: ISeq?) -> PersistentHashMap {
-		var ret: ITransientMap? = EMPTY.asTransient as? ITransientMap
-		for var i = 0; items != nil; items = items!.next.next, i = i.successor() {
-			if items!.next.count == 0 {
-				fatalError("No value supplied for key: \(items!.first)")
-			}
-			ret = ret!.associateKey(items!.first!, value: Utils.second(items!)!)
-			if ret!.count != (i + 1) {
-				fatalError("Duplicate key: \(items!.first)")
-			}
-		}
-		return ret!.persistent() as! PersistentHashMap
-	}
+//	class func createWithCheckSeq(items: ISeq?) -> PersistentHashMap {
+//		var ret: ITransientMap? = EMPTY.asTransient as? ITransientMap
+//		for var i = 0; items != nil; items = items!.next.next, i = i.successor() {
+//			if items!.next.count == 0 {
+//				fatalError("No value supplied for key: \(items!.first)")
+//			}
+//			ret = ret!.associateKey(items!.first!, value: Utils.second(items!)!)
+//			if ret!.count != (i + 1) {
+//				fatalError("Duplicate key: \(items!.first)")
+//			}
+//		}
+//		return ret!.persistent() as! PersistentHashMap
+//	}
 
 	class func createWithMeta(meta: IPersistentMap?, array: Array<AnyObject>) -> PersistentHashMap {
 		return PersistentHashMap.createWithSeq(Seq(nodes: array))

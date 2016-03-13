@@ -14,7 +14,7 @@ class Murmur3: NSObject {
 		var hash: UInt = 1
 		for x: AnyObject in xs.generate() {
 			hash = 31 * hash + UInt(Utils.hasheq(x))
-			++n
+			n = n.successor()
 		}
 		return Murmur3.mixCollHash(hash, count: n)
 	}
@@ -24,7 +24,7 @@ class Murmur3: NSObject {
 		var n: UInt = 0
 		for x: AnyObject in xs.generate() {
 			hash += UInt(Utils.hasheq(x))
-			++n
+			n = n.successor()
 		}
 		return Murmur3.mixCollHash(hash, count: n)
 	}

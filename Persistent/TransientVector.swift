@@ -64,14 +64,14 @@ public final class TransientVector : ITransientVector, ICounted {
 		}
 		var trimmedTail: Array<AnyObject> = []
 		trimmedTail.reserveCapacity(_count - self.tailoff)
-		ArrayCopy(_tail, 0, trimmedTail, 0, UInt(trimmedTail.count))
+		ArrayCopy(_tail, 0, &trimmedTail, 0, UInt(trimmedTail.count))
 		return PersistentVector(cnt: _count, shift: _shift, root: _root as! INode, tail: trimmedTail)
 	}
 
 	class func editableTail(tl: Array<AnyObject>) -> Array<AnyObject> {
 		var ret: Array<AnyObject> = []
 		ret.reserveCapacity(32)
-		ArrayCopy(tl, 0, ret, 0, UInt(tl.count))
+		ArrayCopy(tl, 0, &ret, 0, UInt(tl.count))
 		return ret
 	}
 
@@ -143,7 +143,7 @@ public final class TransientVector : ITransientVector, ICounted {
 				return _tail
 			}
 			var node: Node = _root
-			for var level = _shift; level > 0; level -= 5 {
+			for level in _shift.stride(to: 0, by: -5) {
 				node = node.array[(i >> level) & 0x01f] as! Node
 			}
 			return node.array
@@ -157,7 +157,7 @@ public final class TransientVector : ITransientVector, ICounted {
 				return _tail
 			}
 			var node: Node = _root
-			for var level = _shift; level > 0; level -= 5 {
+			for level in _shift.stride(to: 0, by: -5) {
 				node = node.array[(i >> level) & 0x01f] as! Node
 			}
 			return node.array
@@ -247,7 +247,7 @@ public final class TransientVector : ITransientVector, ICounted {
 		}
 		let i: Int = _count - 1
 		if (i & 0x01f) > 0 {
-			_count--
+			_count = _count.predecessor()
 			return self
 		}
 		let newtail: Array = self.editableArrayFor(_count - 2)
@@ -259,7 +259,7 @@ public final class TransientVector : ITransientVector, ICounted {
 		}
 		_root = newroot
 		_shift = newshift
-		_count--
+		_count = _count.predecessor()
 		_tail = newtail
 		return self
 	}

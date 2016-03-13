@@ -63,14 +63,25 @@ public class PersistentTreeMap: AbstractPersistentMap, IObj, IReversible, ISorte
 		self.init(meta: nil, comparator: comparator)
 	}
 
-	class func createWithSeq(var items: ISeq?) -> AnyObject {
+	class func createWithSeq(items: ISeq) -> AnyObject {
 		var ret: IPersistentMap = EMPTY
-		for ; items != nil; items = items!.next.next {
-			if items?.next == nil {
-				fatalError("No value supplied for key: \(items!.first)")
+		var sink : (AnyObject?, AnyObject?) = (nil, nil)
+		for e in items.generate() {
+			if let l = sink.0, r = sink.1 {
+				ret = ret.associateKey(l, withValue: r) as! PersistentTreeMap
+				sink = (e, nil)
+			} else if sink.0 == nil {
+				sink = (e, nil)
+			} else if let l = sink.0 {
+				sink = (l, e)
+			} else {
+				fatalError("impossible")
 			}
-			ret = ret.associateKey(items!.first!, withValue: Utils.second(items!)!) as! PersistentTreeMap
 		}
+		guard sink.1 == nil else {
+			fatalError("Unassociated key in tree map")
+		}
+		
 		return ret as! PersistentTreeMap
 	}
 

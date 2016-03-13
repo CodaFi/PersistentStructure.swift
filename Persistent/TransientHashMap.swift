@@ -52,7 +52,7 @@ public class TransientHashMap: AbstractTransientMap {
 			_root = n
 		}
 		if _leafFlag != nil {
-			_count--
+			_count = _count.predecessor()
 		}
 		return self
 	}

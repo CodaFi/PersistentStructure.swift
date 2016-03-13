@@ -50,10 +50,10 @@ public class AbstractMapEntry: AbstractPersistentVector, IMapEntry {
 	}
 
 	public var key : AnyObject {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 
 	public var val : AnyObject {
-		fatalError("\(__FUNCTION__) unimplemented")
+		fatalError("\(#function) unimplemented")
 	}
 }

@@ -15,7 +15,7 @@ public class TransientArrayMap: AbstractTransientMap {
 		_owner = NSThread.currentThread()
 		_array = []
 		_array.reserveCapacity(max(HASHTABLE_THRESHOLD, _array.count))
-		ArrayCopy(array, 0, _array, 0, UInt(array.count))
+		ArrayCopy(array, 0, &_array, 0, UInt(array.count))
 		_length = array.count
 	}
 
@@ -79,7 +79,7 @@ public class TransientArrayMap: AbstractTransientMap {
 		_owner = nil
 		var a: Array<AnyObject> = []
 		a.reserveCapacity(_length)
-		ArrayCopy(_array, 0, a, 0, UInt(_length))
+		ArrayCopy(_array, 0, &a, 0, UInt(_length))
 		return PersistentArrayMap(initial: a)
 	}
 
